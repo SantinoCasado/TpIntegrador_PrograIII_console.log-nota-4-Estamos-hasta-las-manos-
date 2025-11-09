@@ -1,0 +1,17 @@
+/* Cards de productos */
+.product-card {
+  border: 1px solid var(--purple);
+  border-radius: 8px;
+}
+
+/* Formularios */
+.form-control:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 5px rgba(139, 0, 255, 0.3);
+}
+
+/* Botones gaming */
+.btn-gaming {
+  background: var(--purple);
+  color: white;
+}

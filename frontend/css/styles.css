@@ -1,0 +1,161 @@
+:root {
+  --purple: #8b00ff;
+  --pink: #ff1493;
+  --blue: #00bfff;
+  --cyan: #00ffff;
+  --dark-base: #0f0f0f;
+  --dark-card: #1a1a1a;
+}
+
+.navbar {
+  background: linear-gradient(to right, #1a1a1a, #2d1b69) !important;
+  border-bottom: 2px solid var(--purple);
+}
+
+.navbar-brand img {
+  transition: transform 0.3s;
+}
+
+.navbar-brand img:hover {
+  transform: scale(1.1);
+}
+
+.text-primary {
+  color: var(--purple) !important;
+}
+
+.text-info {
+  color: var(--blue) !important;
+}
+
+.btn-outline-primary {
+  border-color: var(--purple);
+  color: var(--purple);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--purple);
+  color: white;
+}
+
+.welcome-page {
+  background: linear-gradient(
+    135deg,
+    var(--dark-base),
+    #1a0033,
+    var(--dark-base)
+  );
+  min-height: 100vh;
+}
+
+.bg-gaming-gradient {
+  background: linear-gradient(
+    90deg,
+    var(--dark-base),
+    #2d1b69,
+    var(--dark-base)
+  ) !important;
+  border-bottom: 2px solid var(--purple);
+}
+
+.logo {
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 0 10px rgba(139, 0, 255, 0.5));
+}
+
+.logo:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 15px rgba(255, 20, 147, 0.7));
+}
+
+/* ========= COLORES DE TEXTO ===================== */
+.text-primary {
+  color: var(--purple) !important;
+}
+
+.text-neon-pink {
+  color: var(--pink) !important;
+}
+
+.text-purple {
+  color: var(--purple) !important;
+}
+
+.text-blue {
+  color: var(--blue) !important;
+}
+
+.text-pink {
+  color: var(--pink) !important;
+}
+
+.text-light-50 {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.text-gradient {
+  background: linear-gradient(45deg, var(--purple), var(--pink), var(--blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ========= CARDS ===================== */
+.border-gaming {
+  border-color: var(--purple);
+}
+
+.bg-gaming-header {
+  background: linear-gradient(45deg, var(--purple), var(--pink)) !important;
+}
+
+.gaming-card {
+  transition: all 0.3s ease;
+}
+
+.gaming-card:hover {
+  border-color: var(--purple) !important;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(139, 0, 255, 0.2);
+}
+
+/* ========= INPUTS ===================== */
+/* Gaming Input */
+.gaming-input {
+  background-color: var(--dark-card) !important;
+  border: 2px solid var(--purple) !important;
+  color: white !important;
+}
+
+.gaming-input:focus {
+  background-color: var(--dark-card) !important;
+  border-color: var(--pink) !important;
+  box-shadow: 0 0 10px rgba(255, 20, 147, 0.3) !important;
+  color: white !important;
+}
+
+/* Gaming Buttons */
+.btn-gaming {
+  background: linear-gradient(45deg, var(--purple), var(--pink));
+  border: none;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-gaming:hover {
+  background: linear-gradient(45deg, var(--pink), var(--blue));
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(139, 0, 255, 0.3);
+}
+
+.btn-outline-gaming {
+  border: 2px solid var(--purple);
+  color: var(--purple);
+  background: rgba(139, 0, 255, 0.1);
+}
+
+.btn-outline-gaming:hover {
+  background: var(--purple);
+  color: white;
+  box-shadow: 0 0 15px rgba(139, 0, 255, 0.5);
+}

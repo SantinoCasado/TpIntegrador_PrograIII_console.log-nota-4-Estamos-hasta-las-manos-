@@ -1,0 +1,31 @@
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+}
+
+/*========= Tema oscuro ==============*/
+[data-theme="dark"] {
+  --bg-primary: #0f0f0f;
+  --bg-secondary: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+}
+
+[data-theme="dark"] .welcome-page {
+  background: linear-gradient(135deg, #000000, #1a0033, #000000);
+}
+
+[data-theme="dark"] .card {
+  background-color: var(--bg-secondary) !important;
+}
+
+[data-theme="dark"] .text-light {
+  color: var(--text-primary) !important;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}

@@ -3,15 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GameVerse - Bienvenido</title>
+    <title>Gaming - Welcome</title>
 
     <!-- favicon-->
-    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico" />
+    <link rel="icon" type="image/png" href="./assets/img/favicon.png" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
 
     <!-- CSS -->
     <link rel="stylesheet" href="./css/styles.css" />
     <link rel="stylesheet" href="./css/themes.css" />
     <link rel="stylesheet" href="./css/responsive.css" />
+    <link rel="stylesheet" href="./css/animations.css" />
+    <link rel="stylesheet" href="./css/components.css" />
 
     <!-- Font Awesome para iconos -->
     <link
@@ -20,104 +27,156 @@
     />
   </head>
   <body class="welcome-page">
-    <!-- Header con elementos REQUERIDOS -->
-    <header class="main-header">
-      <div class="container">
-        <!-- ✅ LOGO + NOMBRE APLICACIÓN REQUERIDO -->
-        <div class="brand">
-          <img src="./assets/images/logo.png" alt="Logo" class="logo" />
-          <h1 class="company-name">GameVerse</h1>
+    <header class="navbar navbar-dark bg-dark shadow">
+      <div class="container-fluid px-4">
+        <div class="navbar-brand d-flex align-items-center me-auto">
+          <img
+            src="./assets/img/logo.png"
+            alt="Logo"
+            class="logo"
+            style="height: 40px"
+          />
+          <h1 class="company-name text-primary fw-bold fs-3 mb-0 text-gradient">
+            Gaming
+          </h1>
         </div>
 
-        <!-- ✅ NOMBRES ALUMNOS REQUERIDO -->
-        <div class="developers">
-          <p>Desarrollado por:</p>
-          <p><strong>NOMBRE_ALUMNO_1 - NOMBRE_ALUMNO_2</strong></p>
+        <!-- integrantes -->
+        <div class="text-light text-center d-none d-md-block">
+          <small class="text-light opacity-75 mb-1">Developed by:</small>
+          <span class="text-info fw-semibold fs-6"
+            >STUDENT_NAME_1 - STUDENT_NAME_2</span
+          >
         </div>
 
-        <!-- ✅ SELECTOR TEMA REQUERIDO -->
-        <div class="theme-controls">
-          <button id="theme-toggle" class="theme-btn">
+        <!-- tema oscuro -->
+        <div class="theme-controls ms-auto">
+          <button
+            id="theme-toggle"
+            class="btn btn-outline-primary btn-sm d-flex align-items-center gap-2 px-3"
+          >
             <i class="fas fa-moon"></i>
-            <span>Tema Oscuro</span>
+            <span>Dark Theme</span>
           </button>
         </div>
       </div>
     </header>
 
-    <main class="welcome-main">
+    <main class="welcome-main min-vh-100 d-flex align-items-center">
       <div class="container">
-        <div class="welcome-content">
-          <div class="welcome-header">
-            <h2>¡Welcom to Gaming!</h2>
-            <p class="welcome-subtitle">
-              Your ultimate destination for gaming hardware and software.
-            </p>
-          </div>
+        <div class="row justify-content-center">
+          <div class="col-lg-8 col-md-10">
+            <!-- Header de bienvenida -->
+            <div class="text-center mb-5">
+              <h2 class="display-5 fw-bold text-gradient mb-3">
+                ¡Welcome to Gaming!
+              </h2>
+              <p class="lead text-light">
+                Your ultimate destination for gaming hardware and software.
+              </p>
+            </div>
 
-          <!-- formulario para ingresar nombre del cliente -->
-          <div class="customer-form-container">
-            <form id="customer-form" class="customer-form">
-              <div class="form-group">
-                <label for="customer-name">
-                  <i class="fas fa-user"></i>
-                  To continue, enter your name:
-                </label>
-                <input
-                  type="text"
-                  id="customer-name"
-                  name="customerName"
-                  placeholder="Enter your name here..."
-                  required
-                  autocomplete="given-name"
-                />
-                <div id="name-error" class="error-message"></div>
-              </div>
-
-              <!-- boton para continuar como cliente -->
-              <button
-                type="submit"
-                id="continue-btn"
-                class="btn btn-primary"
-                disabled
-              >
-                <i class="fas fa-arrow-right"></i>
-                Continue to Store
-              </button>
-            </form>
-          </div>
-
-          <!-- Botones adicionales -->
-          <div class="additional-actions">
-            <!-- boton de acceso para admin -->
-            <a
-              href="http://localhost:3000/admin/login"
-              class="btn btn-secondary"
-              target="_blank"
+            <!-- Formulario -->
+            <div
+              class="card bg-dark border-gaming shadow-lg mx-auto mb-4"
+              style="max-width: 500px"
             >
-              <i class="fas fa-cog"></i>
-              Admin Access
-            </a>
-          </div>
-        </div>
+              <div class="card-header bg-gaming-header text-center py-3">
+                <h5 class="mb-0 text-white">
+                  <i class="fas fa-user me-2"></i>
+                  Enter Your Name to Continue
+                </h5>
+              </div>
+              <div class="card-body p-4">
+                <form id="customer-form">
+                  <div class="mb-4">
+                    <label for="customer-name" class="form-label text-light">
+                      <i class="fas fa-gamepad me-2"></i>
+                      Player Name:
+                    </label>
+                    <input
+                      type="text"
+                      id="customer-name"
+                      name="customerName"
+                      class="form-control form-control-lg gaming-input"
+                      placeholder="Enter your gamer tag..."
+                      required
+                      autocomplete="given-name"
+                    />
+                    <div id="name-error" class="text-danger mt-2"></div>
+                  </div>
 
-        <!-- Información de la empresa -->
-        <div class="company-info">
-          <div class="info-cards">
-            <div class="info-card">
-              <i class="fas fa-rocket"></i>
-              <h3>High-Level Gaming</h3>
-              <p>Gaming hardware and software</p>
+                  <div class="d-grid gap-3">
+                    <button
+                      type="submit"
+                      id="continue-btn"
+                      class="btn btn-gaming btn-lg fw-semibold"
+                      disabled
+                    >
+                      <i class="fas fa-arrow-right me-2"></i>
+                      Enter Gaming Zone
+                    </button>
+
+                    <a
+                      href="http://localhost:3000/admin/login"
+                      class="btn btn-outline-secondary"
+                      target="_blank"
+                    >
+                      <i class="fas fa-cog me-2"></i>
+                      Admin Panel
+                    </a>
+                  </div>
+                </form>
+              </div>
             </div>
-            <div class="info-card">
-              <i class="fas fa-shield-alt"></i>
-              <h3>Secure Purchase</h3>
-              <p>Original keys guaranteed</p>
-            </div>
-            <div class="info-card">
-              <i class="fas fa-headset"></i>
-              <h3>Gamer Support</h3>
-              <p>Specialized attention 24/7</p>
+
+            <!-- Info cards -->
+            <div class="row g-4">
+              <div class="col-md-4">
+                <div
+                  class="card h-100 bg-dark border-secondary text-center gaming-card"
+                >
+                  <div class="card-body d-flex flex-column">
+                    <div class="text-purple mb-3 fs-1">
+                      <i class="fas fa-rocket"></i>
+                    </div>
+                    <h5 class="text-light">High-Level Gaming</h5>
+                    <p class="text-light-50 mt-auto">
+                      Premium hardware and software for pro gamers
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div
+                  class="card h-100 bg-dark border-secondary text-center gaming-card"
+                >
+                  <div class="card-body d-flex flex-column">
+                    <div class="text-blue mb-3 fs-1">
+                      <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h5 class="text-light">Secure Purchase</h5>
+                    <p class="text-light-50 mt-auto">
+                      Original keys and authentic products guaranteed
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div
+                  class="card h-100 bg-dark border-secondary text-center gaming-card"
+                >
+                  <div class="card-body d-flex flex-column">
+                    <div class="text-pink mb-3 fs-1">
+                      <i class="fas fa-headset"></i>
+                    </div>
+                    <h5 class="text-light">Gamer Support</h5>
+                    <p class="text-light-50 mt-auto">
+                      24/7 specialized gaming assistance
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -125,15 +184,22 @@
     </main>
 
     <!-- Footer -->
-    <footer class="main-footer">
+    <footer class="bg-dark border-top border-gaming mt-auto">
       <div class="container">
-        <p>
-          &copy; 2025 GameVerse - Developed by STUDENT_NAME_1 and STUDENT_NAME_2
-        </p>
+        <div class="row">
+          <div class="col-12 text-center py-4">
+            <p class="text-light mb-0">
+              &copy; 2025 GameVerse - Developed by
+              <span class="text-neon-pink">STUDENT_NAME_1</span> and
+              <span class="text-neon-pink">STUDENT_NAME_2</span>
+            </p>
+          </div>
+        </div>
       </div>
     </footer>
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./config/config.js"></script>
     <script src="./js/themes.js"></script>
     <script src="./js/validation.js"></script>
