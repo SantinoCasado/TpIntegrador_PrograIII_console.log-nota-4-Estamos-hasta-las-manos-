@@ -1,0 +1,142 @@
+# ===========================
+# NODE.JS DEPENDENCIES
+# ===========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# ===========================
+# ENVIRONMENT VARIABLES
+# ===========================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ===========================
+# DATABASE
+# ===========================
+*.sqlite
+*.sqlite3
+*.db
+database.db
+database.sqlite
+/database/*
+!database/.gitkeep
+
+# ===========================
+# LOGS
+# ===========================
+logs/
+*.log
+npm-debug.log*
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# ===========================
+# RUNTIME DATA
+# ===========================
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# ===========================
+# COVERAGE DIRECTORY
+# ===========================
+coverage/
+.nyc_output
+
+# ===========================
+# UPLOADED FILES
+# ===========================
+uploads/
+public/uploads/
+temp/
+tmp/
+
+# ===========================
+# SESSION STORAGE
+# ===========================
+sessions/
+*.session
+
+# ===========================
+# BUILD DIRECTORIES
+# ===========================
+build/
+dist/
+.next/
+out/
+
+# ===========================
+# OS GENERATED FILES
+# ===========================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ===========================
+# IDE/EDITOR FILES
+# ===========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ===========================
+# BACKUP FILES
+# ===========================
+*.bak
+*.backup
+*.old
+
+# ===========================
+# CERTIFICATES & KEYS
+# ===========================
+*.pem
+*.key
+*.crt
+*.cert
+
+# ===========================
+# GAMING STORE SPECIFIC
+# ===========================
+# Product images uploads
+public/images/products/
+public/images/uploads/
+
+# User profile pictures
+public/images/profiles/
+
+# Generated PDFs/receipts
+public/documents/
+public/receipts/
+
+# Cache files
+.cache/
+*.cache
+
+# ===========================
+# DEVELOPMENT TOOLS
+# ===========================
+.eslintcache
+.stylelintcache
+
+# ===========================
+# MISCELLANEOUS
+# ===========================
+.git/
+*.tgz
+*.tar.gz
