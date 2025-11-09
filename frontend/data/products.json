@@ -1,0 +1,94 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "RTX 4070 Super Gaming",
+            "description": "Tarjeta gráfica NVIDIA RTX 4070 Super para gaming en 1440p",
+            "price": 599.99,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "hardware",
+            "active": true
+        },
+        {
+            "id": 2,
+            "name": "Teclado Mecánico RGB",
+            "description": "Teclado mecánico gaming con switches Cherry MX y RGB",
+            "price": 129.99,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "hardware",
+            "active": true
+        },
+        {
+            "id": 3,
+            "name": "Cyberpunk 2077",
+            "description": "Videojuego RPG futurista de mundo abierto - Steam Key",
+            "price": 29.99,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "software",
+            "active": true
+        },
+        {
+            "id": 4,
+            "name": "Unity Pro License",
+            "description": "Licencia profesional de Unity para desarrollo de juegos",
+            "price": 185.00,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "software",
+            "active": true
+        },
+        {
+            "id": 5,
+            "name": "Monitor Gaming 27'' 144Hz",
+            "description": "Monitor gaming 27 pulgadas, 144Hz, 1ms, FreeSync/G-Sync",
+            "price": 299.99,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "hardware",
+            "active": true
+        },
+        {
+            "id": 6,
+            "name": "Assassin's Creed Valhalla",
+            "description": "Aventura vikinga épica - Edición Gold con DLC incluido",
+            "price": 39.99,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "software",
+            "active": true
+        },
+        {
+            "id": 7,
+            "name": "Auriculares Gaming 7.1",
+            "description": "Auriculares gaming con sonido envolvente 7.1 y micrófono",
+            "price": 79.99,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "hardware",
+            "active": true
+        },
+        {
+            "id": 8,
+            "name": "Steam Gift Card $50",
+            "description": "Tarjeta regalo Steam por $50 para comprar juegos",
+            "price": 50.00,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "software",
+            "active": true
+        },
+        {
+            "id": 9,
+            "name": "Ryzen 7 5800X",
+            "description": "Procesador AMD Ryzen 7 5800X, 8 cores, perfecto para gaming",
+            "price": 329.99,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "hardware",
+            "active": true
+        },
+        {
+            "id": 10,
+            "name": "The Witcher 3: Wild Hunt",
+            "description": "RPG épico con todas las expansiones - GOTY Edition",
+            "price": 19.99,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "software",
+            "active": true
+        }
+    ]
+}

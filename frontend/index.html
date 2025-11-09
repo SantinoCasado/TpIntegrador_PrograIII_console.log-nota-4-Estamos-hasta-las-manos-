@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GameVerse - Bienvenido</title>
+
+    <!-- favicon-->
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/themes.css" />
+    <link rel="stylesheet" href="./css/responsive.css" />
+
+    <!-- Font Awesome para iconos -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body class="welcome-page">
+    <!-- Header con elementos REQUERIDOS -->
+    <header class="main-header">
+      <div class="container">
+        <!-- ✅ LOGO + NOMBRE APLICACIÓN REQUERIDO -->
+        <div class="brand">
+          <img src="./assets/images/logo.png" alt="Logo" class="logo" />
+          <h1 class="company-name">GameVerse</h1>
+        </div>
+
+        <!-- ✅ NOMBRES ALUMNOS REQUERIDO -->
+        <div class="developers">
+          <p>Desarrollado por:</p>
+          <p><strong>NOMBRE_ALUMNO_1 - NOMBRE_ALUMNO_2</strong></p>
+        </div>
+
+        <!-- ✅ SELECTOR TEMA REQUERIDO -->
+        <div class="theme-controls">
+          <button id="theme-toggle" class="theme-btn">
+            <i class="fas fa-moon"></i>
+            <span>Tema Oscuro</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="welcome-main">
+      <div class="container">
+        <div class="welcome-content">
+          <div class="welcome-header">
+            <h2>¡Welcom to Gaming!</h2>
+            <p class="welcome-subtitle">
+              Your ultimate destination for gaming hardware and software.
+            </p>
+          </div>
+
+          <!-- formulario para ingresar nombre del cliente -->
+          <div class="customer-form-container">
+            <form id="customer-form" class="customer-form">
+              <div class="form-group">
+                <label for="customer-name">
+                  <i class="fas fa-user"></i>
+                  To continue, enter your name:
+                </label>
+                <input
+                  type="text"
+                  id="customer-name"
+                  name="customerName"
+                  placeholder="Enter your name here..."
+                  required
+                  autocomplete="given-name"
+                />
+                <div id="name-error" class="error-message"></div>
+              </div>
+
+              <!-- boton para continuar como cliente -->
+              <button
+                type="submit"
+                id="continue-btn"
+                class="btn btn-primary"
+                disabled
+              >
+                <i class="fas fa-arrow-right"></i>
+                Continue to Store
+              </button>
+            </form>
+          </div>
+
+          <!-- Botones adicionales -->
+          <div class="additional-actions">
+            <!-- boton de acceso para admin -->
+            <a
+              href="http://localhost:3000/admin/login"
+              class="btn btn-secondary"
+              target="_blank"
+            >
+              <i class="fas fa-cog"></i>
+              Admin Access
+            </a>
+          </div>
+        </div>
+
+        <!-- Información de la empresa -->
+        <div class="company-info">
+          <div class="info-cards">
+            <div class="info-card">
+              <i class="fas fa-rocket"></i>
+              <h3>High-Level Gaming</h3>
+              <p>Gaming hardware and software</p>
+            </div>
+            <div class="info-card">
+              <i class="fas fa-shield-alt"></i>
+              <h3>Secure Purchase</h3>
+              <p>Original keys guaranteed</p>
+            </div>
+            <div class="info-card">
+              <i class="fas fa-headset"></i>
+              <h3>Gamer Support</h3>
+              <p>Specialized attention 24/7</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+      <div class="container">
+        <p>
+          &copy; 2025 GameVerse - Developed by STUDENT_NAME_1 and STUDENT_NAME_2
+        </p>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="./config/config.js"></script>
+    <script src="./js/themes.js"></script>
+    <script src="./js/validation.js"></script>
+    <script src="./js/app.js"></script>
+  </body>
+</html>

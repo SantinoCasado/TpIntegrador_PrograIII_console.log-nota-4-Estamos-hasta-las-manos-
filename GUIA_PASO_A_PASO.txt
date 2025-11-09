@@ -1,0 +1,1320 @@
+========================================================================================================
+                    GUÍA PASO A PASO - TRABAJO INTEGRADOR PROGRAMACIÓN III
+                              FRONTEND + BACKEND + BASE DE DATOS
+                                    🎮 TIENDA GAMER 🎮
+========================================================================================================
+
+🎮 TEMÁTICA DEL PROYECTO: GAMEVERSE - TIENDA GAMING ONLINE
+==========================================================
+
+PRODUCTOS A VENDER:
+CATEGORÍA 1: HARDWARE GAMING
+- Componentes PC (procesadores AMD/Intel, tarjetas gráficas RTX/RX, RAM DDR4/DDR5)
+- Periféricos gaming (teclados mecánicos, mouses gaming, auriculares)
+- Monitores gaming (144Hz+, 4K, ultrawide)
+- Accesorios (sillas gamer, gabinetes RGB, cooling)
+
+CATEGORÍA 2: SOFTWARE & JUEGOS
+- Videojuegos PC (Steam, Epic Games, GOG keys)
+- Juegos consola (PlayStation, Xbox, Nintendo Switch)
+- Software desarrollo (Unity Pro, Unreal Engine, Visual Studio)
+- Licencias software (Windows, Office, antivirus gaming)
+- DLCs y expansiones
+
+NOMBRE SUGERIDO EMPRESA: "GameVerse" o "GamerZone" o "TechGaming Store"
+
+VENTAJAS DE ESTA TEMÁTICA:
+✅ Productos físicos Y virtuales
+✅ Mismo target (gamers/desarrolladores)
+✅ Amplio rango de precios ($10 - $2000+)
+✅ NO son comida (cumple restricción)
+✅ Mercado en crecimiento
+
+========================================================================================================
+
+ESTRUCTURA GENERAL DEL PROYECTO:
+1. Proyecto Frontend (Cliente)
+2. Proyecto Backend (API + Panel Admin con EJS)
+3. Base de Datos (Relacionada con ORM)
+
+========================================================================================================
+                                    FASE 1: CONFIGURACIÓN INICIAL
+========================================================================================================
+
+PASO 1.1: CREAR ESTRUCTURA DE CARPETAS
+---------------------------------------
+Crear la siguiente estructura de directorios:
+
+/proyecto-integrador/
+├── frontend/                    # Aplicación cliente (HTML, CSS, JS)
+├── backend/                     # Servidor Node.js + Express
+└── docs/                       # Documentación del proyecto
+
+PASO 1.2: INICIALIZAR REPOSITORIO GIT
+-------------------------------------
+- Crear repositorio en GitHub
+- Inicializar git en la carpeta raíz
+- Crear .gitignore apropiado
+- Hacer commit inicial
+
+========================================================================================================
+                                      FASE 2: BACKEND SETUP
+========================================================================================================
+
+PASO 2.1: CONFIGURACIÓN INICIAL DEL BACKEND (CON EXPRESS GENERATOR)
+-----------------------------------------------------------------------
+Opción A - Express Generator (RECOMENDADO):
+```bash
+# Instalar express-generator globalmente
+npm install -g express-generator
+
+# Crear proyecto backend con EJS
+express --ejs backend
+cd backend
+npm install
+```
+
+Opción B - Manual:
+```bash
+cd backend
+npm init -y
+```
+
+Dependencias adicionales a instalar (tras express generator):
+```bash
+npm install mysql2
+npm install sequelize
+npm install bcryptjs
+npm install multer
+npm install cors
+npm install dotenv
+npm install express-validator
+```
+
+Dependencias de desarrollo:
+```bash
+npm install --save-dev nodemon
+```
+
+VENTAJAS EXPRESS GENERATOR:
+✅ Estructura de carpetas automática
+✅ EJS ya configurado
+✅ Express configurado con middlewares básicos
+✅ Scripts npm predefinidos
+✅ Error handling básico incluido
+
+PASO 2.2: ESTRUCTURA DE CARPETAS DEL BACKEND (ADAPTADA PARA EXPRESS GENERATOR)
+------------------------------------------------------------------------------
+Express Generator crea automáticamente:
+backend/
+├── bin/
+│   └── www                      # Script de inicio del servidor
+├── public/                      # Archivos estáticos (CSS, JS, imágenes)
+│   ├── images/                  # Imágenes del admin
+│   ├── javascripts/             # Scripts para vistas EJS
+│   └── stylesheets/             # Estilos para vistas EJS
+├── routes/                      # Rutas básicas generadas
+│   ├── index.js                 # Ruta principal
+│   └── users.js                 # Rutas de usuarios (base)
+├── views/                       # Templates EJS (ya configurado)
+│   ├── error.ejs               # Página de error
+│   ├── index.ejs               # Página principal
+│   └── layout.ejs              # Layout base
+├── app.js                       # Configuración principal Express
+└── package.json                 # Dependencias y scripts
+
+Carpetas ADICIONALES a crear manualmente:
+├── controllers/                 # Lógica de controladores (MVC)
+│   ├── productController.js     # CRUD productos
+│   ├── userController.js        # Login y usuarios
+│   ├── saleController.js        # Manejo de ventas
+│   └── adminController.js       # Vistas del panel admin
+├── models/                      # Modelos de base de datos (Sequelize)
+│   ├── index.js                 # Configuración Sequelize
+│   ├── Product.js               # Modelo producto
+│   ├── User.js                  # Modelo usuario
+│   ├── Sale.js                  # Modelo venta
+│   └── SaleProduct.js           # Tabla intermedia ventas-productos
+├── routes/api/                  # Rutas API (JSON) - NUEVA CARPETA
+│   ├── products.js              # Endpoints productos
+│   ├── users.js                 # Endpoints usuarios
+│   └── sales.js                 # Endpoints ventas
+├── routes/admin/                # Rutas vistas HTML (EJS) - NUEVA CARPETA
+│   ├── auth.js                  # Login admin
+│   ├── dashboard.js             # Panel principal
+│   └── products.js              # CRUD productos (vistas)
+├── middleware/                  # Middlewares personalizados
+│   ├── auth.js                  # Validación de autenticación
+│   ├── validation.js            # Validación de datos
+│   └── upload.js                # Manejo de archivos/imágenes
+├── views/admin/                 # Vistas del panel admin - NUEVA CARPETA
+│   ├── login.ejs                # Pantalla login
+│   ├── dashboard.ejs            # Panel principal
+│   ├── product-form.ejs         # Alta/Edición producto
+│   └── products.ejs             # Listado productos
+├── views/partials/              # Componentes reutilizables - NUEVA CARPETA
+│   ├── header.ejs               # Header común
+│   ├── navbar.ejs               # Navegación
+│   └── footer.ejs               # Footer común
+├── config/                      # Configuraciones
+│   ├── database.js              # Configuración BD
+│   └── multer.js                # Configuración subida archivos
+└── .env                         # Variables de entorno
+
+PASO 2.3: CONFIGURACIÓN BASE DE DATOS
+-------------------------------------
+Archivo: backend/.env
+Función: Variables de entorno para configuración
+
+Contenido:
+```
+PORT=3000
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=tu_password
+DB_NAME=integrador_db
+JWT_SECRET=tu_secreto_jwt
+UPLOAD_PATH=./public/uploads
+```
+
+Archivo: backend/config/database.js
+Función: Configuración de conexión a MySQL
+
+Contenido:
+```javascript
+const { Sequelize } = require('sequelize');
+require('dotenv').config();
+
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    dialect: 'mysql',
+    logging: false
+  }
+);
+
+module.exports = sequelize;
+```
+
+PASO 2.4: MODELOS DE BASE DE DATOS
+----------------------------------
+Archivo: backend/models/Product.js
+Función: Modelo de productos con todos los campos necesarios
+
+Campos requeridos:
+- id (PRIMARY KEY, AUTO_INCREMENT)
+- name (STRING, NOT NULL)
+- description (TEXT)
+- price (DECIMAL(10,2), NOT NULL)
+- image (STRING)
+- category (ENUM: 'hardware', 'software') // 🎮 Categorías gaming
+- active (BOOLEAN, DEFAULT true)
+- createdAt, updatedAt (TIMESTAMPS)
+
+EJEMPLOS DE PRODUCTOS GAMING:
+Hardware: "RTX 4070 Gaming", "Teclado Mecánico RGB", "Monitor 144Hz"
+Software: "Cyberpunk 2077", "Unity Pro License", "Steam Gift Card"
+
+Archivo: backend/models/User.js
+Función: Modelo de usuarios administradores
+
+Campos requeridos:
+- id (PRIMARY KEY, AUTO_INCREMENT)
+- email (STRING, UNIQUE, NOT NULL)
+- password (STRING, NOT NULL) // Encriptada con bcrypt
+- role (ENUM: 'admin') // Para futuras expansiones
+- createdAt, updatedAt (TIMESTAMPS)
+
+Archivo: backend/models/Sale.js
+Función: Modelo de ventas
+
+Campos requeridos:
+- id (PRIMARY KEY, AUTO_INCREMENT)
+- customerName (STRING, NOT NULL)
+- totalAmount (DECIMAL(10,2), NOT NULL)
+- saleDate (DATE, DEFAULT NOW)
+- createdAt, updatedAt (TIMESTAMPS)
+
+Archivo: backend/models/SaleProduct.js
+Función: Tabla intermedia para relación many-to-many
+
+Campos requeridos:
+- saleId (FOREIGN KEY)
+- productId (FOREIGN KEY)
+- quantity (INTEGER, NOT NULL)
+- unitPrice (DECIMAL(10,2), NOT NULL)
+- subtotal (DECIMAL(10,2), NOT NULL)
+
+PASO 2.5: ADAPTACIÓN DEL app.js GENERADO POR EXPRESS
+----------------------------------------------------
+Express Generator crea un app.js base. Necesitas modificarlo para agregar las funcionalidades del proyecto:
+
+Archivo: backend/app.js (MODIFICAR EL GENERADO)
+Función: Configuración de Express y middlewares
+
+El generator crea algo como:
+```javascript
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+
+var app = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
+
+// error handler
+app.use(function(err, req, res, next) {
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+module.exports = app;
+```
+
+MODIFICACIONES NECESARIAS:
+1. Agregar cors y dotenv
+2. Agregar rutas de API y admin
+3. Configurar upload de archivos
+
+Código modificado:
+```javascript
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+const cors = require('cors');
+require('dotenv').config();
+
+// Rutas originales del generator
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+
+// Nuevas rutas para el proyecto
+const productApiRouter = require('./routes/api/products');
+const userApiRouter = require('./routes/api/users');
+const saleApiRouter = require('./routes/api/sales');
+const adminAuthRouter = require('./routes/admin/auth');
+const adminDashboardRouter = require('./routes/admin/dashboard');
+const adminProductsRouter = require('./routes/admin/products');
+
+var app = express();
+
+// view engine setup (ya configurado por generator)
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+// Middlewares (algunos ya configurados por generator)
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Cambiar a true
+app.use(cookieParser());
+app.use(cors()); // Agregar CORS
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Crear carpeta uploads si no existe
+const uploadsDir = path.join(__dirname, 'public', 'uploads');
+if (!require('fs').existsSync(uploadsDir)) {
+  require('fs').mkdirSync(uploadsDir, { recursive: true });
+}
+
+// Rutas originales del generator
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+
+// Nuevas rutas API (JSON)
+app.use('/api/products', productApiRouter);
+app.use('/api/users', userApiRouter);
+app.use('/api/sales', saleApiRouter);
+
+// Nuevas rutas Admin (EJS)
+app.use('/admin', adminAuthRouter);
+app.use('/admin/dashboard', adminDashboardRouter);
+app.use('/admin/products', adminProductsRouter);
+
+// catch 404 and forward to error handler (ya configurado por generator)
+app.use(function(req, res, next) {
+  next(createError(404));
+});
+
+// error handler (ya configurado por generator)
+app.use(function(err, req, res, next) {
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+module.exports = app;
+```
+
+Archivo: backend/bin/www (MODIFICAR EL GENERADO PARA SEQUELIZE)
+Función: Punto de entrada con sincronización de BD
+
+Express Generator crea el archivo bin/www para iniciar el servidor. 
+Necesitas modificarlo para sincronizar Sequelize antes de iniciar:
+
+```javascript
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('backend:server');
+var http = require('http');
+
+// Agregar Sequelize para sincronización de BD
+const sequelize = require('../config/database');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+/**
+ * Sincronizar base de datos antes de iniciar servidor
+ */
+
+sequelize.sync({ force: false }) // force: true solo en desarrollo
+  .then(() => {
+    console.log('Base de datos sincronizada');
+    
+    /**
+     * Listen on provided port, on all network interfaces.
+     */
+    server.listen(port);
+    server.on('error', onError);
+    server.on('listening', onListening);
+  })
+  .catch(err => {
+    console.error('Error al conectar con la base de datos:', err);
+    process.exit(1);
+  });
+
+// Resto del código generado por Express Generator...
+// (funciones normalizePort, onError, onListening)
+```
+
+ALTERNATIVA: Mantener server.js separado
+Si prefieres mantener la estructura original sugerida, crea:
+
+Archivo: backend/server.js (NUEVO)
+Función: Inicialización con Sequelize
+
+```javascript
+const app = require('./app');
+const sequelize = require('./config/database');
+
+const PORT = process.env.PORT || 3000;
+
+// Sincronizar base de datos y iniciar servidor
+sequelize.sync({ force: false })
+  .then(() => {
+    console.log('Base de datos sincronizada');
+    app.listen(PORT, () => {
+      console.log(`Servidor corriendo en puerto ${PORT}`);
+    });
+  })
+  .catch(err => {
+    console.error('Error al conectar con la base de datos:', err);
+  });
+```
+
+Y modificar package.json:
+```json
+{
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  }
+}
+```
+
+PASO 2.6: MIDDLEWARES IMPORTANTES
+---------------------------------
+Archivo: backend/middleware/validation.js
+Función: Validar datos de entrada con express-validator
+
+Validaciones necesarias:
+- Productos: name, price, category, image
+- Usuarios: email, password
+- Ventas: customerName, products array
+
+Archivo: backend/middleware/upload.js
+Función: Configurar multer para subida de imágenes
+
+Configuración:
+- Destination: ./public/uploads
+- Filename: timestamp + original name
+- File filter: solo imágenes (jpg, png, gif)
+- Size limit: 5MB máximo
+
+Archivo: backend/middleware/auth.js
+Función: Verificar autenticación para rutas protegidas
+
+========================================================================================================
+                                 FASE 3: CONTROLADORES BACKEND
+========================================================================================================
+
+PASO 3.1: CONTROLADOR DE PRODUCTOS (API)
+----------------------------------------
+Archivo: backend/controllers/productController.js
+Función: CRUD completo de productos para API JSON
+
+Métodos necesarios:
+- getAllProducts(): Obtener todos los productos activos (con paginación)
+- getProductById(): Obtener un producto específico
+- createProduct(): Crear nuevo producto (con imagen)
+- updateProduct(): Actualizar producto existente
+- deleteProduct(): Baja lógica (active = false)
+- activateProduct(): Reactivar producto (active = true)
+
+PASO 3.2: CONTROLADOR DE VENTAS
+-------------------------------
+Archivo: backend/controllers/saleController.js
+Función: Manejar operaciones de ventas
+
+Métodos necesarios:
+- createSale(): Procesar nueva venta
+- getAllSales(): Listar todas las ventas (con productos)
+- getSaleById(): Obtener venta específica
+- getSalesStats(): Estadísticas de ventas
+
+PASO 3.3: CONTROLADOR DE USUARIOS
+---------------------------------
+Archivo: backend/controllers/userController.js
+Función: Autenticación y manejo de usuarios
+
+Métodos necesarios:
+- login(): Validar credenciales
+- createAdmin(): Crear usuario administrador
+- hashPassword(): Encriptar contraseña
+- comparePassword(): Validar contraseña
+
+PASO 3.4: CONTROLADOR ADMIN (EJS)
+---------------------------------
+Archivo: backend/controllers/adminController.js
+Función: Renderizar vistas del panel administrativo
+
+Métodos necesarios:
+- showLogin(): Mostrar formulario login
+- showDashboard(): Mostrar panel principal
+- showProducts(): Listado productos con acciones
+- showProductForm(): Formulario alta/edición
+
+========================================================================================================
+                                    FASE 4: RUTAS BACKEND
+========================================================================================================
+
+PASO 4.1: RUTAS API PRODUCTOS
+-----------------------------
+Archivo: backend/routes/api/products.js
+Función: Endpoints JSON para productos
+
+Rutas necesarias:
+- GET /api/products - Listar productos activos (paginado)
+- GET /api/products/:id - Obtener producto específico
+- POST /api/products - Crear producto
+- PUT /api/products/:id - Actualizar producto
+- DELETE /api/products/:id - Eliminar producto (baja lógica)
+- PATCH /api/products/:id/activate - Reactivar producto
+
+PASO 4.2: RUTAS API VENTAS
+--------------------------
+Archivo: backend/routes/api/sales.js
+Función: Endpoints JSON para ventas
+
+Rutas necesarias:
+- POST /api/sales - Crear nueva venta
+- GET /api/sales - Listar todas las ventas
+- GET /api/sales/:id - Obtener venta específica
+
+PASO 4.3: RUTAS API USUARIOS
+----------------------------
+Archivo: backend/routes/api/users.js
+Función: Endpoints JSON para usuarios
+
+Rutas necesarias:
+- POST /api/users/login - Login de administrador
+- POST /api/users/register - Crear admin (endpoint protegido)
+
+PASO 4.4: RUTAS ADMIN (EJS)
+---------------------------
+Archivo: backend/routes/admin/auth.js
+Función: Rutas de autenticación admin
+
+Rutas necesarias:
+- GET /admin/login - Mostrar formulario login
+- POST /admin/login - Procesar login
+- GET /admin/logout - Cerrar sesión
+
+Archivo: backend/routes/admin/dashboard.js
+Función: Panel principal administrativo
+
+Rutas necesarias:
+- GET /admin/dashboard - Panel principal con estadísticas
+
+Archivo: backend/routes/admin/products.js
+Función: CRUD productos con vistas EJS
+
+Rutas necesarias:
+- GET /admin/products - Listado productos
+- GET /admin/products/new - Formulario nuevo producto
+- POST /admin/products - Crear producto
+- GET /admin/products/:id/edit - Formulario edición
+- PUT /admin/products/:id - Actualizar producto
+- DELETE /admin/products/:id - Eliminar producto
+
+========================================================================================================
+                                   FASE 5: VISTAS EJS BACKEND
+========================================================================================================
+
+PASO 5.1: ADAPTACIÓN DEL LAYOUT GENERADO POR EXPRESS
+---------------------------------------------------
+Express Generator crea views/layout.ejs. Necesitas adaptarlo para el proyecto:
+
+Archivo: backend/views/layout.ejs (MODIFICAR EL GENERADO)
+Función: Template base adaptado para panel administrativo
+
+El generator crea algo básico como:
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <%- body %>
+  </body>
+</html>
+```
+
+MODIFICARLO A:
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title || 'Panel Administrativo' %> - GameVerse</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilos personalizados -->
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+    <!-- Header -->
+    <header class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/admin/dashboard">
+                <img src="/images/logo.png" alt="Logo" width="30" height="30" class="me-2">
+                GameVerse - Admin
+            </a>
+            
+            <nav class="navbar-nav ms-auto">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user"></i> Admin
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/admin/dashboard">Dashboard</a></li>
+                        <li><a class="dropdown-item" href="/admin/products">Productos</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/admin/logout">Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Navegación secundaria -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <div class="container-fluid">
+            <div class="navbar-nav">
+                <a class="nav-link" href="/admin/dashboard">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a class="nav-link" href="/admin/products">
+                    <i class="fas fa-box"></i> Productos
+                </a>
+                <a class="nav-link" href="/" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Ver Tienda
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="container-fluid py-4">
+        <!-- Alerts para mensajes -->
+        <% if (typeof success !== 'undefined' && success) { %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <%= success %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <% } %>
+        
+        <% if (typeof error !== 'undefined' && error) { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <%= error %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <% } %>
+
+        <!-- Contenido dinámico -->
+        <%- body %>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
+        <div class="container">
+            <p>&copy; 2025 GameVerse - Desarrollado por: NOMBRE_ALUMNO_1 y NOMBRE_ALUMNO_2</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/javascripts/admin.js"></script>
+</body>
+</html>
+```
+
+PASO 5.2: VISTA LOGIN ADMIN
+---------------------------
+Archivo: backend/views/admin/login.ejs
+Función: Formulario de acceso administrativo
+
+Elementos requeridos:
+- Formulario con email y password
+- Botón de acceso rápido (autocompletar credenciales)
+- Validación client-side y server-side
+- Mensajes de error
+- Enlace para volver al frontend
+
+PASO 5.3: VISTA DASHBOARD
+-------------------------
+Archivo: backend/views/admin/dashboard.ejs
+Función: Panel principal administrativo
+
+Elementos requeridos:
+- Resumen de estadísticas (productos activos, ventas, etc.)
+- Botones de acceso rápido a secciones
+- Listado reciente de ventas
+- Gráficos simples de ser posible
+
+PASO 5.4: VISTA GESTIÓN PRODUCTOS
+---------------------------------
+Archivo: backend/views/admin/products.ejs
+Función: Listado completo productos con acciones
+
+Elementos requeridos:
+- Tabla con todos los productos (activos e inactivos)
+- Filtros por categoría y estado
+- Botones: Agregar, Editar, Eliminar, Activar
+- Paginación
+- Indicador visual del estado (activo/inactivo)
+- Previsualización de imagen
+
+PASO 5.5: VISTA FORMULARIO PRODUCTO
+-----------------------------------
+Archivo: backend/views/admin/product-form.ejs
+Función: Formulario alta/edición productos
+
+Elementos requeridos:
+- Campos: nombre, descripción, precio, categoría
+- Upload de imagen con preview
+- Validación en tiempo real
+- Botones guardar y cancelar
+- Manejo de errores de validación
+
+========================================================================================================
+                                     FASE 6: FRONTEND SETUP
+========================================================================================================
+
+PASO 6.1: ESTRUCTURA FRONTEND
+-----------------------------
+frontend/
+├── index.html                   # Página principal (bienvenida)
+├── products.html               # Pantalla productos
+├── cart.html                   # Pantalla carrito
+├── ticket.html                 # Pantalla ticket final
+├── css/                        # Estilos de la aplicación
+│   ├── styles.css              # Estilos principales
+│   ├── themes.css              # Temas claro/oscuro
+│   ├── responsive.css          # Media queries
+│   └── components.css          # Estilos de componentes
+├── js/                         # Scripts de la aplicación
+│   ├── app.js                  # Script principal
+│   ├── api.js                  # Comunicación con backend
+│   ├── cart.js                 # Manejo del carrito
+│   ├── products.js             # Gestión productos
+│   ├── themes.js               # Cambio de temas
+│   ├── pagination.js           # Paginación productos
+│   └── pdf-generator.js        # Generación PDF ticket
+├── assets/                     # Recursos estáticos
+│   ├── images/                 # Imágenes de la app
+│   ├── icons/                  # Iconos
+│   └── fonts/                  # Fuentes personalizadas
+├── config/                     # Configuraciones
+│   └── config.js               # URLs de API y configuraciones
+└── components/                 # Componentes reutilizables
+    ├── navbar.js               # Barra de navegación
+    ├── product-card.js         # Tarjeta de producto
+    └── modal.js                # Modales reutilizables
+
+PASO 6.2: CONFIGURACIÓN INICIAL FRONTEND
+----------------------------------------
+Archivo: frontend/config/config.js
+Función: Configuraciones centralizadas
+
+Contenido:
+```javascript
+const CONFIG = {
+    API_BASE_URL: 'http://localhost:3000/api',
+    ADMIN_URL: 'http://localhost:3000/admin/login',
+    ITEMS_PER_PAGE: 6,
+    THEMES: {
+        LIGHT: 'light',
+        DARK: 'dark'
+    },
+    PRODUCT_CATEGORIES: {
+        CATEGORY_1: 'categoria1',  // Definir según productos elegidos
+        CATEGORY_2: 'categoria2'
+    },
+    LOCAL_STORAGE_KEYS: {
+        CUSTOMER_NAME: 'customerName',
+        CART: 'shoppingCart',
+        THEME: 'selectedTheme'
+    }
+};
+```
+
+========================================================================================================
+                                  FASE 7: PANTALLAS FRONTEND
+========================================================================================================
+
+PASO 7.1: PANTALLA BIENVENIDA
+-----------------------------
+Archivo: frontend/index.html
+Función: Punto de entrada de la aplicación
+
+Elementos requeridos:
+- Logo y nombre de la aplicación
+- Nombre de los alumnos
+- Formulario para ingresar nombre del cliente
+- Validación: no permite continuar sin nombre
+- Botón continuar que redirige a productos.html
+- Botón acceso admin
+- Selector de tema (claro/oscuro)
+- Diseño responsive y atractivo
+
+Archivo: frontend/js/app.js (funciones para index.html)
+Funciones necesarias:
+- validateCustomerName(): Validar que se ingrese nombre
+- saveCustomerName(): Guardar nombre en localStorage
+- redirectToProducts(): Redirigir a productos
+- loadSavedTheme(): Cargar tema guardado
+
+PASO 7.2: PANTALLA PRODUCTOS
+----------------------------
+Archivo: frontend/products.html
+Función: Mostrar catálogo de productos por categorías
+
+Elementos requeridos:
+- Header con logo, nombre app, nombre alumnos
+- Navegación entre categorías (tabs o botones)
+- Grid responsive de productos
+- Cada producto debe mostrar:
+  * Imagen
+  * Nombre
+  * Descripción
+  * Precio
+  * Botones +/- para cantidad
+  * Botón agregar al carrito
+- Contador de items en carrito (header)
+- Paginación de productos
+- Botón ir al carrito
+- Selector de tema
+
+Archivo: frontend/js/products.js
+Funciones necesarias:
+- loadProducts(): Cargar productos desde API
+- filterByCategory(): Filtrar por categoría
+- paginateProducts(): Implementar paginación
+- addToCart(): Agregar producto al carrito
+- updateCartCounter(): Actualizar contador carrito
+- showProductDetails(): Mostrar detalles en modal
+
+PASO 7.3: PANTALLA CARRITO
+--------------------------
+Archivo: frontend/cart.html
+Función: Gestionar productos seleccionados
+
+Elementos requeridos:
+- Header común
+- Lista de productos en carrito:
+  * Imagen miniatura
+  * Nombre y precio
+  * Controles cantidad (+/-)
+  * Subtotal por producto
+  * Botón eliminar
+- Total general de la compra
+- Botón continuar comprando (volver a productos)
+- Botón proceder al pago
+- Modal confirmación de compra
+- Carrito vacío: mensaje y botón volver
+
+Archivo: frontend/js/cart.js
+Funciones necesarias:
+- loadCart(): Cargar carrito desde localStorage
+- updateQuantity(): Modificar cantidad producto
+- removeFromCart(): Eliminar producto del carrito
+- calculateTotal(): Calcular total de la compra
+- showConfirmationModal(): Modal confirmar compra
+- processPurchase(): Enviar venta a backend
+- clearCart(): Limpiar carrito tras compra
+
+PASO 7.4: PANTALLA TICKET
+-------------------------
+Archivo: frontend/ticket.html
+Función: Mostrar comprobante de compra
+
+Elementos requeridos:
+- Header con logo empresa
+- Información del ticket:
+  * Número de venta (ID)
+  * Nombre del cliente
+  * Fecha y hora
+  * Lista de productos comprados:
+    - Nombre producto
+    - Cantidad
+    - Precio unitario
+    - Subtotal
+  * Total de la compra
+- Botón descargar PDF
+- Botón nueva compra (reiniciar proceso)
+- Diseño optimizado para impresión
+
+Archivo: frontend/js/pdf-generator.js
+Funciones necesarias:
+- generatePDF(): Crear PDF del ticket
+- formatTicketData(): Formatear datos para PDF
+- downloadPDF(): Descargar archivo PDF
+
+========================================================================================================
+                                   FASE 8: COMUNICACIÓN API
+========================================================================================================
+
+PASO 8.1: MÓDULO API FRONTEND
+-----------------------------
+Archivo: frontend/js/api.js
+Función: Centralizar comunicación con backend
+
+Funciones necesarias:
+```javascript
+const API = {
+    // Productos
+    getProducts: async (page = 1, category = null) => {
+        // GET /api/products?page=1&category=categoria1
+    },
+    
+    getProductById: async (id) => {
+        // GET /api/products/:id
+    },
+    
+    // Ventas
+    createSale: async (saleData) => {
+        // POST /api/sales
+        // Body: { customerName, products: [{id, quantity, price}] }
+    },
+    
+    // Utilidades
+    handleResponse: async (response) => {
+        // Manejo centralizado de respuestas
+    },
+    
+    handleError: (error) => {
+        // Manejo centralizado de errores
+    }
+};
+```
+
+PASO 8.2: ESTRUCTURA DATOS API
+------------------------------
+Formato de datos para comunicación:
+
+Producto:
+```json
+{
+    "id": 1,
+    "name": "Producto Ejemplo",
+    "description": "Descripción del producto",
+    "price": 29.99,
+    "image": "/uploads/producto-1.jpg",
+    "category": "categoria1",
+    "active": true
+}
+```
+
+Venta:
+```json
+{
+    "customerName": "Juan Pérez",
+    "products": [
+        {
+            "productId": 1,
+            "quantity": 2,
+            "unitPrice": 29.99
+        }
+    ],
+    "totalAmount": 59.98
+}
+```
+
+========================================================================================================
+                                     FASE 9: ESTILOS CSS
+========================================================================================================
+
+PASO 9.1: ESTILOS PRINCIPALES
+-----------------------------
+Archivo: frontend/css/styles.css
+Función: Estilos base de la aplicación
+
+Secciones necesarias:
+- Reset CSS y normalize
+- Tipografías y colores principales
+- Layout general (grid, flexbox)
+- Botones y formularios
+- Tarjetas de productos
+- Carrito de compras
+- Navegación
+
+PASO 9.2: TEMAS CLARO/OSCURO
+----------------------------
+Archivo: frontend/css/themes.css
+Función: Variables CSS para múltiples temas
+
+Estructura:
+```css
+:root {
+    /* Tema claro */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --accent-color: #007bff;
+}
+
+[data-theme="dark"] {
+    /* Tema oscuro */
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --accent-color: #00d4ff;
+}
+```
+
+PASO 9.3: RESPONSIVE DESIGN
+---------------------------
+Archivo: frontend/css/responsive.css
+Función: Media queries para dispositivos móviles
+
+Breakpoints necesarios:
+- Mobile: 320px - 768px
+- Tablet: 768px - 1024px
+- Desktop: 1024px+
+
+Adaptaciones necesarias:
+- Grid de productos (1 col mobile, 2 tablet, 3+ desktop)
+- Navegación (hamburger menu en mobile)
+- Tamaños de fuente escalables
+- Botones touch-friendly en móvil
+
+========================================================================================================
+                                 FASE 10: FUNCIONALIDADES AVANZADAS
+========================================================================================================
+
+PASO 10.1: GESTIÓN TEMAS
+------------------------
+Archivo: frontend/js/themes.js
+Función: Cambio y persistencia de temas
+
+Funciones necesarias:
+- initTheme(): Cargar tema guardado al inicio
+- toggleTheme(): Cambiar entre claro y oscuro
+- saveTheme(): Guardar en localStorage
+- applyTheme(): Aplicar tema al DOM
+
+PASO 10.2: PAGINACIÓN PRODUCTOS
+-------------------------------
+Archivo: frontend/js/pagination.js
+Función: Navegación por páginas de productos
+
+Funciones necesarias:
+- createPagination(): Crear controles paginación
+- goToPage(): Ir a página específica
+- updatePaginationUI(): Actualizar interfaz
+- handlePageChange(): Manejar cambio de página
+
+PASO 10.3: VALIDACIONES CLIENT-SIDE
+-----------------------------------
+Validaciones necesarias:
+- Nombre cliente: no vacío, solo letras y espacios
+- Cantidad productos: números positivos
+- Formularios admin: campos requeridos
+- Tamaño archivos: imágenes max 5MB
+- Formato archivos: solo jpg, png, gif
+
+========================================================================================================
+                                   FASE 11: TESTING Y DATOS DEMO
+========================================================================================================
+
+PASO 11.1: DATOS DE PRUEBA - PRODUCTOS GAMING
+--------------------------------------------
+Crear script para poblar base de datos:
+
+Usuario administrador:
+- Email: admin@gameverse.com
+- Password: admin123
+
+Productos gaming de ejemplo (mínimo 10 por categoría):
+
+HARDWARE GAMING:
+- RTX 4070 Super Gaming ($599.99)
+- Teclado Mecánico RGB K95 ($149.99)
+- Monitor Gaming 27" 144Hz ($329.99)
+- Auriculares Gaming 7.1 ($89.99)
+- Mouse Gaming Pro ($79.99)
+- Silla Gamer RGB ($299.99)
+- Ryzen 7 5800X ($349.99)
+- RAM DDR4 32GB Gaming ($159.99)
+
+SOFTWARE & JUEGOS:
+- Cyberpunk 2077 GOTY ($39.99)
+- Unity Pro License ($185.00)
+- The Witcher 3 Complete ($19.99)
+- Steam Gift Card $50 ($50.00)
+- Assassin's Creed Valhalla ($49.99)
+- Call of Duty MW3 ($69.99)
+- Visual Studio Pro ($499.99)
+- Windows 11 Pro ($199.99)
+
+- Algunos productos inactivos para probar reactivación
+- Imágenes gaming para todos los productos
+
+PASO 11.2: SCRIPT INICIALIZACIÓN
+--------------------------------
+Archivo: backend/scripts/seed-database.js
+Función: Poblar BD con datos de prueba
+
+Ejecutar para generar:
+- Usuario administrador con password encriptada
+- 20+ productos gaming distribuidos en hardware/software
+- Algunas ventas gaming de ejemplo
+- Configuración inicial de GameVerse
+
+========================================================================================================
+                                      FASE 12: DEPLOYMENT
+========================================================================================================
+
+PASO 12.1: PREPARACIÓN PARA PRODUCCIÓN
+--------------------------------------
+Backend:
+- Variables de entorno para producción
+- Configuración base de datos remota
+- Optimización de consultas
+- Logs de errores
+
+Frontend:
+- Minificación CSS/JS
+- Optimización de imágenes
+- URLs de API para producción
+- Service worker para cache (opcional)
+
+PASO 12.2: DOCUMENTACIÓN
+------------------------
+Crear archivos README:
+- Instrucciones de instalación
+- Comandos para ejecutar
+- Configuración base de datos
+- Endpoints de la API
+- Capturas de pantalla
+
+========================================================================================================
+                              COMANDOS EXPRESS GENERATOR - GUÍA RÁPIDA
+========================================================================================================
+
+INSTALACIÓN Y SETUP RÁPIDO:
+```bash
+# 1. Instalar express-generator
+npm install -g express-generator
+
+# 2. Crear proyecto backend con EJS
+express --ejs backend
+
+# 3. Entrar al directorio e instalar dependencias base
+cd backend
+npm install
+
+# 4. Instalar dependencias adicionales del proyecto
+npm install mysql2 sequelize bcryptjs multer cors dotenv express-validator
+
+# 5. Instalar dependencias de desarrollo
+npm install --save-dev nodemon
+
+# 6. Modificar scripts en package.json
+# Agregar: "dev": "nodemon ./bin/www"
+
+# 7. Crear carpetas adicionales necesarias
+mkdir controllers models middleware config
+mkdir routes/api routes/admin views/admin views/partials
+
+# 8. Ejecutar servidor
+npm start
+# o para desarrollo:
+npm run dev
+```
+
+ARCHIVOS QUE EXPRESS GENERATOR CREA AUTOMÁTICAMENTE:
+✅ package.json con dependencias básicas
+✅ app.js configurado con Express y EJS
+✅ bin/www como punto de entrada del servidor
+✅ public/ para archivos estáticos
+✅ routes/ con rutas básicas (index.js, users.js)
+✅ views/ con EJS configurado (layout.ejs, index.ejs, error.ejs)
+✅ Estructura básica de middlewares
+
+ARCHIVOS QUE NECESITAS CREAR/MODIFICAR:
+🔧 Modificar app.js para agregar rutas API y admin
+🔧 Modificar views/layout.ejs para el diseño admin
+🔧 Modificar bin/www para sincronización Sequelize
+🔧 Crear todas las carpetas y archivos del proyecto (controllers, models, etc.)
+
+========================================================================================================
+
+✅ BACKEND COMPLETO:
+- [ ] Base de datos con modelos y relaciones
+- [ ] API JSON funcionando (CRUD productos, ventas)
+- [ ] Panel admin con EJS (login, dashboard, CRUD productos)
+- [ ] Autenticación y autorización
+- [ ] Validaciones y middlewares
+- [ ] Subida de imágenes
+- [ ] Paginación implementada
+- [ ] Contraseñas encriptadas
+
+✅ FRONTEND COMPLETO:
+- [ ] 4 pantallas principales funcionando
+- [ ] Comunicación con API backend
+- [ ] Carrito de compras persistente
+- [ ] Temas claro/oscuro
+- [ ] Diseño responsive
+- [ ] Generación PDF ticket
+- [ ] Paginación de productos
+- [ ] Validaciones client-side
+
+✅ FUNCIONALIDADES ESPECÍFICAS:
+- [ ] Nombre obligatorio antes de comprar
+- [ ] Productos divididos en 2 categorías
+- [ ] Alta, baja y modificación de productos
+- [ ] Baja lógica (activo/inactivo)
+- [ ] Ticket con todos los datos requeridos
+- [ ] Modal confirmación de compra
+- [ ] Botón acceso rápido admin
+- [ ] Navegación entre todas las pantallas
+
+✅ REQUERIMIENTOS TÉCNICOS:
+- [ ] Node.js + Express
+- [ ] MySQL + Sequelize ORM
+- [ ] EJS para vistas admin
+- [ ] Responsive design
+- [ ] Git con commits de ambos integrantes
+- [ ] Estructura MVC
+- [ ] Código limpio y comentado
+
+========================================================================================================
+                                         CRONOGRAMA SUGERIDO
+========================================================================================================
+
+SEMANA 1-2: Setup y Backend Base
+- Configuración inicial del proyecto
+- Modelos de base de datos
+- API básica de productos
+
+SEMANA 3-4: Backend Completo
+- Panel administrativo con EJS
+- Autenticación y CRUD completo
+- Validaciones y middlewares
+
+SEMANA 5-6: Frontend Base
+- Pantallas principales
+- Comunicación con API
+- Carrito de compras básico
+
+SEMANA 7-8: Integración y Features
+- Conexión frontend-backend
+- Funcionalidades avanzadas
+- Temas y responsive
+
+SEMANA 9-10: Testing y Pulido
+- Pruebas integrales
+- Corrección de bugs
+- Documentación y deployment
+
+========================================================================================================
+                                            NOTAS IMPORTANTES
+========================================================================================================
+
+1. AMBOS integrantes deben trabajar en AMBAS partes del proyecto
+2. Realizar commits frecuentes con mensajes descriptivos
+3. Probar constantemente la comunicación frontend-backend
+4. Mantener el código limpio y bien comentado
+5. Documentar las decisiones técnicas importantes
+6. Hacer backups regulares del trabajo
+7. Preparar datos de prueba suficientes para la evaluación
+
+Este archivo debe servir como guía completa para el desarrollo del proyecto integrador.
+Seguir los pasos en orden garantiza una implementación exitosa de todos los requerimientos.
+
+========================================================================================================

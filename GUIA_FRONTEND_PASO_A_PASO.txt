@@ -1,0 +1,1115 @@
+========================================================================================================
+                    GUÍA PASO A PASO - FRONTEND CLIENTE/USUARIO
+                              TRABAJO INTEGRADOR PROGRAMACIÓN III
+                                    🎮 GAMEVERSE - TIENDA GAMING 🎮
+========================================================================================================
+
+ESTA GUÍA CUBRE ESPECÍFICAMENTE EL FRONTEND PARA EL CLIENTE/USUARIO
+(La aplicación que usarán los gamers para comprar hardware y software)
+
+🎮 TEMÁTICA: TIENDA GAMING ONLINE
+================================
+PRODUCTOS A VENDER:
+• HARDWARE GAMING: Componentes PC, periféricos, monitores, accesorios
+• SOFTWARE & JUEGOS: Videojuegos, licencias, DLCs, software desarrollo
+
+DIFERENCIA CON EL BACKEND:
+- Backend: Panel administrativo con EJS + API
+- Frontend: Aplicación cliente con HTML/CSS/JS puro
+
+========================================================================================================
+                                    FASE 1: CONFIGURACIÓN INICIAL FRONTEND
+========================================================================================================
+
+PASO 1.1: ESTRUCTURA DE CARPETAS FRONTEND
+-----------------------------------------
+frontend/
+├── index.html                   # ✅ PANTALLA 1: Bienvenida (nombre cliente)
+├── products.html               # ✅ PANTALLA 2: Catálogo de productos
+├── cart.html                   # ✅ PANTALLA 3: Carrito de compras
+├── ticket.html                 # ✅ PANTALLA 4: Ticket final
+├── css/                        # Todos los estilos
+│   ├── styles.css              # ✅ Estilos principales
+│   ├── themes.css              # ✅ Temas claro/oscuro REQUERIDO
+│   ├── responsive.css          # ✅ Media queries RESPONSIVE
+│   ├── components.css          # ✅ Estilos componentes
+│   └── animations.css          # Animaciones opcionales
+├── js/                         # Toda la lógica JavaScript
+│   ├── app.js                  # ✅ Script principal + navegación
+│   ├── api.js                  # ✅ Comunicación con backend
+│   ├── cart.js                 # ✅ Manejo del carrito
+│   ├── products.js             # ✅ Gestión productos + PAGINACIÓN
+│   ├── themes.js               # ✅ Cambio temas + persistencia
+│   ├── pdf-generator.js        # ✅ Generación PDF ticket REQUERIDO
+│   ├── validation.js           # ✅ Validaciones client-side
+│   ├── modal.js                # ✅ Modales (confirmación compra)
+│   └── utils.js                # Utilidades generales
+├── assets/                     # Recursos estáticos
+│   ├── images/                 # ✅ Logo, favicon, imágenes empresa
+│   │   ├── logo.png            # Logo principal
+│   │   ├── favicon.ico         # ✅ Favicon REQUERIDO
+│   │   └── placeholder.jpg     # Imagen placeholder productos
+│   ├── icons/                  # Iconos (carrito, tema, etc.)
+│   └── fonts/                  # Fuentes personalizadas (opcional)
+├── config/                     # Configuraciones
+│   └── config.js               # ✅ URLs API + configuraciones
+├── components/                 # Componentes reutilizables (opcional)
+│   ├── navbar.js               # Barra navegación
+│   ├── product-card.js         # Tarjeta producto
+│   └── pagination.js           # Paginación
+└── data/                       # Datos de respaldo (si no hay backend)
+    └── products.json           # ✅ JSON hardcodeado REQUERIDO
+
+========================================================================================================
+                                      FASE 2: CONFIGURACIÓN BASE
+========================================================================================================
+
+PASO 2.1: ARCHIVO DE CONFIGURACIÓN
+----------------------------------
+Archivo: frontend/config/config.js
+Función: Configuraciones centralizadas de la aplicación
+
+```javascript
+const CONFIG = {
+    // URLs del backend
+    API_BASE_URL: 'http://localhost:3000/api',
+    ADMIN_URL: 'http://localhost:3000/admin/login',
+    
+    // Configuración paginación
+    ITEMS_PER_PAGE: 6,              // ✅ PAGINACIÓN REQUERIDA
+    
+    // Temas disponibles
+    THEMES: {
+        LIGHT: 'light',             // ✅ TEMA CLARO REQUERIDO
+        DARK: 'dark'                // ✅ TEMA OSCURO REQUERIDO
+    },
+    
+    // Categorías de productos - TIENDA GAMER
+    PRODUCT_CATEGORIES: {
+        HARDWARE: 'hardware',           // 🎮 Hardware gaming (PC, periféricos, monitores)
+        SOFTWARE: 'software'            // 🎮 Software gaming (juegos, licencias, DLCs)
+    },
+    
+    // Nombres para categorías en UI
+    CATEGORY_NAMES: {
+        hardware: 'Hardware Gaming',    // 🎮 Componentes y periféricos
+        software: 'Software & Juegos'   // 🎮 Videojuegos y licencias
+    },
+    
+    // Claves localStorage
+    LOCAL_STORAGE_KEYS: {
+        CUSTOMER_NAME: 'customerName',  // ✅ NOMBRE OBLIGATORIO
+        CART: 'shoppingCart',          // ✅ CARRITO PERSISTENTE
+        THEME: 'selectedTheme',        // ✅ TEMA PERSISTENTE REQUERIDO
+        CURRENT_PAGE: 'currentPage'    // Página actual productos
+    },
+    
+    // Configuración empresa - GAMING
+    COMPANY: {
+        NAME: 'GameVerse',             // 🎮 Nombre tienda gaming
+        LOGO: './assets/images/logo.png',
+        FAVICON: './assets/images/favicon.ico'
+    },
+    
+    // Desarrolladores (REQUERIDO EN TODAS LAS PANTALLAS)
+    DEVELOPERS: {
+        STUDENT_1: 'NOMBRE_ALUMNO_1',   // ⚠️ CAMBIAR POR NOMBRES REALES
+        STUDENT_2: 'NOMBRE_ALUMNO_2'    // ⚠️ CAMBIAR POR NOMBRES REALES
+    },
+    
+    // Configuración PDF
+    PDF_CONFIG: {
+        FILENAME: 'ticket-compra.pdf',
+        MARGIN: 20,
+        FORMAT: 'A4'
+    }
+};
+
+// Hacer disponible globalmente
+window.CONFIG = CONFIG;
+```
+
+PASO 2.2: DATOS DE RESPALDO (SIN BACKEND)
+-----------------------------------------
+Archivo: frontend/data/products.json
+Función: ✅ JSON hardcodeado REQUERIDO para testing sin backend
+
+```json
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "RTX 4070 Super Gaming",
+            "description": "Tarjeta gráfica NVIDIA RTX 4070 Super para gaming en 1440p",
+            "price": 599.99,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "hardware",
+            "active": true
+        },
+        {
+            "id": 2,
+            "name": "Teclado Mecánico RGB",
+            "description": "Teclado mecánico gaming con switches Cherry MX y RGB",
+            "price": 129.99,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "hardware",
+            "active": true
+        },
+        {
+            "id": 3,
+            "name": "Cyberpunk 2077",
+            "description": "Videojuego RPG futurista de mundo abierto - Steam Key",
+            "price": 29.99,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "software",
+            "active": true
+        },
+        {
+            "id": 4,
+            "name": "Unity Pro License",
+            "description": "Licencia profesional de Unity para desarrollo de juegos",
+            "price": 185.00,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "software",
+            "active": true
+        },
+        {
+            "id": 5,
+            "name": "Monitor Gaming 27'' 144Hz",
+            "description": "Monitor gaming 27 pulgadas, 144Hz, 1ms, FreeSync/G-Sync",
+            "price": 299.99,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "hardware",
+            "active": true
+        },
+        {
+            "id": 6,
+            "name": "Assassin's Creed Valhalla",
+            "description": "Aventura vikinga épica - Edición Gold con DLC incluido",
+            "price": 39.99,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "software",
+            "active": true
+        },
+        {
+            "id": 7,
+            "name": "Auriculares Gaming 7.1",
+            "description": "Auriculares gaming con sonido envolvente 7.1 y micrófono",
+            "price": 79.99,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "hardware",
+            "active": true
+        },
+        {
+            "id": 8,
+            "name": "Steam Gift Card $50",
+            "description": "Tarjeta regalo Steam por $50 para comprar juegos",
+            "price": 50.00,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "software",
+            "active": true
+        },
+        {
+            "id": 9,
+            "name": "Ryzen 7 5800X",
+            "description": "Procesador AMD Ryzen 7 5800X, 8 cores, perfecto para gaming",
+            "price": 329.99,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "hardware",
+            "active": true
+        },
+        {
+            "id": 10,
+            "name": "The Witcher 3: Wild Hunt",
+            "description": "RPG épico con todas las expansiones - GOTY Edition",
+            "price": 19.99,
+            "image": "./assets/images/placeholder.jpg",
+            "category": "software",
+            "active": true
+        }
+    ]
+}
+```
+
+========================================================================================================
+                                   FASE 3: PANTALLA 1 - BIENVENIDA
+========================================================================================================
+
+PASO 3.1: HTML BIENVENIDA
+-------------------------
+Archivo: frontend/index.html
+Función: ✅ PANTALLA DE BIENVENIDA - Punto de entrada obligatorio
+
+```html
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameVerse - Bienvenido</title>
+    
+    <!-- ✅ FAVICON REQUERIDO -->
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/themes.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+    
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="welcome-page">
+    <!-- Header con elementos REQUERIDOS -->
+    <header class="main-header">
+        <div class="container">
+            <!-- ✅ LOGO + NOMBRE APLICACIÓN REQUERIDO -->
+            <div class="brand">
+                <img src="./assets/images/logo.png" alt="Logo" class="logo">
+                <h1 class="company-name">GameVerse</h1>
+            </div>
+            
+            <!-- ✅ NOMBRES ALUMNOS REQUERIDO -->
+            <div class="developers">
+                <p>Desarrollado por:</p>
+                <p><strong>NOMBRE_ALUMNO_1 - NOMBRE_ALUMNO_2</strong></p>
+            </div>
+            
+            <!-- ✅ SELECTOR TEMA REQUERIDO -->
+            <div class="theme-controls">
+                <button id="theme-toggle" class="theme-btn">
+                    <i class="fas fa-moon"></i>
+                    <span>Tema Oscuro</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="welcome-main">
+        <div class="container">
+            <div class="welcome-content">
+                <!-- Título de bienvenida -->
+                <div class="welcome-header">
+                    <h2>¡Bienvenido a GameVerse!</h2>
+                    <p class="welcome-subtitle">Tu tienda gaming definitiva - Hardware y Software</p>
+                </div>
+
+                <!-- ✅ FORMULARIO NOMBRE OBLIGATORIO -->
+                <div class="customer-form-container">
+                    <form id="customer-form" class="customer-form">
+                        <div class="form-group">
+                            <label for="customer-name">
+                                <i class="fas fa-user"></i>
+                                Para continuar, ingresa tu nombre:
+                            </label>
+                            <input 
+                                type="text" 
+                                id="customer-name" 
+                                name="customerName"
+                                placeholder="Escribe tu nombre aquí..."
+                                required
+                                autocomplete="given-name"
+                            >
+                            <div id="name-error" class="error-message"></div>
+                        </div>
+                        
+                        <!-- ✅ BOTÓN CONTINUAR (SOLO ACTIVO CON NOMBRE) -->
+                        <button type="submit" id="continue-btn" class="btn btn-primary" disabled>
+                            <i class="fas fa-arrow-right"></i>
+                            Continuar a la Tienda
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Botones adicionales -->
+                <div class="additional-actions">
+                    <!-- ✅ BOTÓN ACCESO ADMIN REQUERIDO -->
+                    <a href="http://localhost:3000/admin/login" class="btn btn-secondary" target="_blank">
+                        <i class="fas fa-cog"></i>
+                        Acceso Administrador
+                    </a>
+                </div>
+            </div>
+
+            <!-- Información de la empresa -->
+            <div class="company-info">
+                <div class="info-cards">
+                    <div class="info-card">
+                        <i class="fas fa-rocket"></i>
+                        <h3>Gaming de Alto Nivel</h3>
+                        <p>Hardware y software gaming</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Compra Segura</h3>
+                        <p>Keys originales garantizadas</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-headset"></i>
+                        <h3>Soporte Gamer</h3>
+                        <p>Atención especializada 24/7</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 GameVerse - Desarrollado por NOMBRE_ALUMNO_1 y NOMBRE_ALUMNO_2</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="./config/config.js"></script>
+    <script src="./js/themes.js"></script>
+    <script src="./js/validation.js"></script>
+    <script src="./js/app.js"></script>
+</body>
+</html>
+```
+
+PASO 3.2: JAVASCRIPT BIENVENIDA
+-------------------------------
+Archivo: frontend/js/app.js
+Función: Lógica principal de la pantalla de bienvenida
+
+```javascript
+// ✅ INICIALIZACIÓN AL CARGAR LA PÁGINA
+document.addEventListener('DOMContentLoaded', function() {
+    initializeWelcomePage();
+});
+
+function initializeWelcomePage() {
+    // ✅ Cargar tema guardado REQUERIDO
+    Themes.loadSavedTheme();
+    
+    // ✅ Configurar formulario nombre OBLIGATORIO
+    setupCustomerForm();
+    
+    // ✅ Configurar cambio de tema
+    setupThemeToggle();
+    
+    // Verificar si ya hay un nombre guardado
+    checkExistingCustomer();
+}
+
+// ✅ CONFIGURAR FORMULARIO NOMBRE CLIENTE
+function setupCustomerForm() {
+    const form = document.getElementById('customer-form');
+    const nameInput = document.getElementById('customer-name');
+    const continueBtn = document.getElementById('continue-btn');
+    const errorDiv = document.getElementById('name-error');
+    
+    // Validación en tiempo real
+    nameInput.addEventListener('input', function() {
+        const name = this.value.trim();
+        const isValid = validateCustomerName(name);
+        
+        // ✅ BOTÓN SOLO ACTIVO CON NOMBRE VÁLIDO
+        continueBtn.disabled = !isValid;
+        
+        if (name.length > 0 && !isValid) {
+            showNameError('Por favor, ingresa solo letras y espacios');
+        } else {
+            hideNameError();
+        }
+    });
+    
+    // ✅ SUBMIT FORMULARIO
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = nameInput.value.trim();
+        
+        if (validateCustomerName(name)) {
+            // ✅ GUARDAR NOMBRE Y CONTINUAR
+            saveCustomerName(name);
+            redirectToProducts();
+        } else {
+            showNameError('Por favor, ingresa un nombre válido');
+        }
+    });
+}
+
+// ✅ VALIDAR NOMBRE CLIENTE
+function validateCustomerName(name) {
+    // Solo letras, espacios y acentos
+    const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/;
+    return name.length >= 2 && nameRegex.test(name);
+}
+
+// ✅ GUARDAR NOMBRE EN LOCALSTORAGE
+function saveCustomerName(name) {
+    localStorage.setItem(CONFIG.LOCAL_STORAGE_KEYS.CUSTOMER_NAME, name);
+    console.log('Nombre del cliente guardado:', name);
+}
+
+// ✅ REDIRIGIR A PRODUCTOS
+function redirectToProducts() {
+    // Animación suave antes de redirigir
+    document.body.classList.add('fade-out');
+    
+    setTimeout(() => {
+        window.location.href = './products.html';
+    }, 300);
+}
+
+// Verificar si ya hay un cliente logueado
+function checkExistingCustomer() {
+    const savedName = localStorage.getItem(CONFIG.LOCAL_STORAGE_KEYS.CUSTOMER_NAME);
+    
+    if (savedName) {
+        const nameInput = document.getElementById('customer-name');
+        const continueBtn = document.getElementById('continue-btn');
+        
+        nameInput.value = savedName;
+        continueBtn.disabled = false;
+        
+        // Mostrar mensaje de bienvenida
+        showWelcomeBackMessage(savedName);
+    }
+}
+
+function showWelcomeBackMessage(name) {
+    const welcomeHeader = document.querySelector('.welcome-header h2');
+    welcomeHeader.textContent = `¡Bienvenido de nuevo, ${name}!`;
+}
+
+// ✅ CONFIGURAR TOGGLE TEMA
+function setupThemeToggle() {
+    const themeBtn = document.getElementById('theme-toggle');
+    
+    themeBtn.addEventListener('click', function() {
+        Themes.toggleTheme();
+        updateThemeButtonText();
+    });
+    
+    // Actualizar texto inicial
+    updateThemeButtonText();
+}
+
+function updateThemeButtonText() {
+    const themeBtn = document.getElementById('theme-toggle');
+    const icon = themeBtn.querySelector('i');
+    const text = themeBtn.querySelector('span');
+    
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    
+    if (currentTheme === 'dark') {
+        icon.className = 'fas fa-sun';
+        text.textContent = 'Tema Claro';
+    } else {
+        icon.className = 'fas fa-moon';
+        text.textContent = 'Tema Oscuro';
+    }
+}
+
+// Mostrar/ocultar errores de nombre
+function showNameError(message) {
+    const errorDiv = document.getElementById('name-error');
+    errorDiv.textContent = message;
+    errorDiv.style.display = 'block';
+}
+
+function hideNameError() {
+    const errorDiv = document.getElementById('name-error');
+    errorDiv.style.display = 'none';
+}
+```
+
+========================================================================================================
+                                   FASE 4: PANTALLA 2 - PRODUCTOS
+========================================================================================================
+
+PASO 4.1: HTML PRODUCTOS
+------------------------
+Archivo: frontend/products.html
+Función: ✅ PANTALLA DE PRODUCTOS - Catálogo con categorías y paginación
+
+```html
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameVerse - Productos</title>
+    
+    <!-- ✅ FAVICON REQUERIDO -->
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/themes.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+    <link rel="stylesheet" href="./css/components.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="products-page">
+    <!-- ✅ Header con elementos REQUERIDOS -->
+    <header class="main-header">
+        <div class="container">
+            <!-- ✅ Logo + Nombre -->
+            <div class="brand">
+                <img src="./assets/images/logo.png" alt="Logo" class="logo">
+                <h1 class="company-name">GameVerse</h1>
+            </div>
+            
+            <!-- ✅ Nombres alumnos -->
+            <div class="developers">
+                <span>NOMBRE_ALUMNO_1 - NOMBRE_ALUMNO_2</span>
+            </div>
+            
+            <!-- ✅ Navegación principal -->
+            <nav class="main-nav">
+                <a href="./index.html" class="nav-link">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+                <a href="./products.html" class="nav-link active">
+                    <i class="fas fa-box"></i> Productos
+                </a>
+                <a href="./cart.html" class="nav-link cart-link">
+                    <i class="fas fa-shopping-cart"></i> 
+                    Carrito 
+                    <span id="cart-counter" class="cart-counter">0</span>
+                </a>
+            </nav>
+            
+            <!-- ✅ Controles adicionales -->
+            <div class="header-controls">
+                <!-- ✅ Selector tema REQUERIDO -->
+                <button id="theme-toggle" class="theme-btn">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <!-- ✅ Botón admin REQUERIDO -->
+                <a href="http://localhost:3000/admin/login" class="btn-admin" target="_blank">
+                    <i class="fas fa-cog"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Información del cliente actual -->
+    <section class="customer-info">
+        <div class="container">
+            <div class="customer-welcome">
+                <i class="fas fa-user"></i>
+                <span>Bienvenido, <strong id="customer-name-display">Cliente</strong></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenido principal -->
+    <main class="products-main">
+        <div class="container">
+            <!-- ✅ FILTROS POR CATEGORÍA (DOS TIPOS DE PRODUCTOS) -->
+            <section class="category-filters">
+                <h2>Nuestros Productos</h2>
+                <div class="category-tabs">
+                    <button class="category-btn active" data-category="all">
+                        <i class="fas fa-th"></i>
+                        Todos los Productos
+                    </button>
+                    <button class="category-btn" data-category="hardware">
+                        <i class="fas fa-microchip"></i>
+                        Hardware Gaming
+                    </button>
+                    <button class="category-btn" data-category="software">
+                        <i class="fas fa-gamepad"></i>
+                        Software & Juegos
+                    </button>
+                </div>
+            </section>
+
+            <!-- ✅ GRID DE PRODUCTOS RESPONSIVE -->
+            <section class="products-grid-container">
+                <div id="products-loading" class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Cargando productos...</p>
+                </div>
+                
+                <div id="products-grid" class="products-grid">
+                    <!-- Los productos se cargan dinámicamente aquí -->
+                </div>
+                
+                <div id="no-products" class="no-products" style="display: none;">
+                    <i class="fas fa-box-open"></i>
+                    <h3>No hay productos disponibles</h3>
+                    <p>No se encontraron productos en esta categoría</p>
+                </div>
+            </section>
+
+            <!-- ✅ PAGINACIÓN REQUERIDA -->
+            <section class="pagination-container">
+                <div id="pagination" class="pagination">
+                    <!-- La paginación se genera dinámicamente -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 GameVerse - Desarrollado por NOMBRE_ALUMNO_1 y NOMBRE_ALUMNO_2</p>
+        </div>
+    </footer>
+
+    <!-- Modal para detalles del producto -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div id="modal-product-content">
+                <!-- Contenido dinámico del producto -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./config/config.js"></script>
+    <script src="./js/themes.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/cart.js"></script>
+    <script src="./js/modal.js"></script>
+    <script src="./js/products.js"></script>
+</body>
+</html>
+```
+
+PASO 4.2: JAVASCRIPT PRODUCTOS
+------------------------------
+Archivo: frontend/js/products.js
+Función: Lógica de productos, categorías y paginación
+
+```javascript
+// ✅ VARIABLES GLOBALES
+let allProducts = [];
+let filteredProducts = [];
+let currentPage = 1;
+let currentCategory = 'all';
+let itemsPerPage = CONFIG.ITEMS_PER_PAGE;
+
+// ✅ INICIALIZACIÓN
+document.addEventListener('DOMContentLoaded', function() {
+    initializeProductsPage();
+});
+
+async function initializeProductsPage() {
+    try {
+        // ✅ Verificar que el cliente haya ingresado nombre
+        if (!checkCustomerName()) {
+            redirectToWelcome();
+            return;
+        }
+        
+        // ✅ Configuración inicial
+        Themes.loadSavedTheme();
+        setupThemeToggle();
+        displayCustomerName();
+        Cart.updateCartCounter();
+        
+        // ✅ Configurar filtros por categoría
+        setupCategoryFilters();
+        
+        // ✅ CARGAR PRODUCTOS (backend o JSON)
+        await loadProducts();
+        
+        // ✅ Mostrar productos con paginación
+        displayProducts();
+        
+    } catch (error) {
+        console.error('Error al inicializar productos:', error);
+        showErrorMessage('Error al cargar los productos');
+    }
+}
+
+// ✅ VERIFICAR NOMBRE CLIENTE OBLIGATORIO
+function checkCustomerName() {
+    const customerName = localStorage.getItem(CONFIG.LOCAL_STORAGE_KEYS.CUSTOMER_NAME);
+    return customerName && customerName.trim().length > 0;
+}
+
+function redirectToWelcome() {
+    alert('Debes ingresar tu nombre para continuar');
+    window.location.href = './index.html';
+}
+
+function displayCustomerName() {
+    const customerName = localStorage.getItem(CONFIG.LOCAL_STORAGE_KEYS.CUSTOMER_NAME);
+    const nameDisplay = document.getElementById('customer-name-display');
+    if (nameDisplay && customerName) {
+        nameDisplay.textContent = customerName;
+    }
+}
+
+// ✅ CARGAR PRODUCTOS (API O JSON)
+async function loadProducts() {
+    try {
+        // Intentar cargar desde API
+        allProducts = await API.getProducts();
+        console.log('Productos cargados desde API:', allProducts.length);
+    } catch (error) {
+        console.warn('No se pudo conectar con la API, cargando datos locales:', error);
+        
+        // ✅ Cargar desde JSON hardcodeado REQUERIDO
+        allProducts = await loadProductsFromJSON();
+        console.log('Productos cargados desde JSON local:', allProducts.length);
+    }
+    
+    // Filtrar solo productos activos
+    allProducts = allProducts.filter(product => product.active !== false);
+    filteredProducts = [...allProducts];
+}
+
+// ✅ CARGAR DESDE JSON HARDCODEADO
+async function loadProductsFromJSON() {
+    try {
+        const response = await fetch('./data/products.json');
+        if (!response.ok) throw new Error('No se pudo cargar products.json');
+        
+        const data = await response.json();
+        return data.products || [];
+    } catch (error) {
+        console.error('Error cargando JSON local:', error);
+        return getHardcodedProducts(); // Última opción de respaldo
+    }
+}
+
+// Productos hardcodeados como último recurso
+function getHardcodedProducts() {
+    return [
+        {
+            id: 1,
+            name: "RTX 4070 Super Gaming",
+            description: "Tarjeta gráfica gaming de alto rendimiento",
+            price: 599.99,
+            image: "./assets/images/placeholder.jpg",
+            category: "hardware",
+            active: true
+        }
+    ];
+}
+
+// ✅ CONFIGURAR FILTROS CATEGORÍA
+function setupCategoryFilters() {
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const category = this.dataset.category;
+            
+            // Actualizar UI botones
+            categoryBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // ✅ Filtrar productos por categoría
+            filterProductsByCategory(category);
+        });
+    });
+}
+
+function filterProductsByCategory(category) {
+    currentCategory = category;
+    currentPage = 1; // Resetear a primera página
+    
+    if (category === 'all') {
+        filteredProducts = [...allProducts];
+    } else {
+        filteredProducts = allProducts.filter(product => 
+            product.category === category
+        );
+    }
+    
+    displayProducts();
+}
+
+// ✅ MOSTRAR PRODUCTOS CON PAGINACIÓN
+function displayProducts() {
+    const grid = document.getElementById('products-grid');
+    const loading = document.getElementById('products-loading');
+    const noProducts = document.getElementById('no-products');
+    
+    // Ocultar loading
+    loading.style.display = 'none';
+    
+    if (filteredProducts.length === 0) {
+        grid.style.display = 'none';
+        noProducts.style.display = 'block';
+        return;
+    }
+    
+    noProducts.style.display = 'none';
+    grid.style.display = 'grid';
+    
+    // ✅ CALCULAR PAGINACIÓN
+    const totalProducts = filteredProducts.length;
+    const totalPages = Math.ceil(totalProducts / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const productsToShow = filteredProducts.slice(startIndex, endIndex);
+    
+    // ✅ RENDERIZAR PRODUCTOS
+    grid.innerHTML = '';
+    productsToShow.forEach(product => {
+        const productCard = createProductCard(product);
+        grid.appendChild(productCard);
+    });
+    
+    // ✅ CREAR CONTROLES PAGINACIÓN
+    createPagination(totalPages);
+}
+
+// ✅ CREAR TARJETA DE PRODUCTO
+function createProductCard(product) {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.innerHTML = `
+        <div class="product-image">
+            <img src="${product.image}" alt="${product.name}" loading="lazy">
+        </div>
+        <div class="product-info">
+            <h3 class="product-name">${product.name}</h3>
+            <p class="product-description">${product.description}</p>
+            <div class="product-price">$${product.price.toFixed(2)}</div>
+        </div>
+        <div class="product-actions">
+            <div class="quantity-controls">
+                <button class="qty-btn minus" data-id="${product.id}">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <span class="quantity" id="qty-${product.id}">1</span>
+                <button class="qty-btn plus" data-id="${product.id}">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            <button class="add-to-cart-btn" data-product='${JSON.stringify(product)}'>
+                <i class="fas fa-shopping-cart"></i>
+                Agregar al Carrito
+            </button>
+            <button class="view-details-btn" data-product='${JSON.stringify(product)}'>
+                <i class="fas fa-eye"></i>
+                Ver Detalles
+            </button>
+        </div>
+    `;
+    
+    // ✅ CONFIGURAR EVENTOS
+    setupProductCardEvents(card, product);
+    
+    return card;
+}
+
+// ✅ EVENTOS DE TARJETA PRODUCTO
+function setupProductCardEvents(card, product) {
+    const plusBtn = card.querySelector('.qty-btn.plus');
+    const minusBtn = card.querySelector('.qty-btn.minus');
+    const addToCartBtn = card.querySelector('.add-to-cart-btn');
+    const viewDetailsBtn = card.querySelector('.view-details-btn');
+    const quantitySpan = card.querySelector('.quantity');
+    
+    let quantity = 1;
+    
+    // ✅ Controles cantidad +/-
+    plusBtn.addEventListener('click', () => {
+        quantity++;
+        quantitySpan.textContent = quantity;
+    });
+    
+    minusBtn.addEventListener('click', () => {
+        if (quantity > 1) {
+            quantity--;
+            quantitySpan.textContent = quantity;
+        }
+    });
+    
+    // ✅ AGREGAR AL CARRITO
+    addToCartBtn.addEventListener('click', () => {
+        Cart.addProduct(product, quantity);
+        showAddedToCartMessage(product.name, quantity);
+        
+        // Resetear cantidad
+        quantity = 1;
+        quantitySpan.textContent = quantity;
+    });
+    
+    // Ver detalles en modal
+    viewDetailsBtn.addEventListener('click', () => {
+        showProductModal(product);
+    });
+}
+
+// ✅ CREAR PAGINACIÓN
+function createPagination(totalPages) {
+    const paginationContainer = document.getElementById('pagination');
+    
+    if (totalPages <= 1) {
+        paginationContainer.innerHTML = '';
+        return;
+    }
+    
+    let paginationHTML = '<div class="pagination-controls">';
+    
+    // Botón anterior
+    if (currentPage > 1) {
+        paginationHTML += `
+            <button class="page-btn" data-page="${currentPage - 1}">
+                <i class="fas fa-chevron-left"></i> Anterior
+            </button>
+        `;
+    }
+    
+    // Números de página
+    for (let i = 1; i <= totalPages; i++) {
+        const isActive = i === currentPage ? 'active' : '';
+        paginationHTML += `
+            <button class="page-btn ${isActive}" data-page="${i}">
+                ${i}
+            </button>
+        `;
+    }
+    
+    // Botón siguiente
+    if (currentPage < totalPages) {
+        paginationHTML += `
+            <button class="page-btn" data-page="${currentPage + 1}">
+                Siguiente <i class="fas fa-chevron-right"></i>
+            </button>
+        `;
+    }
+    
+    paginationHTML += '</div>';
+    paginationContainer.innerHTML = paginationHTML;
+    
+    // ✅ CONFIGURAR EVENTOS PAGINACIÓN
+    setupPaginationEvents();
+}
+
+function setupPaginationEvents() {
+    const pageButtons = document.querySelectorAll('.page-btn');
+    
+    pageButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const page = parseInt(this.dataset.page);
+            if (page !== currentPage) {
+                currentPage = page;
+                displayProducts();
+                
+                // Scroll suave al inicio de productos
+                document.querySelector('.products-grid-container').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+}
+
+// ✅ CONFIGURAR TOGGLE TEMA
+function setupThemeToggle() {
+    const themeBtn = document.getElementById('theme-toggle');
+    
+    themeBtn.addEventListener('click', function() {
+        Themes.toggleTheme();
+    });
+}
+
+// Mostrar mensaje producto agregado
+function showAddedToCartMessage(productName, quantity) {
+    // Crear notificación temporal
+    const notification = document.createElement('div');
+    notification.className = 'notification success';
+    notification.innerHTML = `
+        <i class="fas fa-check-circle"></i>
+        ${quantity}x ${productName} agregado al carrito
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Mostrar y ocultar después de 3 segundos
+    setTimeout(() => notification.classList.add('show'), 100);
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+function showProductModal(product) {
+    Modal.show('product-modal', createProductModalContent(product));
+}
+
+function createProductModalContent(product) {
+    return `
+        <div class="modal-product">
+            <img src="${product.image}" alt="${product.name}" class="modal-product-image">
+            <div class="modal-product-info">
+                <h2>${product.name}</h2>
+                <p class="modal-product-description">${product.description}</p>
+                <div class="modal-product-price">$${product.price.toFixed(2)}</div>
+                <div class="modal-product-category">
+                    Categoría: ${CONFIG.CATEGORY_NAMES[product.category] || product.category}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function showErrorMessage(message) {
+    const notification = document.createElement('div');
+    notification.className = 'notification error';
+    notification.innerHTML = `
+        <i class="fas fa-exclamation-triangle"></i>
+        ${message}
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => notification.classList.add('show'), 100);
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 5000);
+}
+```
+
+========================================================================================================
+                                   CONTINÚA EN LA SIGUIENTE SECCIÓN...
+========================================================================================================
+
+Esta guía del frontend incluye:
+
+✅ **PANTALLA 1 - BIENVENIDA**: Completa con validación de nombre obligatorio
+✅ **PANTALLA 2 - PRODUCTOS**: Con categorías gaming, paginación y responsive design
+✅ **Configuración completa**: URLs, temas, localStorage para tienda gaming
+✅ **JSON hardcodeado**: Productos gaming reales para testing sin backend
+✅ **Temática Gaming**: Hardware (RTX, teclados, monitores) y Software (juegos, licencias)
+✅ **Todos los requerimientos**: Logo, nombres, favicon, temas, etc.
+
+🎮 **PRODUCTOS GAMING INCLUIDOS EN LA GUÍA:**
+=============================================
+
+HARDWARE GAMING:
+- RTX 4070 Super Gaming ($599.99)
+- Teclado Mecánico RGB ($129.99)  
+- Monitor Gaming 27" 144Hz ($299.99)
+- Auriculares Gaming 7.1 ($79.99)
+- Ryzen 7 5800X ($329.99)
+
+SOFTWARE & JUEGOS:
+- Cyberpunk 2077 ($29.99)
+- Unity Pro License ($185.00)
+- Assassin's Creed Valhalla ($39.99)
+- Steam Gift Card $50 ($50.00)
+- The Witcher 3: Wild Hunt ($19.99)
+
+🚀 **VENTAJAS DE LA TEMÁTICA GAMING:**
+- ✅ Productos físicos Y virtuales (cumple requerimientos)
+- ✅ Mismo target (gamers) con necesidades específicas
+- ✅ Amplio rango de precios ($19 - $599)
+- ✅ NO son productos de comida (cumple restricción)
+- ✅ Mercado en crecimiento constante
+
+¿Quieres que continúe con las **PANTALLAS 3 y 4** (Carrito y Ticket) y el resto de archivos JavaScript?
