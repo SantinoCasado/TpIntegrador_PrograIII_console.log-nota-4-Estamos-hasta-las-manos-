@@ -36,7 +36,7 @@ function toggleTheme(){
 
     applyTheme(newTheme);
     updateThemeButton(newTheme);
-    savedTheme(newTheme);
+    saveTheme(newTheme);
 }
 
 // Actualizaciomn del TEXTO del boton
@@ -57,7 +57,7 @@ function updateThemeButton(theme){
 }
 
 // Funcion que GUARDA el tema en localStorage para recuperarlo despues
-function savedTheme(theme){
+function saveTheme(theme){
     localStorage.setItem(STORAGE_KEY, theme);
 }
 

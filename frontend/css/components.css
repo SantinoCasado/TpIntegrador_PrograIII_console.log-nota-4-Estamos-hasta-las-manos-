@@ -1,4 +1,22 @@
-/* Cards de productos */
+/* ========= CARDS ===================== */
+.border-gaming {
+  border-color: var(--purple);
+}
+
+.bg-gaming-header {
+  background: linear-gradient(45deg, var(--purple), var(--pink)) !important;
+}
+
+.gaming-card {
+  transition: all 0.3s ease;
+}
+
+.gaming-card:hover {
+  border-color: var(--purple) !important;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(139, 0, 255, 0.2);
+}
+
 .product-card {
   border: 1px solid var(--purple);
   border-radius: 8px;
@@ -10,8 +28,48 @@
   box-shadow: 0 0 5px rgba(139, 0, 255, 0.3);
 }
 
-/* Botones gaming */
+/* ========= BOTONES ========= */
 .btn-gaming {
+  background: linear-gradient(45deg, var(--purple), var(--pink));
+  border: none;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-gaming:hover {
+  background: linear-gradient(45deg, var(--pink), var(--blue));
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(139, 0, 255, 0.3);
+}
+
+.btn-outline-gaming {
+  border: 2px solid var(--purple);
+  color: var(--purple);
+  background: rgba(139, 0, 255, 0.1);
+}
+
+.btn-outline-gaming:hover {
   background: var(--purple);
   color: white;
+  box-shadow: 0 0 15px rgba(139, 0, 255, 0.5);
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #545b62;
+  border-color: #4e555b;
+  color: #ffffff;
+}
+
+.btn-secondary:disabled {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  opacity: 0.65;
+  cursor: not-allowed;
 }

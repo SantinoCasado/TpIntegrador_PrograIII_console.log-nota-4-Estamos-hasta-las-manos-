@@ -10,6 +10,7 @@
 .navbar {
   background: linear-gradient(to right, #1a1a1a, #2d1b69) !important;
   border-bottom: 2px solid var(--purple);
+  border-block-color: var(--pink);
 }
 
 .navbar-brand img {
@@ -18,24 +19,6 @@
 
 .navbar-brand img:hover {
   transform: scale(1.1);
-}
-
-.text-primary {
-  color: var(--purple) !important;
-}
-
-.text-info {
-  color: var(--blue) !important;
-}
-
-.btn-outline-primary {
-  border-color: var(--purple);
-  color: var(--purple);
-}
-
-.btn-outline-primary:hover {
-  background-color: var(--purple);
-  color: white;
 }
 
 .welcome-page {
@@ -73,6 +56,10 @@
   color: var(--purple) !important;
 }
 
+.text-info {
+  color: var(--blue) !important;
+}
+
 .text-neon-pink {
   color: var(--pink) !important;
 }
@@ -100,25 +87,6 @@
   background-clip: text;
 }
 
-/* ========= CARDS ===================== */
-.border-gaming {
-  border-color: var(--purple);
-}
-
-.bg-gaming-header {
-  background: linear-gradient(45deg, var(--purple), var(--pink)) !important;
-}
-
-.gaming-card {
-  transition: all 0.3s ease;
-}
-
-.gaming-card:hover {
-  border-color: var(--purple) !important;
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(139, 0, 255, 0.2);
-}
-
 /* ========= INPUTS ===================== */
 /* Gaming Input */
 .gaming-input {
@@ -134,28 +102,38 @@
   color: white !important;
 }
 
-/* Gaming Buttons */
-.btn-gaming {
-  background: linear-gradient(45deg, var(--purple), var(--pink));
-  border: none;
-  color: white;
-  transition: all 0.3s ease;
+/* ========= NOTIFICACIONES ========= */
+.notification {
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  animation: slideInRight 0.3s ease;
+  min-width: 250px;
+  border-left: 4px solid;
 }
 
-.btn-gaming:hover {
-  background: linear-gradient(45deg, var(--pink), var(--blue));
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(139, 0, 255, 0.3);
+.notification-info {
+  background-color: rgba(0, 191, 255, 0.1);
+  color: var(--blue);
+  border-left-color: var(--blue);
 }
 
-.btn-outline-gaming {
-  border: 2px solid var(--purple);
-  color: var(--purple);
-  background: rgba(139, 0, 255, 0.1);
+.notification-success {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+  border-left-color: #28a745;
 }
 
-.btn-outline-gaming:hover {
-  background: var(--purple);
-  color: white;
-  box-shadow: 0 0 15px rgba(139, 0, 255, 0.5);
+.notification-error {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+  border-left-color: #dc3545;
+}
+
+.notification-warning {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: #ffc107;
+  border-left-color: #ffc107;
 }

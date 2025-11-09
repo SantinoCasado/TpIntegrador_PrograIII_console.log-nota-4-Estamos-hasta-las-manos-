@@ -6,6 +6,11 @@
 }
 
 /*========= Tema oscuro ==============*/
+.dark-theme {
+  background-color: #0f0f0f;
+  color: #ffffff;
+}
+
 [data-theme="dark"] {
   --bg-primary: #0f0f0f;
   --bg-secondary: #1a1a1a;
@@ -28,4 +33,81 @@
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
+}
+
+/*========= TEMA CLARO ==============*/
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+}
+
+[data-theme="light"] .welcome-page {
+  background: linear-gradient(135deg, #f8f9fa, #ffffff, #f1f3f4) !important;
+  color: #333333;
+}
+
+[data-theme="light"] .card {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border: 1px solid #dee2e6 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme="light"] .gaming-card {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border: 2px solid var(--purple) !important;
+}
+
+[data-theme="light"] .gaming-input {
+  background-color: #ffffff !important;
+  border: 2px solid var(--purple) !important;
+  color: #333333 !important;
+}
+
+[data-theme="light"] .gaming-input:focus {
+  background-color: #ffffff !important;
+  border-color: var(--pink) !important;
+  color: #333333 !important;
+}
+
+[data-theme="light"] .navbar {
+  background: linear-gradient(to right, #ffffff, #f8f9fa) !important;
+  border-bottom: 2px solid var(--purple) !important;
+}
+
+[data-theme="light"] #footer {
+  background: linear-gradient(to right, #ffffff, #f8f9fa) !important;
+  border-bottom: 2px solid var(--purple) !important;
+}
+
+[data-theme="light"] .bg-gaming-header {
+  background: linear-gradient(45deg, var(--purple), var(--pink)) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .text-light {
+  color: #333333 !important;
+}
+
+[data-theme="light"] .text-light-50 {
+  color: #666666 !important;
+}
+
+/* ================ CLASES DEL BODY PARA TEMAS ==============*/
+.light-theme {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+}
+
+.light-theme .navbar {
+  background: linear-gradient(to right, #ffffff, #f8f9fa) !important;
+}
+
+.light-theme .card {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border: 1px solid #dee2e6 !important;
 }
