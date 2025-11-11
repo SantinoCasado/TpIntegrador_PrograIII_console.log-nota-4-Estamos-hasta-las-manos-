@@ -137,3 +137,14 @@
   color: #ffc107;
   border-left-color: #ffc107;
 }
+
+/*============ BOTON DEL ADMIN ============== */
+
+#admin-btb {
+  display: none;
+}
+
+.admin-reveled {
+  animation: adminGlow 2s infinite alternate;
+  border: 2px solid gold !important;
+}

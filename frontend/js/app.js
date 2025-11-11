@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', function(){
     // Configuro efectos
     setupEffects();
 
+    setupAdminMode();
+
     console.log('All setup complete.');
 });
 
@@ -110,3 +112,61 @@ function setupCustomerForm(){
         }, 300);
     }
 };
+
+/* ================= DESBLOQUEAR EL MODO ADMIN EN LA APLIACION ================= */
+function setupAdminMode(){
+    const konamiCode = [
+        'ArrowUp', 'ArrowUp',
+        'ArrowDown', 'ArrowDown',
+        'ArrowLeft', 'ArrowRight',
+        'ArrowLeft', 'ArrowRight',
+        'KeyB', 'KeyA'
+    ];
+
+    let userInput = [];
+
+    document.addEventListener('keydown', function(event){
+        //Agrego la tecla presionada
+        userInput.push(event.code);
+
+        // Mantener solo las ultimas 10 teclas para evitar overflow
+        if(userInput.length > konamiCode.length){
+            userInput.shift();  // Elimino la primera tecla
+        }
+
+        // Verifico si el usuario ingreso el codigo correcto
+        if(userInput.length === konamiCode.length){
+            const isKonamiCode = userInput.every((key, index) => key === konamiCode[index]);
+            if(isKonamiCode){
+                showAdminButton();
+                userInput = []; // Reseteo el input del usuario
+            }
+        }
+    });
+};
+
+// Funcion para mostrar el boton de admin
+function showAdminButton(){
+    const adminButton = document.getElementById('admin-btn');
+    if(adminButton){
+        // Remuevo la clase d-none
+        adminButton.classList.remove('d-none');
+
+        //hacer visible el boton
+        adminButton.style.display = 'block';
+        adminButton.style.opacity = '0';
+        adminButton.style.transform = 'scale(0.5)';
+
+        // Animacion de aparicion
+        setTimeout(() => {
+            adminButton.style.transition = 'all 0.5s ease';
+            adminButton.style.opacity = '1';
+            adminButton.style.transform = 'scale(1)';
+        }, 100)
+
+        // Mostrar notificacion
+        if(typeof showNotification === 'function'){
+            showNotification('Admin Mode Enabled!', 'success');
+        }
+    }
+}
