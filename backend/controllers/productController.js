@@ -9,7 +9,7 @@ const createProduct = async (req, res) => {
         });
         res.json(newProduct);
     } catch (error) {
-        res.json({ error: 'Error al crear el producto' });
+        res.json({ message: error.message });
     }
 };
 
@@ -21,7 +21,7 @@ const getAllProducts = async (req, res) => {
         });
         res.json(products);
     } catch (error) {
-        res.json({ error: 'Error al obtener los productos' });
+        res.json({ message: error.message });
     }
 };
 
@@ -85,7 +85,7 @@ const updateProduct = async (req, res) => {
         });
         res.json(upadtedProduct);
     } catch (error) {
-        res.json({ error: 'Error al actualizar el producto' });
+        res.json({ message: error.message });
     }
 };
 
@@ -95,9 +95,9 @@ const deleteProduct = async (req, res) => {
         await Product.update({ isActive: false }, {
             where: { id: req.params.id }
         });
-        res.json({ message: 'Producto desactivado correctamente' });
+        res.json({ message: 'Product deactivated successfully' });
     }catch (error) {
-        res.json({ error: 'Error al desactivar el producto' });
+        res.json({ message: error.message });
     }
 };
 
@@ -108,7 +108,7 @@ const activateProduct = async (req, res) => {
             { isActive: true }, 
             {where: { id: req.params.id }}
         );
-        res.json({ message: 'Producto activado correctamente' });
+        res.json({ message: 'Product activated successfully' });
     } catch (error) {
         res.json({ message: error.message });
     }

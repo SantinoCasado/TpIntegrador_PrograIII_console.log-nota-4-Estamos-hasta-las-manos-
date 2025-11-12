@@ -39,7 +39,7 @@ const getSaleById = async (req, res) => {
         if(sale){
             res.json(sale);
         }else{
-            res.status(404).json({ error: 'Venta no encontrada' });
+            res.status(404).json({ message: 'Sale not found' });
         }
     } catch (error) {
         res.json({ message: error.message });
@@ -52,8 +52,56 @@ const updateSale = async (req, res) => {
         const sale = await Sale.update(req.body, {
             where: { id: req.params.id }
         });
-        res.json({ message: 'Venta actualizada correctamente' });
+        res.json({ message: 'Sale updated successfully' });
     }catch (error) {
         res.json({ message: error.message });
     }
+};
+
+// D - DELETE - eliminar una venta SIN DESACTIVAR
+const deleteSale = async (req, res) => {
+    try {
+        await Sale.destroy({
+            where: { id: req.params.id }
+        });
+        res.json({ message: 'Sale deleted successfully' });
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+// Marcar como completada la venta
+const completeSale = async (req, res) => {
+    try {
+        await Sale.update(
+            { status: 'completed' },
+            { where: { id: req.params.id } }
+        );
+        res.json({ message: 'Sale completed successfully' });
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+//Marcar como cancelada la centa
+const cancelSale = async (req, res) => {
+    try {
+        await Sale.update(
+            { status: 'canceled' },
+            { where: { id: req.params.id } }
+        );
+        res.json({ message: 'Sale canceled successfully' });
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+module.exports = {
+    createSale,
+    getAllSales,
+    getSaleById,
+    updateSale,
+    deleteSale,
+    completeSale,
+    cancelSale
 };
