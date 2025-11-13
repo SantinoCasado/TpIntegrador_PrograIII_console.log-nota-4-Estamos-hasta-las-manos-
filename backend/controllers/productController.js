@@ -56,7 +56,7 @@ const getProductsByCategory = async (req, res) => {
 };
 
 // R - READ - obtener productos con paginacion
-const getProductsPaginated = async (req, res) => {
+const getPaginatedProducts = async (req, res) => {
     try{
         const page = parseInt(req.query.page) || 1; // Pagina por defecto 1
         const limit = parseInt(req.query.limit) || 10; // Limite por defecto 10
@@ -119,7 +119,7 @@ module.exports = {
     getAllProducts,
     getProductById,
     getProductsByCategory,
-    getProductsPaginated,
+    getPaginatedProducts,
     updateProduct,
     deleteProduct,
     activateProduct

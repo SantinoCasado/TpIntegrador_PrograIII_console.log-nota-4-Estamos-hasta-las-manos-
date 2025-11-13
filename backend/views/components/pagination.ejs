@@ -1,0 +1,51 @@
+<!-- Estos van a ser l asi simplificamosos componente de paginación reutilizable asi simplificamos -->
+<% if (totalPages > 1) { %>
+<nav aria-label="Product pagination" class="mt-4">
+  <ul class="pagination justify-content-center">
+    <!-- Boton de previo -->
+    <% if(currentPage > 1) { %>
+    <li class="page-item">
+      <a class="page-link" href="?page=<%= currentPage - 1 %>">
+        <i class="fas fa-chevron-left"></i>Previous
+      </a>
+    </li>
+    <% } %>
+
+    <!-- Numeros de pagina (pero solo el anterior, actual y el que le sigue) -->
+    <!-- Encontre en una pagina este metodo para saber si tiene un anterior y siguiente -->
+    <% if(currentPage > 1 ){ %>
+    <li class="page-item">
+      <a class="page-link" href="?page=<%= currentPage - 1 %>"
+        ><%= currentPage - 1 %></a
+      >
+    </li>
+    <% } %>
+
+    <!-- Pagina actual -->
+    <li class="page-item active">
+      <span class="page-link"><%= currentPage %></span>
+    </li>
+    <% if(currentPage < totalPages) { %>
+    <li class="page-item">
+      <a class="page-link" href="?page=<%= currentPage + 1 %>"
+        ><%= currentPage + 1 %></a
+      >
+    </li>
+    <% } %>
+
+    <!-- Boton de siguiente -->
+    <% if(currentPage < totalPages) { %>
+    <li class="page-item">
+      <a class="page-link" href="?page=<%= currentPage + 1 %>">
+        Next <i class="fas fa-chevron-right"></i>
+      </a>
+    </li>
+    <% } %>
+  </ul>
+
+  <!-- Informacion simple -->
+  <div class="text-center text-muted">
+    <small>Page <%= currentPage %> of <%= totalPages %></small>
+  </div>
+</nav>
+<% } %>

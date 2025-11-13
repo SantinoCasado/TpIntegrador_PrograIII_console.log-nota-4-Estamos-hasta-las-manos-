@@ -22,15 +22,8 @@ Product.belongsToMany(Sale,{
     as: 'sales'
 });
 
-//SakeProduct pertenece a una venta (Sale)
-SaleProduct.belongsTo(Sale,{
-    through: SaleProduct,
-    foreignKey: 'saleId',
-    as: 'sale'
-});
-
-// SalePROduct pertenece a SAle
-SaleProduct.belongsTo(Product,{foreignKey: 'saleId'});
+// SalePROduct pertenece a sale
+SaleProduct.belongsTo(Sale,{foreignKey: 'saleId'});
 // SaleProduct pertenece a Product
 SaleProduct.belongsTo(Product,{foreignKey: 'productId'});
 

@@ -1,0 +1,159 @@
+<% layout('layout/adminLayout') -%>
+
+<!-- Solo el contenido específico del formulario -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>
+    <!-- Asi lo hace el tipo del video y queda mas simplificado vamos con eso? Se -->
+    <i class="fas fa-<%= action === 'create' ? 'plus' : 'edit' %> me-2"></i>
+    <%= action === 'create' ? 'Add New Product' : 'Edit Product' %>
+  </h2>
+  <a href="/admin/dashboard/products" class="btn btn-secondary">
+    <i class="fas fa-arrow-left me-2"></i>Go back
+  </a>
+</div>
+
+<!-- Alertas de error -->
+<!-- Es ma facil hacerlo asi bld -->
+<% if (typeof error !== 'undefined' && error) {%>
+<!-- Encontre este combo que fachero, seee -->
+<div class="alert alert-danger alert-dismissible fade shadow" role="alert">
+  <i class="fas fa-exclamation-triangle me-2"></i>
+  <%= error %>
+  <!-- es mas facil ponerle un boton asi -->
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+<% } %>
+
+<!-- Card del formulario -->
+<!-- Esto dejamelo hacer a mi que es ir uno por uno anda continuando el frontend -->
+<div class="card shadow">
+  <div class="card-body">
+    <form action="<%= action === 'create' ? '/admin/dashboard/products/' : '/admin/dashboard/products/' + product.id %>" method="post">
+      <% if (product) { %>
+        <input type="hidden" name="_method" value="PUT">
+      <% } %>
+      <!-- Nombre del producto -->
+      <div class="mb-3">
+        <label for="name" class="form-label"
+          ><i class="fas fa-tag me-2"></i> Product Name
+        </label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          value="<%= product ? product.name : '' %>"
+          required
+          maxlength="200"
+        />
+      </div>
+      <!-- Descripcion -->
+      <div class="mb-3">
+        <label for="description" class="form-label">
+          <i class="fas fa-file-text me-2"></i>Description
+        </label>
+        <textarea
+          name="description"
+          id="description"
+          class="form-control"
+          required
+          rows="4"
+        ><%= product ? product.description : '' %></textarea>
+      </div>
+      
+      <!-- Precio y Categoria en la misma fila -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="price" class="form-label">
+              <i class="fas fa-dollar-sign me-2"></i>Price
+            </label>
+            <input
+              type="number"
+              class="form-control"
+              id="price"
+              name="price"
+              value="<%= product ? product.price : '' %>"
+              step="0.01"
+              min="0"
+              required
+            />
+          </div>
+        </div>
+      </div>
+        <!-- Me falta esto, stock y lo de la img tengo para rato jjajajajaj -->
+        <!-- Categoria -->
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="category" class="form-label">
+              <i class="fas fa-list me-2"></i>Category
+            </label>
+            <select class="form-select" id="category" name="category" required>
+              <option value="">Select a category</option>
+              <option value="hardware" <%= product && product.category === 'hardware' ? 'selected' : '' %>>
+                Hardware
+              </option>
+              <option value="software" <%= product && product.category === 'software' ? 'selected' : '' %>>
+                Software
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!-- Stock -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="stock" class="form-label">
+              <i class="fas fa-boxes me-2"></i>Stock
+            </label>
+            <input 
+            type="number"
+            class="form-control"
+            id="stock"
+            name="stock"
+            value="<%= product ? product.stock : '0' %>"
+            min="0"
+            step="1"
+            />
+          </div>
+        </div>
+      
+        <!-- Imagen -->
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="image" class="form-label">
+              <i class="fas fa-image me-2"></i>Image URL
+            </label>
+            <input
+              type="url"
+              class="form-control"
+              id="image"
+              name="image"
+              value="<%= product ? product.image : '' %>"
+              required
+              placeholder="https://example.com/image.jpg"
+            />
+          </div>
+        </div>
+      </div>
+      <!-- Botones de accion -->
+      <div class="d-flex justify-content-between align-items-center mt-4">
+        <a href="/admin/dashboard/products" class="btn btn-outline-secondary">
+          <i class="fas fa-times me-2"></i>Cancel
+        </a>
+
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-<%= action === 'create' ? 'plus' : 'save' %> me-2"></i>
+          <%= action === 'create' ? 'Create Product' : 'Update product' %>
+        </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

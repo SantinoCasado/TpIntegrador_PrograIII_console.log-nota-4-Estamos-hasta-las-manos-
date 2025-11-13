@@ -54,7 +54,7 @@ const getUserById = async (req, res) => {
 };
 
 // LOGIN - autenticar usuario
-/*const loginUser = async (req, res) => {
+const loginUser = async (req, res) => {
     try {
         const {name, password} = req.body;
 
@@ -65,4 +65,65 @@ const getUserById = async (req, res) => {
 
         if(!user){
             return res.status(404).json({ message: 'Inavlid credentials' });
-        }*/
+        }
+
+        // Verifico la contraseña
+        const isValidPassword = await bcrypt.compare(password, user.password);
+        if(!isValidPassword){
+            return res.status(404).json({ message: 'Invalid credentials' });
+        }
+
+        // El login fue exitoso
+        res.json({
+            message: 'Login successful',
+            user: {
+                id: user.id,
+                name: user.name,
+                createdAt: user.createdAt
+            }
+        });
+    }catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+// U - UPDATE - actualizar un usuario por ID
+const updateUser = async (req, res) => {
+    try {
+        let updatedData = {...req.body}; // Clono los datos recibidos
+
+        // Si se proporciona una nueva contraseña, hashearla
+        if(updatedData.password){
+            updatedData.password = await bcrypt.hash(updatedData.password, 10);
+        }
+
+        const updatedUser = await User.update(updatedData, {
+            where: { id: req.params.id }    // Actualizo por ID
+        });
+
+        res.json({ message: 'User updated successfully' });
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+// D - DELETE - eliminar un usuario por ID
+const deleteUser = async (req, res) => {
+    try {
+        await User.destroy({
+            where: { id: req.params.id }
+        });
+        res.json({ message: 'User deleted successfully' });
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+module.exports = {
+    createUser,
+    getAllUsers,
+    getUserById,
+    loginUser,
+    updateUser,
+    deleteUser
+};
