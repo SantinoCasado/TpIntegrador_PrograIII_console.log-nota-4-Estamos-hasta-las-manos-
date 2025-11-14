@@ -2,7 +2,7 @@ const db = require('../data/database');
 const { DataTypes } = require('sequelize');
 
 // Definición del modelo Product
-const Product = db.define('products', {}, {
+const Product = db.define('products', {
     id:{
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -26,7 +26,7 @@ const Product = db.define('products', {}, {
     },
     stock:{
         type: DataTypes.INTEGER,
-        toDefaultValue: 0,
+        defaultValue: 0,
     },
     image:{
         type: DataTypes.STRING,
@@ -37,7 +37,7 @@ const Product = db.define('products', {}, {
         defaultValue: true,
     }
 },{
-    timetamps: true,
+    timestamps: true,
     tableName: 'products'
 });
 

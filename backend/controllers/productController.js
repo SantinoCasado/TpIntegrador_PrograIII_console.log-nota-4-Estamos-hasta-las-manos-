@@ -25,6 +25,18 @@ const getAllProducts = async (req, res) => {
     }
 };
 
+// R - READ - obtener todos los productos para admin (incluye inactivos)
+const getAllProductsAdmin = async (req, res) => {
+    try {
+        const products = await Product.findAll({
+            order: [['createdAt', 'DESC']]
+        });
+        res.json(products);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
 
 // R - READ - obtener un producto por ID
 const getProductById = async (req, res) => {
@@ -61,16 +73,19 @@ const getPaginatedProducts = async (req, res) => {
         const page = parseInt(req.query.page) || 1; // Pagina por defecto 1
         const limit = parseInt(req.query.limit) || 10; // Limite por defecto 10
         const offset = (page - 1) * limit;  // desde donde empezar a traer los datos
-        const products = await Product.findAll({
+        
+        const { count, rows: products } = await Product.findAndCountAll({
             where: { isActive: true },
             limit: limit,
-            offset: offset
+            offset: offset,
+            order: [['createdAt', 'DESC']]
         });
+        
         res.json({
-            products: products.rows,
-            totalProducts: products.count,
+            products: products,
+            totalProducts: count,
             currentPage: page,
-            totalPages: Math.ceil(products.count / limit)
+            totalPages: Math.ceil(count / limit)
         });
     } catch (error) {
         res.json({ message: error.message });
@@ -117,6 +132,7 @@ const activateProduct = async (req, res) => {
 module.exports = {
     createProduct,
     getAllProducts,
+    getAllProductsAdmin,
     getProductById,
     getProductsByCategory,
     getPaginatedProducts,

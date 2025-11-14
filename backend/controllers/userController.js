@@ -1,4 +1,4 @@
-const { User } = require('../models/userModel');
+const { User } = require('../models');
 const bcrypt = require('bcryptjs');
 
 // C - CREATE - crear un nuevo usuario
@@ -56,15 +56,15 @@ const getUserById = async (req, res) => {
 // LOGIN - autenticar usuario
 const loginUser = async (req, res) => {
     try {
-        const {name, password} = req.body;
+        const {email, password} = req.body;
 
-        // Buscar el usuario por nombre
+        // Buscar el usuario por email
         const user = await User.findOne({ 
-            where: { name } 
+            where: { email } 
         });
 
         if(!user){
-            return res.status(404).json({ message: 'Inavlid credentials' });
+            return res.status(404).json({ message: 'Invalid credentials' });
         }
 
         // Verifico la contraseña
@@ -79,6 +79,7 @@ const loginUser = async (req, res) => {
             user: {
                 id: user.id,
                 name: user.name,
+                email: user.email,
                 createdAt: user.createdAt
             }
         });

@@ -12,11 +12,11 @@ const showLogin = (req, res) => {
 // POST - proceso de login
 const processLogin = async (req, res) => {
     try {
-        const {name, password} = req.body; // obtengo los datos del formulario
+        const {email, password} = req.body; // obtengo los datos del formulario
 
-        // Buscar el usuario por nombre
+        // Buscar el usuario por email
         const user = await User.findOne({ 
-            where: { name } 
+            where: { email } 
         });
 
         if(!user){
@@ -58,12 +58,14 @@ const showDashboard = async (req, res) => {
     try {
         // Obtener datos para el dashboard
         const totalUsers = await User.count();
-        const totalProducts = await Product.count({where:{isActive:true}});
+        const totalProducts = await Product.count();
+        const activeProducts = await Product.count({where:{isActive:true}});
         const totalSales = await Sale.count();
 
         res.render('admin/dashboard', {
             title: 'Admin Dashboard',
             stats: {
+                totalUsers,
                 totalProducts,
                 activeProducts,
                 totalSales

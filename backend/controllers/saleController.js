@@ -1,12 +1,52 @@
 const { Sale, Product, SaleProduct } = require('../models');
 
-// C - CREATE - crear una nueva venta
+// C - CREATE - crear una nueva venta con productos
 const createSale = async (req, res) => {
     try {
-        const newSale = await Sale.create(req.body); // Se asume que el cuerpo de la solicitud tiene los campos necesarios
-        res.json(newSale);
+        const { customerName, products, paymentMethod } = req.body;
+        
+        // Calcular el total
+        let totalAmount = 0;
+        for (const item of products) {
+            const product = await Product.findByPk(item.productId);
+            if (product) {
+                totalAmount += product.price * item.quantity;
+            }
+        }
+        
+        // Crear la venta
+        const newSale = await Sale.create({
+            customerName,
+            totalAmount,
+            paymentMethod: paymentMethod || 'cash',
+            status: 'completed'
+        });
+
+        // Agregar los productos a la venta
+        for (const item of products) {
+            const product = await Product.findByPk(item.productId);
+            if (product) {
+                await SaleProduct.create({
+                    saleId: newSale.id,
+                    productId: item.productId,
+                    quantity: item.quantity,
+                    unitPrice: product.price
+                });
+            }
+        }
+
+        // Buscar la venta creada con sus productos
+        const completeSale = await Sale.findByPk(newSale.id, {
+            include: [{
+                model: Product,
+                as: 'products',
+                through: { attributes: ['quantity', 'unitPrice'] }
+            }]
+        });
+
+        res.status(201).json(completeSale);
     } catch (error) {
-        res.json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 };
 

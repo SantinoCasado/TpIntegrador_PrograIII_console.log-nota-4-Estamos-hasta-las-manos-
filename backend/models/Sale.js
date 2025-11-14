@@ -12,7 +12,7 @@ const Sale = db.define('sales', {
         type: DataTypes.STRING(100),
         allowNull: false,
     },
-    totalAmout:{
+    totalAmount:{
         type: DataTypes.DECIMAL(10,2),
         allowNull: false,
     },
