@@ -1,0 +1,204 @@
+================================================================================
+    CONFIGURACIÓN DE BASE DE DATOS - GAMING STORE BACKEND
+================================================================================
+
+REQUISITOS PREVIOS:
+------------------
+- MySQL Server instalado (versión 8.0 o superior recomendada)
+- Node.js instalado (versión 18 o superior)
+- MySQL Workbench (opcional, para visualización gráfica)
+
+================================================================================
+PASO 1: CREAR LA BASE DE DATOS EN MYSQL
+================================================================================
+
+Opción A - Desde MySQL Workbench:
+---------------------------------
+1. Abrir MySQL Workbench
+2. Conectar a tu instancia local de MySQL
+3. Ejecutar el siguiente comando en una nueva query:
+
+   CREATE DATABASE IF NOT EXISTS gaming 
+   CHARACTER SET utf8mb4 
+   COLLATE utf8mb4_unicode_ci;
+
+4. Verificar que la base de datos fue creada en el panel izquierdo
+
+
+Opción B - Desde línea de comandos:
+-----------------------------------
+1. Abrir PowerShell o CMD
+2. Ejecutar:
+
+   mysql -u root -p
+
+3. Ingresar tu contraseña de MySQL
+4. Ejecutar:
+
+   CREATE DATABASE IF NOT EXISTS gaming 
+   CHARACTER SET utf8mb4 
+   COLLATE utf8mb4_unicode_ci;
+
+5. Salir de MySQL:
+
+   EXIT;
+
+
+================================================================================
+PASO 2: CONFIGURAR CREDENCIALES DE CONEXIÓN
+================================================================================
+
+1. Abrir el archivo: backend/data/database.js
+
+2. Verificar/modificar las credenciales de conexión:
+
+   const db = new Sequelize(
+       'gaming',           // ← Nombre de la base de datos
+       'root',            // ← Tu usuario de MySQL
+       'TU_PASSWORD',     // ← Tu contraseña de MySQL
+       {
+           host: 'localhost',
+           dialect: 'mysql',
+           port: 3306,    // ← Puerto por defecto de MySQL
+           ...
+       }
+   );
+
+3. IMPORTANTE: Cambiar 'TU_PASSWORD' por tu contraseña real de MySQL
+
+4. Guardar el archivo
+
+
+================================================================================
+PASO 3: INSTALAR DEPENDENCIAS DEL PROYECTO
+================================================================================
+
+1. Abrir PowerShell o CMD en la carpeta 'backend'
+
+2. Ejecutar:
+
+   npm install
+
+3. Esperar a que se instalen todas las dependencias
+
+
+================================================================================
+PASO 4: INICIALIZAR LA BASE DE DATOS
+================================================================================
+
+1. Desde la carpeta 'backend', ejecutar:
+
+   node scripts/initDatabase.js
+
+2. Deberías ver estos mensajes de éxito:
+
+   Database connection established successfully
+   Database synchronized successfully
+   Creating admin user...
+   Admin user created successfully
+   Email: admin@gaming.com
+   Password: admin123
+   Creating sample products...
+   Sample products created successfully
+   Database initialization completed successfully!
+
+3. Si el usuario admin ya existe, verás:
+
+   Admin user already exists
+
+
+================================================================================
+PASO 5: VERIFICAR LAS TABLAS EN MYSQL
+================================================================================
+
+Opción A - MySQL Workbench:
+---------------------------
+1. Abrir MySQL Workbench
+2. Conectar a tu instancia local
+3. En el panel izquierdo, expandir la base de datos 'gaming'
+4. Expandir la carpeta 'Tables'
+5. Deberías ver estas tablas:
+   - users
+   - products
+   - sales
+   - saleproducts
+
+6. Para ver los datos, hacer clic derecho en cualquier tabla
+7. Seleccionar "Select Rows - Limit 1000"
+
+
+Opción B - Línea de comandos:
+-----------------------------
+1. Conectar a MySQL:
+
+   mysql -u root -p
+
+2. Seleccionar la base de datos:
+
+   USE gaming;
+
+3. Ver todas las tablas:
+
+   SHOW TABLES;
+
+4. Ver datos de usuarios:
+
+   SELECT * FROM users;
+
+5. Ver datos de productos:
+
+   SELECT * FROM products;
+
+
+================================================================================
+PASO 6: INICIAR EL SERVIDOR
+================================================================================
+
+1. Desde la carpeta 'backend', ejecutar:
+
+   npm start
+
+   O para desarrollo con auto-reload:
+
+   npm run dev
+
+2. El servidor debería iniciar en el puerto 3000
+
+3. Deberías ver estos mensajes:
+
+   Database connection established successfully
+   Database synchronized successfully
+   Application started with database connection
+
+
+================================================================================
+CREDENCIALES DE ACCESO AL PANEL ADMIN
+================================================================================
+
+URL: http://localhost:3000/admin/login
+
+Email:    admin@gaming.com
+Password: admin123
+
+
+================================================================================
+COMANDOS ÚTILES
+================================================================================
+
+# Instalar dependencias
+npm install
+
+# Iniciar servidor (producción)
+npm start
+
+# Iniciar servidor (desarrollo con auto-reload)
+npm run dev
+
+# Reinicializar base de datos
+node scripts/initDatabase.js
+
+# Ver estado de la base de datos
+mysql -u root -p -e "USE gaming; SHOW TABLES;"
+
+# Limpiar dependencias no utilizadas
+npm prune

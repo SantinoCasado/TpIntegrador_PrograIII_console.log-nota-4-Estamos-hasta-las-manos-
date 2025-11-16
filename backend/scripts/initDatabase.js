@@ -18,7 +18,7 @@ const initializeData = async () => {
         });
 
         if (!existingAdmin) {
-            console.log('👤 Creating admin user...');
+            console.log('Creating admin user...');
             const hashedPassword = await bcrypt.hash('admin123', 12);
             
             await User.create({

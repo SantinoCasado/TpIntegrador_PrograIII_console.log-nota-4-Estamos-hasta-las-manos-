@@ -61,15 +61,15 @@ const db = new Sequelize(
 const initializeDatabase = async () => {
     try {
         await db.authenticate();
-        console.log('✅ Database connection established successfully');
+        console.log('Database connection established successfully');
         
         // Sincronizar modelos (crear tablas si no existen)
         await db.sync({ alter: false }); // NO usar force: true para no borrar datos
-        console.log('✅ Database synchronized successfully');
+        console.log('Database synchronized successfully');
         
         return true;
     } catch (error) {
-        console.error('❌ Unable to connect to the database:', error.message);
+        console.error('Unable to connect to the database:', error.message);
         return false;
     }
 };
