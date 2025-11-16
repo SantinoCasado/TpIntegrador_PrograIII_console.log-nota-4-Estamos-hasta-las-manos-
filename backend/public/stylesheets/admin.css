@@ -1,0 +1,201 @@
+/* =====================================================
+   STICKY FOOTER - PARA TODOS LOS LAYOUTS
+   ===================================================== */
+
+/* Asegurar que el footer se adhiera al final en todas las páginas */
+html,
+body {
+  height: 100%;
+}
+
+.min-vh-100 {
+  min-height: 100vh !important;
+}
+
+.flex-grow-1 {
+  flex-grow: 1 !important;
+}
+
+/* Footer siempre al final */
+footer {
+  margin-top: auto;
+}
+
+/* =====================================================
+   BOOTSTRAP OVERRIDES
+   ===================================================== */
+
+.bg-dark {
+  background-color: #212529 !important;
+}
+
+.text-light {
+  color: #f8f9fa !important;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+/* Admin body general styles */
+body.admin-body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+}
+
+/* ==================== components/navbar.ejs ======================== */
+
+.navbar-admin {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+/* ==================== components/footer.ejs ======================== */
+
+footer.admin-footer {
+  margin-top: auto;
+  border-top: 1px solid #dee2e6;
+}
+
+/* ==================== admin/login.ejs ======================== */
+.login-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.quick-access-btn {
+  transition: all 0.3s ease;
+}
+
+.quick-access-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ==================== admin/dashboard.ejs ======================== */
+
+.stats-card {
+  border: none;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stats-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.stats-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+/* ==================== admin/products.ejs ======================== */
+
+.products-header {
+  background: linear-gradient(135deg, #4e73df 0%, #1cc88a 100%);
+  color: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.table-img {
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.status-badge {
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+}
+
+/* Product filters */
+.filters-section {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ==================== components/systemInfo.ejs ======================== */
+
+.system-info-card {
+  background: linear-gradient(135deg, #36d1dc 0%, #5b86e5 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+}
+
+.system-info-card .card-header {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 10px 10px 0 0;
+}
+
+/* ==================== components/quickInfo.ejs ======================== */
+
+.quick-info-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+}
+
+.quick-info-card .card-header {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 10px 10px 0 0;
+}
+
+/* ==================== utilities/commonStyles ======================== */
+
+/* Smooth transitions for all interactive elements */
+.btn,
+.card,
+.badge {
+  transition: all 0.3s ease;
+}
+
+/* Custom scrollbar for admin area */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .stats-card {
+    margin-bottom: 1rem;
+  }
+
+  .filters-section {
+    padding: 1rem;
+  }
+
+  .products-header {
+    padding: 1rem;
+    text-align: center;
+  }
+}

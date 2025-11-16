@@ -28,12 +28,46 @@ const getAllProducts = async (req, res) => {
 // R - READ - obtener todos los productos para admin (incluye inactivos)
 const getAllProductsAdmin = async (req, res) => {
     try {
-        const products = await Product.findAll({
-            order: [['createdAt', 'DESC']]
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
+        const category = req.query.category || '';
+        const status = req.query.status || '';
+
+        // Construir condiciones de filtro
+        let whereConditions = {};
+        
+        if (category) {
+            whereConditions.category = category;
+        }
+        
+        if (status !== '') {
+            whereConditions.isActive = status === 'true';
+        }
+
+        const { count, rows } = await Product.findAndCountAll({
+            where: whereConditions,
+            order: [['createdAt', 'DESC']],
+            limit: limit,
+            offset: offset
         });
-        res.json(products);
+
+        const totalPages = Math.ceil(count / limit);
+
+        res.json({
+            products: rows,
+            currentPage: page,
+            totalPages: totalPages,
+            totalProducts: count,
+            hasNextPage: page < totalPages,
+            hasPrevPage: page > 1
+        });
     } catch (error) {
-        res.json({ message: error.message });
+        console.error('Error in getAllProductsAdmin:', error);
+        res.status(500).json({ 
+            error: 'Error al obtener los productos',
+            message: error.message 
+        });
     }
 };
 

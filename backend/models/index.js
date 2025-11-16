@@ -1,4 +1,4 @@
-const db = require('../data/database');
+const { db } = require('../data/database');
 
 // Importar los modelos
 const Product = require('./Product');

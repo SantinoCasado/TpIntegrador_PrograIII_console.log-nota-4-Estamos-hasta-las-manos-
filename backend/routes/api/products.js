@@ -8,6 +8,9 @@ router.get('/', productController.getAllProducts);
 //GET /api/products/paginated => devuelve productos con paginacion
 router.get('/paginated', productController.getPaginatedProducts);
 
+//GET /api/products/admin => devuelve todos los productos (incluyendo inactivos) para admin
+router.get('/admin', productController.getAllProductsAdmin);
+
 // POST /api/products => crea un nuevo producto
 router.post('/', productController.createProduct);
 

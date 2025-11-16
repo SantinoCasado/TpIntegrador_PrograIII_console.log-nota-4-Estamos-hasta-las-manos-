@@ -1,4 +1,4 @@
-const db = require('../data/database');
+const { db } = require('../data/database');
 const { DataTypes } = require('sequelize');
 
 // Definición del modelo Product
@@ -29,8 +29,9 @@ const Product = db.define('products', {
         defaultValue: 0,
     },
     image:{
-        type: DataTypes.STRING,
-        allowNull: false,
+        type: DataTypes.TEXT,
+        allowNull: true,
+        defaultValue: '/images/no-image.svg'
     },
     isActive:{
         type: DataTypes.BOOLEAN,

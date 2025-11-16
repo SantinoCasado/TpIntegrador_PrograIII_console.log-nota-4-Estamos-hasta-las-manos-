@@ -1,0 +1,106 @@
+<!-- Cards de las estadisticas -->
+<div class="row mb-4">
+  <div class="col-md-3 mb-3">
+    <div class="card text-center stats-card">
+      <div class="card-body">
+        <div class="stats-icon text-primary mb-2">
+          <i class="fas fa-users fa-2x"></i>
+        </div>
+        <h3 class="stats-number">
+          <!-- Si no hay usuarios registrados evito undefinded -->
+          <%= typeof stats !== 'undefined' && stats.totalUsers ?
+          stats.totalUsers : 0 %>
+        </h3>
+        <p class="text-muted mb-0">Total Users</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 mb-3">
+    <div class="card text-center stats-card">
+      <div class="card-body">
+        <div class="stats-icon text-success mb-2">
+          <i class="fas fa-box fa-2x"></i>
+        </div>
+        <h3 class="stats-number">
+          <!-- Si no hay productos registrados evito undefinded -->
+          <%= typeof stats !== 'undefined' && stats.totalProducts ?
+          stats.totalProducts : 0 %>
+        </h3>
+        <p class="text-muted mb-0">Total Products</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 mb-3">
+    <div class="card text-center stats-card">
+      <div class="card-body">
+        <div class="stats-icon text-info mb-2">
+          <i class="fas fa-check-circle fa-2x"></i>
+        </div>
+        <h3 class="stats-number">
+          <!-- Si no hay productos activos evito undefined -->
+          <%= typeof stats !== 'undefined' && stats.activeProducts ?
+          stats.activeProducts : 0 %>
+        </h3>
+        <p class="text-muted mb-0">Active Products</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 mb-3">
+    <div class="card text-center stats-card">
+      <div class="card-body">
+        <div class="stats-icon text-warning mb-2">
+          <i class="fas fa-shopping-cart fa-2x"></i>
+        </div>
+        <h3 class="stats-number">
+          <!-- Si no hay ventas totales evito undefined -->
+          <%= typeof stats !== 'undefined' && stats.totalSales ?
+          stats.totalSales : 0 %>
+        </h3>
+        <p class="text-muted mb-0">Total Sales</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Acciones rapidas -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <a
+                href="/admin/dashboard/products/new"
+                class="btn btn-primary w-100"
+              >
+                <i class="fas fa-plus me-2"></i>Add New Product
+              </a>
+            </div>
+            <div class="col-md-4 mb-3">
+              <a href="/admin/dashboard/products" class="btn btn-success w-100">
+                <i class="fas fa-list me-2"></i>Manage Products
+              </a>
+            </div>
+            <div class="col-md-4 mb-3">
+              <button class="btn btn-info w-100" disabled>
+                <i class="fas fa-list me-2"></i>View Sales (Coming Soon)
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 mb-3"><%- include('../components/systemInfo') %></div>
+  <div class="col-md-6 mb-3"><%- include('../components/quickInfo') %></div>
+</div>
+<div class="row">
+  <div class="col-12"><%- include('../components/welcomeMessage') %></div>
+</div>

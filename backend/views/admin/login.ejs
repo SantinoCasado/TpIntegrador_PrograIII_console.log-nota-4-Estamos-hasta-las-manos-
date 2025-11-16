@@ -1,0 +1,95 @@
+<!-- Formulario para el login -->
+<div
+  class="container-fluid vh-100 d-flex align-items-center justify-content-center"
+>
+  <div class="row w-100">
+    <div class="col-md-6 col-lg-4 mx-auto">
+      <div class="card shadow">
+        <div class="card-header text-center bg-primary text-white">
+          <div class="d-flex align-items-center justify-content-center mb-2">
+            <img
+              src="/images/logo.png"
+              alt="Gaming Logo"
+              class="me-2"
+              style="height: 30px"
+            />
+            <h4 class="mb-0">Gaming Admin</h4>
+          </div>
+          <small>Administrator Access Panel</small>
+        </div>
+        <div class="card-body p-4">
+          <!-- boton de acceso rapido -->
+          <div class="mb-3 text-center">
+            <button
+              type="button"
+              id="quick-access-btn"
+              class="btn btn-success btn-sm"
+            >
+              <i class="fas fa-bolt me-1"></i>Quick Access (For Testing)
+            </button>
+          </div>
+          <hr />
+          <!-- Formulario de login -->
+          <form action="/admin/login" method="POST">
+            <div class="mb-3">
+              <label for="email" class="form-label">
+                <i class="fas fa-envelope me-1"></i>Email Address
+              </label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+              />
+
+              <div class="mb-3">
+                <label for="password" class="form-label">
+                  <i class="fas fa-key me-1"></i>Password
+                </label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  required
+                />
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div class="card-footer text-center bg-light">
+            <small class="text-muted">
+              Developed by <strong>SANTINO CASADO</strong> and
+              <strong>THIAGO PATRICIO FERNANDEZ LADO</strong>
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Accion para el boton de acceso rapido
+  document
+    .getElementById("quick-access-btn")
+    .addEventListener("click", function () {
+      // Auto completar credenciales para testers/profesores
+      document.getElementById("email").value = "admin@gaming.com";
+      document.getElementById("password").value = "admin123";
+
+      //Feedback visual
+      this.innerHTML = '<i class="fas fa-check me-1"></i>Credentials Loaded!';
+      this.classList.remove("btn-success");
+      this.classList.add("btn-info");
+    });
+</script>

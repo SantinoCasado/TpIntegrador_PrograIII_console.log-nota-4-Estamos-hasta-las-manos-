@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+const expressLayouts = require('express-ejs-layouts');
+const session = require('express-session');
+const methodOverride = require('method-override');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -23,12 +26,45 @@ app.use(cors());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use(expressLayouts);
+app.set('layout', 'layouts/adminLayout');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// Configurar method-override para permitir PUT y DELETE en formularios
+// Buscar _method en query string, body y headers
+app.use(methodOverride('_method'));
+app.use(methodOverride(function (req, res) {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST body and delete it
+    var method = req.body._method;
+    delete req.body._method;
+    return method;
+  }
+}));
+
+// Configuración de sesiones para autenticación
+app.use(session({
+  secret: 'gaming-admin-secret-key-2024', // Cambiar en producción
+  resave: false,
+  saveUninitialized: false,
+  cookie: { 
+    secure: false, // true en HTTPS
+    maxAge: 24 * 60 * 60 * 1000 // 24 horas
+  }
+}));
+
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Crear carpeta uploads
+const uploadsDir = path.join(__dirname, 'public', 'uploads');
+if (!require('fs').existsSync(uploadsDir)) {
+  require('fs').mkdirSync(uploadsDir, { recursive: true });
+  console.log('Uploads directory created');
+}
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

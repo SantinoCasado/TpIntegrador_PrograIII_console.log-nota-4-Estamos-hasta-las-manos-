@@ -1,4 +1,4 @@
-const db = require('../data/database');
+const { db } = require('../data/database');
 const { DataTypes } = require('sequelize');
 
 //Definición del modelo User

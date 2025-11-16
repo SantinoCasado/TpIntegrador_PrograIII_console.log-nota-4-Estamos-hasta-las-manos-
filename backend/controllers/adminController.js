@@ -35,7 +35,12 @@ const processLogin = async (req, res) => {
                 error: 'Invalid credentials'
             });
         }
-        // El login fue exitoso
+        // El login fue exitoso - Crear sesión usando patrón del profesor
+        req.session.usario = {
+            id: user.id,
+            name: user.name,
+            email: user.email
+        };
         res.redirect('/admin/dashboard');
 
     } catch (error) {
@@ -48,8 +53,13 @@ const processLogin = async (req, res) => {
 
 // GET -  Logout de admin
 const logout = (req, res) => {
-    // Destruir la sesion (si se usa sesiones)
-    res.redirect('/admin/login');
+    // Destruir la sesión
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error destroying session:', err);
+        }
+        res.redirect('/admin/login');
+    });
 };
 
 // ======================= DASHBOARD DE LAS VIEWS ========================
@@ -83,21 +93,21 @@ const showDashboard = async (req, res) => {
 // GET - Muestro todos los productos
 const showProducts = async (req, res) => {
     try {
-        const products = await Product.findAll();
+        // No cargar productos aquí, dejar que el JavaScript los cargue dinámicamente
         res.render('admin/products', {
             title: 'Products Management',
-            products: products
+            products: [], // Array vacío para que el JavaScript tome el control
+            totalProducts: 0 // Se actualizará via JavaScript
         });
     } catch (error) {
         res.render('admin/products', {
-            title: 'Products Management',
+            title: 'Products Management', 
             error: 'An error occurred while loading the products',
-            products: []
+            products: [],
+            totalProducts: 0
         });
     }
-};
-
-// GET - Muestro nueva forma de producto
+};// GET - Muestro nueva forma de producto
 const showNewProduct = (req, res) => {
     res.render('admin/product-form', {
         title: 'Add New Product',
@@ -109,17 +119,24 @@ const showNewProduct = (req, res) => {
 // POST - Creo un nuevo producto
 const createProduct = async (req, res) => {
     try {
-        await Product.create({
+        // Validar que la URL de imagen no sea demasiado larga
+        if (req.body.image && req.body.image.length > 10000) {
+            throw new Error('Image URL is too long. Please use a shorter URL or upload to an image hosting service.');
+        }
+        
+        const newProduct = await Product.create({
             ...req.body,      // nombre, description, price, category, isActive
             isActive: true
         });
+        
         res.redirect('/admin/dashboard/products');
     } catch (error) {
+        console.error('Error creating product:', error.message);
         res.render('admin/product-form', {
             title: 'Add New Product',
             product: req.body,
             action: 'create',
-            error: 'An error occurred while creating the product'
+            error: 'Error creating product: ' + error.message
         });
     }
 };
@@ -138,25 +155,39 @@ const showEditProduct = async (req, res) => {
             action: 'edit'
         });
     } catch (error) {
+        console.error('Error in showEditProduct:', error);
         res.redirect('/admin/dashboard/products');
     }
 };
 
 // PUT - Actualizo un producto existente
 const updateProduct = async (req, res) => {
+    
     try{
-        await Product.update(req.body, {
+        const [updatedRows] = await Product.update(req.body, {
             where: { id: req.params.id }
         });
+        
+        if (updatedRows === 0) {
+            return res.redirect('/admin/dashboard/products');
+        }
+        
         res.redirect('/admin/dashboard/products');
     } catch (error) {
-        res.render('admin/product-form', {
-            title: 'Edit Product',
-            // Obtengo el producto original para mostrar en el formulario y llenar los campos
-            product: { ...product.dataValues, ...req.body}, //
-            action: 'edit',
-            error: 'An error occurred while updating the product'
-        });
+        console.error('Error updating product:', error);
+        
+        // Buscar el producto para mostrar en el formulario con error
+        try {
+            const product = await Product.findByPk(req.params.id);
+            res.render('admin/product-form', {
+                title: 'Edit Product',
+                product: product,
+                action: 'edit',
+                error: 'An error occurred while updating the product'
+            });
+        } catch (findError) {
+            res.redirect('/admin/dashboard/products');
+        }
     }
 };
 
