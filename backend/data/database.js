@@ -1,7 +1,7 @@
 // 1. Importo el constructor sequelize
 const { Sequelize } =  require("sequelize");
 
-// 2. Crear la conexion a la base de datos-
+// 2. Crear la conexion a la base de datos aca pondrias tus datos y duespues creamos por separado los obejetos
 const db = new Sequelize(
     'gaming', // Nombre CORRECTO de la base de datos
     'root', // Nombre de usuario
@@ -11,7 +11,7 @@ const db = new Sequelize(
         dialect: 'mysql',
         port: 3306,
         dialectOptions: {
-            // Deshabilitamos SSL completamente para desarrollo local
+            // Deshabilite el SSL completamente para desarrollo local
             ssl: false,
             connectTimeout: 60000,
         },

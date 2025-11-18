@@ -1,0 +1,38 @@
+<%- include('./parciales/header') %>
+
+<% if(usuario) { %>
+
+    <p> Hola <%= usuario.nombre %> <%= usuario.apellido %></p>
+    <p> <a href="/logout">Logout</a> </p>
+
+<% } %>
+
+<table class="table table-hover">
+    <tr>
+        <th>CÓDIGO</th><th>MARCA</th><th>PRECIO</th><th>FOTO</th><th>ACCIONES</th>
+    </tr>
+
+    <% for (let index = 0; index < prod_obj_array.length; index++) {
+        const dato = prod_obj_array[index]; 
+    %>
+    <tr>
+        <td><%= dato.codigo %></td><td><%= dato.marca %></td><td><%= dato.precio %></td>
+        <td><img src="<%= dato.path %>" width="80px" hight="80px"></td>
+        <td>
+            <button type="button" class="btn btn-info" id="" 
+                data-obj='<%= JSON.stringify(dato) %>' name="btnModificar">Modificar
+                <span class="bi bi-pencil"></span>
+            </button>
+            <button type="button" class="btn btn-danger" id="" 
+                data-codigo='<%= dato.codigo %>' name="btnEliminar">Eliminar
+                <span class="bi bi-x-circle"></span>
+            </button>
+        </td>
+    </tr>
+
+    <% } %>
+</table>
+<br>
+<button id="btnAgregarNuevo">Agregar Nuevo Producto</button>
+
+<%- include('./parciales/footer') %>
