@@ -1,0 +1,20 @@
+<%- include('./parciales/header') %>
+
+<h1><%= titulo %></h1>
+
+<form method="post" action="/registro">
+    <input type="number" name="legajo" placeholder="Legajo">
+    <input type="password" name="clave" placeholder="Clave">
+    <input type="text" name="nombre" placeholder="Nombre">
+    <input type="text" name="apellido" placeholder="Aplellido">
+    <button type="submit" >Registrar</button>
+</form>
+
+<p><a href="/login" >Volver al login</a></p>
+
+<% if(error) { %>
+    <p style="color: red;"><%= error %></p>
+
+<% } %>
+
+<%- include('./parciales/footer') %>
