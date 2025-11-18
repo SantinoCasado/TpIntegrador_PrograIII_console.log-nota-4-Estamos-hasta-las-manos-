@@ -140,3 +140,8 @@ public/receipts/
 .git/
 *.tgz
 *.tar.gz
+
+
+# Ignore specific sensitive files
+backend/data/database.js
+
