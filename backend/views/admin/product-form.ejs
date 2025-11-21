@@ -1,36 +1,43 @@
-<!-- Solo el contenido específico del formulario -->
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h2>
-    <!-- Asi lo hace el tipo del video y queda mas simplificado vamos con eso? Se -->
-    <i class="fas fa-<%= action === 'create' ? 'plus' : 'edit' %> me-2"></i>
-    <%= action === 'create' ? 'Add New Product' : 'Edit Product' %>
-  </h2>
-  <a href="/admin/dashboard/products" class="btn btn-secondary">
-    <i class="fas fa-arrow-left me-2"></i>Go back
-  </a>
-</div>
+<!-- Header del formulario con estilo moderno -->
+<div class="container-fluid py-4">
+  <div class="mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <h2 class="mb-1">
+          <i class="fas fa-<%= action === 'create' ? 'plus-circle' : 'edit' %> me-2" style="color: #667eea;"></i>
+          <%= action === 'create' ? 'Add New Product' : 'Edit Product' %>
+        </h2>
+        <p class="text-muted mb-0">
+          <%= action === 'create' ? 'Fill in the details to add a new product' : 'Update the product information below' %>
+        </p>
+      </div>
+      <a href="/admin/dashboard/products" class="btn btn-outline-secondary btn-lg">
+        <i class="fas fa-arrow-left me-2"></i>Back to List
+      </a>
+    </div>
+  </div>
 
-<!-- Alertas de error -->
-<!-- Es ma facil hacerlo asi bld -->
-<% if (typeof error !== 'undefined' && error) {%>
-<!-- Encontre este combo que fachero, seee -->
-<div class="alert alert-danger alert-dismissible fade shadow" role="alert">
-  <i class="fas fa-exclamation-triangle me-2"></i>
-  <%= error %>
-  <!-- es mas facil ponerle un boton asi -->
-  <button
-    type="button"
-    class="btn-close"
-    data-bs-dismiss="alert"
-    aria-label="Close"
-  ></button>
-</div>
-<% } %>
+  <!-- Alertas de error con diseño moderno -->
+  <% if (typeof error !== 'undefined' && error) {%>
+  <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+    <div class="d-flex align-items-center">
+      <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+      <div>
+        <strong>Error!</strong> <%= error %>
+      </div>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <% } %>
 
-<!-- Card del formulario -->
-<!-- Esto dejamelo hacer a mi que es ir uno por uno anda continuando el frontend -->
-<div class="card shadow">
-  <div class="card-body">
+  <!-- Card del formulario con diseño moderno -->
+  <div class="card shadow-sm border-0">
+    <div class="card-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+      <h5 class="mb-0">
+        <i class="fas fa-info-circle me-2"></i>Product Information
+      </h5>
+    </div>
+    <div class="card-body p-4">
     <form action="<%= action === 'create' ? '/admin/dashboard/products' : '/admin/dashboard/products/' + product.id %>" method="post">
       <% if (action === 'edit') { %>
         <input type="hidden" name="_method" value="PUT">

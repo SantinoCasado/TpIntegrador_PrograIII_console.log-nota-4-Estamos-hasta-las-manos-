@@ -1,94 +1,84 @@
 <!-- Cards de las estadisticas -->
 <div class="row mb-4">
-  <div class="col-md-3 mb-3">
+  <div class="col-lg-3 col-md-6 mb-4">
     <div class="card text-center stats-card">
       <div class="card-body">
-        <div class="stats-icon text-primary mb-2">
-          <i class="fas fa-users fa-2x"></i>
+        <div class="stats-icon text-primary">
+          <i class="fas fa-users"></i>
         </div>
         <h3 class="stats-number">
-          <!-- Si no hay usuarios registrados evito undefinded -->
-          <%= typeof stats !== 'undefined' && stats.totalUsers ?
-          stats.totalUsers : 0 %>
+          <%= typeof stats !== 'undefined' && stats.totalUsers ? stats.totalUsers : 0 %>
         </h3>
-        <p class="text-muted mb-0">Total Users</p>
+        <p class="text-muted mb-0 fw-bold">Total Users</p>
       </div>
     </div>
   </div>
 
-  <div class="col-md-3 mb-3">
+  <div class="col-lg-3 col-md-6 mb-4">
     <div class="card text-center stats-card">
       <div class="card-body">
-        <div class="stats-icon text-success mb-2">
-          <i class="fas fa-box fa-2x"></i>
+        <div class="stats-icon text-success">
+          <i class="fas fa-box"></i>
         </div>
         <h3 class="stats-number">
-          <!-- Si no hay productos registrados evito undefinded -->
-          <%= typeof stats !== 'undefined' && stats.totalProducts ?
-          stats.totalProducts : 0 %>
+          <%= typeof stats !== 'undefined' && stats.totalProducts ? stats.totalProducts : 0 %>
         </h3>
-        <p class="text-muted mb-0">Total Products</p>
+        <p class="text-muted mb-0 fw-bold">Total Products</p>
       </div>
     </div>
   </div>
 
-  <div class="col-md-3 mb-3">
+  <div class="col-lg-3 col-md-6 mb-4">
     <div class="card text-center stats-card">
       <div class="card-body">
-        <div class="stats-icon text-info mb-2">
-          <i class="fas fa-check-circle fa-2x"></i>
+        <div class="stats-icon text-info">
+          <i class="fas fa-check-circle"></i>
         </div>
         <h3 class="stats-number">
-          <!-- Si no hay productos activos evito undefined -->
-          <%= typeof stats !== 'undefined' && stats.activeProducts ?
-          stats.activeProducts : 0 %>
+          <%= typeof stats !== 'undefined' && stats.activeProducts ? stats.activeProducts : 0 %>
         </h3>
-        <p class="text-muted mb-0">Active Products</p>
+        <p class="text-muted mb-0 fw-bold">Active Products</p>
       </div>
     </div>
   </div>
 
-  <div class="col-md-3 mb-3">
+  <div class="col-lg-3 col-md-6 mb-4">
     <div class="card text-center stats-card">
       <div class="card-body">
-        <div class="stats-icon text-warning mb-2">
-          <i class="fas fa-shopping-cart fa-2x"></i>
+        <div class="stats-icon text-warning">
+          <i class="fas fa-shopping-cart"></i>
         </div>
         <h3 class="stats-number">
-          <!-- Si no hay ventas totales evito undefined -->
-          <%= typeof stats !== 'undefined' && stats.totalSales ?
-          stats.totalSales : 0 %>
+          <%= typeof stats !== 'undefined' && stats.totalSales ? stats.totalSales : 0 %>
         </h3>
-        <p class="text-muted mb-0">Total Sales</p>
+        <p class="text-muted mb-0 fw-bold">Total Sales</p>
       </div>
     </div>
   </div>
+</div>
 
   <!-- Acciones rapidas -->
   <div class="row mb-4">
     <div class="col-12">
-      <div class="card">
-        <div class="card-header">
+      <div class="card shadow-sm">
+        <div class="card-header bg-gradient" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
           <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
         </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-4 mb-3">
-              <a
-                href="/admin/dashboard/products/new"
-                class="btn btn-primary w-100"
-              >
-                <i class="fas fa-plus me-2"></i>Add New Product
+        <div class="card-body p-4">
+          <div class="row g-3">
+            <div class="col-lg-4 col-md-6">
+              <a href="/admin/dashboard/products/new" class="btn btn-primary w-100 py-3 shadow-sm">
+                <i class="fas fa-plus-circle me-2"></i>Add New Product
               </a>
             </div>
-            <div class="col-md-4 mb-3">
-              <a href="/admin/dashboard/products" class="btn btn-success w-100">
-                <i class="fas fa-list me-2"></i>Manage Products
+            <div class="col-lg-4 col-md-6">
+              <a href="/admin/dashboard/products" class="btn btn-success w-100 py-3 shadow-sm">
+                <i class="fas fa-list-ul me-2"></i>Manage Products
               </a>
             </div>
-            <div class="col-md-4 mb-3">
-              <button class="btn btn-info w-100" disabled>
-                <i class="fas fa-list me-2"></i>View Sales (Coming Soon)
+            <div class="col-lg-4 col-md-6">
+              <button class="btn btn-info w-100 py-3 shadow-sm" disabled>
+                <i class="fas fa-chart-line me-2"></i>View Sales (Coming Soon)
               </button>
             </div>
           </div>

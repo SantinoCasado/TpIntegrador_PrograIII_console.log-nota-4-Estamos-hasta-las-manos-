@@ -40,7 +40,8 @@ footer {
 /* Admin body general styles */
 body.admin-body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8f9fa;
+  background: linear-gradient(to bottom right, #e3f2fd, #f3e5f5);
+  min-height: 100vh;
 }
 
 /* ==================== components/navbar.ejs ======================== */
@@ -84,47 +85,141 @@ footer.admin-footer {
 
 .stats-card {
   border: none;
-  border-radius: 10px;
+  border-radius: 15px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.stats-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
 }
 
 .stats-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.stats-card .card-body {
+  padding: 2rem 1.5rem;
 }
 
 .stats-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 1.8rem;
+}
+
+.stats-icon.text-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white !important;
+}
+
+.stats-icon.text-success {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white !important;
+}
+
+.stats-icon.text-info {
+  background: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
+  color: white !important;
+}
+
+.stats-icon.text-warning {
+  background: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%);
+  color: white !important;
+}
+
+.stats-number {
   font-size: 2.5rem;
-  margin-bottom: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
 }
 
 /* ==================== admin/products.ejs ======================== */
 
 .products-header {
-  background: linear-gradient(135deg, #4e73df 0%, #1cc88a 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  border-radius: 10px;
+  border-radius: 15px;
   padding: 1.5rem;
   margin-bottom: 2rem;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
 }
 
 .table-img {
   border-radius: 8px;
   object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .status-badge {
   font-size: 0.85rem;
   padding: 0.5rem 1rem;
+  border-radius: 20px;
 }
 
 /* Product filters */
 .filters-section {
   background-color: white;
-  border-radius: 10px;
+  border-radius: 15px;
   padding: 1.5rem;
   margin-bottom: 2rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table thead th {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.table tbody tr {
+  transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+  background-color: #f8f9fa;
+  transform: scale(1.01);
+}
+
+.btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  border-radius: 8px;
 }
 
 /* ==================== components/systemInfo.ejs ======================== */
@@ -198,4 +293,101 @@ footer.admin-footer {
     padding: 1rem;
     text-align: center;
   }
+  
+  .table-responsive {
+    font-size: 0.9rem;
+  }
+}
+
+/* ==================== Form Enhancements ======================== */
+
+.form-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+.form-control, .form-select {
+  border-radius: 10px;
+  border: 2px solid #e9ecef;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+textarea.form-control {
+  min-height: 120px;
+}
+
+/* ==================== Button Enhancements ======================== */
+
+.btn {
+  border-radius: 10px;
+  padding: 0.6rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  box-shadow: 0 4px 15px rgba(17, 153, 142, 0.3);
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(17, 153, 142, 0.4);
+}
+
+.btn-lg {
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+}
+
+.btn-group .btn {
+  padding: 0.4rem 0.8rem;
+  margin: 0 2px;
+}
+
+/* ==================== Alert Enhancements ======================== */
+
+.alert {
+  border-radius: 15px;
+  border: none;
+  padding: 1.5rem;
+}
+
+.alert-danger {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+.alert-success {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+}
+
+/* ==================== Badge Enhancements ======================== */
+
+.badge {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.badge.rounded-pill {
+  padding: 0.5rem 1rem;
 }

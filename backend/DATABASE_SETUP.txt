@@ -89,6 +89,7 @@ PASO 4: INICIALIZAR LA BASE DE DATOS
 1. Desde la carpeta 'backend', ejecutar:
 
    node scripts/initDatabase.js
+   node scripts/createAdmins.js
 
 2. Deberías ver estos mensajes de éxito:
 
