@@ -14,7 +14,6 @@ var usersRouter = require('./routes/users');
 // Importacion de rutas api para el frontend
 var productsApiRouter = require('./routes/api/products');
 var salesApiRouter = require('./routes/api/sales');
-var usersApiRouter = require('./routes/api/users');
 
 // Importacion de rutas Admin para el backend
 var adminLoginRouter = require('./routes/admin/login');
@@ -72,7 +71,6 @@ app.use('/users', usersRouter);
 // Rutas API (para el frontend) - descomentá cuando las tengas
 app.use('/api/products', productsApiRouter);
 app.use('/api/sales', salesApiRouter);
-app.use('/api/users', usersApiRouter);
 
 // Rutas Admin (para el backend) - descomentá cuando las tengas
 app.use('/admin', adminLoginRouter);
