@@ -145,3 +145,4 @@ public/receipts/
 # Ignore specific sensitive files
 backend/data/database.js
 
+backend/data/database.js
