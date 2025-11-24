@@ -11,6 +11,7 @@
   background: linear-gradient(to right, #1a1a1a, #2d1b69) !important;
   border-bottom: 2px solid var(--purple);
   border-block-color: var(--pink);
+  grid-area:  header;
 }
 
 .navbar-brand img {
@@ -29,6 +30,25 @@
     var(--dark-base)
   );
   min-height: 100vh;
+}
+
+.products-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+      "header header"
+      "nav products-list"
+      "footer footer";
+  gap: 20px;
+  padding: 20px;
+}
+
+.icon img {
+    width: 1.625rem;
+    height: 1.625rem;
+    margin: auto;
 }
 
 .bg-gaming-gradient {

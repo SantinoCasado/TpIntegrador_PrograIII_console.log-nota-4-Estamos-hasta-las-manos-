@@ -1,8 +1,10 @@
+
 // Confiuracion de la aplicacion frontend
 const APP_CONFIG = {
     CUSTOMER_NAME_KEY: 'gaming-customer-name',
     THEME_KEY: 'gaming-theme',
-    PRODUCTS_PAGE: 'products.html'
+    PRODUCTS_PAGE: 'products.html',
+    CART_PAGE: 'cart.html'
 };
 
 const COMPANY_NAME = 'Gaming';
@@ -24,6 +26,9 @@ document.addEventListener('DOMContentLoaded', function(){
     setupAdminMode();
 
     console.log('All setup complete.');
+    setupproductsPage();
+    console.log('Products page setup complete.');
+
 });
 
 /* ========================== FUNCIONES GLOBALES ==============================*/
@@ -59,6 +64,7 @@ function setupEffects(){
 /* ========================== CONFIGURACION DEL index.html ==============================*/ 
 // Configuracion del formulario de cliente
 function setupCustomerForm(){
+
     const form = document.getElementById('customer-form');
     const nameInput = document.getElementById('customer-name');
     const continueButton = document.getElementById('continue-btn');
@@ -112,6 +118,198 @@ function setupCustomerForm(){
         }, 300);
     }
 };
+/* ========================== CONFIGURACION DEL products.html ==============================*/ 
+function setupproductsPage(){
+    
+    // Cargar el nombre del cliente
+    const customerName = localStorage.getItem(APP_CONFIG.CUSTOMER_NAME_KEY);
+    const nameDisplay = document.getElementById('customer-name-display');
+    if(customerName && nameDisplay){
+        nameDisplay.textContent = customerName;
+    }
+    
+
+    mostrarProducts(cargarProductos());
+
+    function cargarProductos() {
+        /*
+        const promesas = [];
+
+        const url = `https://api.tvmaze.com/shows/${i}`;
+        promesas.push(fetch(url).then(res => res.json()));
+        
+
+        Promise.all(promesas)
+            .then(data => {
+                data.forEach(productosData => {
+                    const products = new Producto(
+                        productosData.id,
+                        productosData.descripction,
+                        productosData.name,
+                        productosData.price,
+                        productosData.image?.medium || 'https://via.placeholder.com/210x295?text=Sin+imagen'
+                    );
+
+                    const elemento = products.createHtmlElement();
+                    productsContainer.appendChild(elemento);
+                });
+            })
+            .catch(error => {
+                console.error('Error al cargar productos:', error);
+            });
+            */
+           const listaProductos = [
+            new Product(
+                1,
+                'Consola PlayStation 5',
+                1200000,
+                '',
+                'Consolas',
+                'Experimentá una velocidad de carga ultrarrápida, inmersión más profunda y una nueva generación de juegos.'
+            ),
+            new Product(
+                2,
+                'Cyberpunk 2077',
+                85000,
+                '',
+                'Juegos',
+                'Una aventura de acción y rol de mundo abierto ambientada en la megalópolis de Night City.'
+            ),
+            new Product(
+                3,
+                'Mouse Gamer Pro X',
+                75000,
+                '',
+                'Periféricos',
+                'Sensor óptico de alta precisión, diseño ergonómico y 8 botones programables para máxima ventaja.'
+            ),
+            new Product(
+                4,
+                'Teclado Mecánico RGB',
+                150000,
+                '',
+                'Periféricos',
+                'Switches mecánicos ultra-rápidos, retroiluminación RGB personalizable y construcción de aluminio.'
+            ),
+            // ... puedes seguir agregando todos los productos que quieras aquí
+        ];
+           return listaProductos;
+    }
+    
+    function mostrarProducts(listaProductos) {
+        
+        const productsContainer = document.getElementById('products-container');
+
+        if (productsContainer) {
+
+            productsContainer.innerHTML = '';
+            listaProductos.forEach(producto => {
+                productsContainer.appendChild(producto.createHtmlElement());
+            });
+        }
+    }
+            
+    
+
+
+    function agregarAlCarrito(id) {
+
+    }
+
+
+        
+
+};
+
+/* ========================== CONFIGURACION DEL products.html ==============================*/
+function setupproductsPage(){
+    // Cargar el nombre del cliente
+    const customerName = localStorage.getItem(APP_CONFIG.CUSTOMER_NAME_KEY);
+    const nameDisplay = document.getElementById('customer-name-display');
+    if(customerName && nameDisplay){
+        nameDisplay.textContent = customerName;
+    }
+    mostrarCarrito(cargarProductos());
+
+    function cargarProductos() {
+        /*
+        const promesas = [];
+
+        const url = `https://api.tvmaze.com/shows/${i}`;
+        promesas.push(fetch(url).then(res => res.json()));
+        
+
+        Promise.all(promesas)
+            .then(data => {
+                data.forEach(productosData => {
+                    const products = new Producto(
+                        productosData.id,
+                        productosData.descripction,
+                        productosData.name,
+                        productosData.price,
+                        productosData.image?.medium || 'https://via.placeholder.com/210x295?text=Sin+imagen'
+                    );
+
+                    const elemento = products.createHtmlElement();
+                    productsContainer.appendChild(elemento);
+                });
+            })
+            .catch(error => {
+                console.error('Error al cargar productos:', error);
+            });
+            */
+           const listaProductos = [
+            new Product(
+                1,
+                'Consola PlayStation 5',
+                1200000,
+                '',
+                'Consolas',
+                'Experimentá una velocidad de carga ultrarrápida, inmersión más profunda y una nueva generación de juegos.'
+            ),
+            new Product(
+                2,
+                'Cyberpunk 2077',
+                85000,
+                '',
+                'Juegos',
+                'Una aventura de acción y rol de mundo abierto ambientada en la megalópolis de Night City.'
+            ),
+            new Product(
+                3,
+                'Mouse Gamer Pro X',
+                75000,
+                '',
+                'Periféricos',
+                'Sensor óptico de alta precisión, diseño ergonómico y 8 botones programables para máxima ventaja.'
+            ),
+            new Product(
+                4,
+                'Teclado Mecánico RGB',
+                150000,
+                '',
+                'Periféricos',
+                'Switches mecánicos ultra-rápidos, retroiluminación RGB personalizable y construcción de aluminio.'
+            ),
+            // ... puedes seguir agregando todos los productos que quieras aquí
+        ];
+           return listaProductos;
+    }
+
+    function mostrarCarrito(listaProductos) {
+        
+        const productsContainer = document.getElementById('cart-container');
+
+        if (productsContainer) {
+
+            productsContainer.innerHTML = '';
+            listaProductos.forEach(producto => {
+                productsContainer.appendChild(producto.createHtmlElement());
+            });
+        }
+    }
+    
+}
 
 /* ================= DESBLOQUEAR EL MODO ADMIN EN LA APLIACION ================= */
 function setupAdminMode(){

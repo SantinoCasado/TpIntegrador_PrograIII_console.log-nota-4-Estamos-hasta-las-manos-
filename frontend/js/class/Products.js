@@ -1,4 +1,4 @@
-import { addToCart } from "../products.js";
+//import { addToCart } from "../products.js";
 
 class Product {
   name;
@@ -123,4 +123,4 @@ class Product {
   }
 }
 
-export { Product };
+//export { Product };

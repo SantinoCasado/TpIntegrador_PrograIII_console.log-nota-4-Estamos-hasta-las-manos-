@@ -1,6 +1,7 @@
 /* ========= CARDS ===================== */
 .border-gaming {
   border-color: var(--purple);
+  grid-area: footer;
 }
 
 .bg-gaming-header {
