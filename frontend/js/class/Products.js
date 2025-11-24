@@ -17,7 +17,7 @@ class Product {
     this.stock = stock || 99; // Stock por defecto si no se proporciona
   }
 
-  createHtmlElement() {
+  createHtmlElement(carrito = false) {
     const colDiv = document.createElement("div");
     colDiv.classList.add("col-lg-3", "col-md-4", "col-sm-6", "mb-4");
 
@@ -52,28 +52,35 @@ class Product {
     const controls = document.createElement("div");
     controls.classList.add("d-flex", "align-items-center", "mt-2");
 
-    const minusBtn = document.createElement("button");
-    minusBtn.className = "btn btn-outline-secondary btn-sm";
-    minusBtn.textContent = "-";
 
-    const qtyInput = document.createElement("input");
-    qtyInput.type = "number";
-    qtyInput.value = 0;
-    qtyInput.min = 1;
-    qtyInput.max = this.stock || 99;
-    qtyInput.className = "form-control form-control-sm mx-2";
-    qtyInput.style.width = "60px";
 
-    const plusBtn = document.createElement("button");
-    plusBtn.className = "btn btn-outline-secondary btn-sm";
-    plusBtn.textContent = "+";
+    
 
-    minusBtn.onclick = () => {
-      if (qtyInput.value > 1) qtyInput.value--;
-    };
-    plusBtn.onclick = () => {
-      if (qtyInput.value < qtyInput.max) qtyInput.value++;
-    };
+      const minusBtn = document.createElement("button");
+      minusBtn.className = "btn btn-outline-secondary btn-sm";
+      minusBtn.textContent = "-";      
+
+      const qtyInput = document.createElement("input");
+      qtyInput.type = "number";
+      qtyInput.value = 0;
+      qtyInput.min = 1;
+      qtyInput.max = this.stock || 99;
+      qtyInput.className = "form-control form-control-sm mx-2";
+      qtyInput.style.width = "60px";
+      const plusBtn = document.createElement("button");
+      plusBtn.className = "btn btn-outline-secondary btn-sm";
+      plusBtn.textContent = "+";
+
+      minusBtn.onclick = () => {
+        if (qtyInput.value > 1) qtyInput.value--;
+      };
+      plusBtn.onclick = () => {
+        if (qtyInput.value < qtyInput.max) qtyInput.value++;
+      };
+
+
+    
+
 
     const cartBtn = document.createElement("button");
     cartBtn.className = "btn btn-success btn-sm ms-2";
@@ -105,9 +112,15 @@ class Product {
       showNotification("Producto agregado al carrito", "success");
     };
 
+    
+    if (carrito) {
     controls.appendChild(minusBtn);
     controls.appendChild(qtyInput);
     controls.appendChild(plusBtn);
+    }
+
+
+    
     controls.appendChild(cartBtn);
 
     cardBody.appendChild(title);
@@ -118,6 +131,9 @@ class Product {
     cardDiv.appendChild(img);
     cardDiv.appendChild(cardBody);
     colDiv.appendChild(cardDiv);
+
+
+
 
     return colDiv;
   }

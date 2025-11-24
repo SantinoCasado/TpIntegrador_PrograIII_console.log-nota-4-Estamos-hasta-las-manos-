@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', function(){
     console.log('All setup complete.');
     setupproductsPage();
     console.log('Products page setup complete.');
+    setupcarritoPage();
+    console.log('Cart page setup complete.');
 
 });
 
@@ -172,12 +174,9 @@ function setupCustomerForm(){
         }
     }
             
-    
+    funtion 
 
 
-    function agregarAlCarrito(id) {
-
-    }
 
 
         
@@ -185,7 +184,7 @@ function setupCustomerForm(){
 };
 
 /* ========================== CONFIGURACION DEL products.html ==============================*/
-function setupproductsPage(){
+function setupcarritoPage(){
     // Cargar el nombre del cliente
     const customerName = localStorage.getItem(APP_CONFIG.CUSTOMER_NAME_KEY);
     const nameDisplay = document.getElementById('customer-name-display');
@@ -267,7 +266,7 @@ function setupproductsPage(){
 
             productsContainer.innerHTML = '';
             listaProductos.forEach(producto => {
-                productsContainer.appendChild(producto.createHtmlElement());
+                productsContainer.appendChild(producto.createHtmlElement(true));
             });
         }
     }
