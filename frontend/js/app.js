@@ -119,7 +119,7 @@ function setupCustomerForm(){
     }
 };
 /* ========================== CONFIGURACION DEL products.html ==============================*/ 
-function setupproductsPage(){
+ async function setupproductsPage(){
     
     // Cargar el nombre del cliente
     const customerName = localStorage.getItem(APP_CONFIG.CUSTOMER_NAME_KEY);
@@ -128,72 +128,35 @@ function setupproductsPage(){
         nameDisplay.textContent = customerName;
     }
     
+    try{
+        const productosCargados = await cargarProductos();
+        mostrarProducts(productosCargados);
+    }catch(error){
+        console.error('Error al cargar productos:', error);
+    }
+    
 
-    mostrarProducts(cargarProductos());
+    async function cargarProductos() {
 
-    function cargarProductos() {
-        /*
-        const promesas = [];
+        const response = await fetch('http://localhost:3000/api/products');
 
-        const url = `https://api.tvmaze.com/shows/${i}`;
-        promesas.push(fetch(url).then(res => res.json()));
+        if (!response.ok) {
+            throw new Error('Error al cargar productos desde el servidor');
+        }
+
+        const data = await response.json();
+
+        const listaPoductos = data.map(productoData => new Product(
+            productoData.id,
+            productoData.name,
+            productoData.price,
+            productoData.image || 'https://via.placeholder.com/210x295?text=Sin+imagen',
+            productoData.category,
+            productoData.description
+        ));
+
+        return listaPoductos;
         
-
-        Promise.all(promesas)
-            .then(data => {
-                data.forEach(productosData => {
-                    const products = new Producto(
-                        productosData.id,
-                        productosData.descripction,
-                        productosData.name,
-                        productosData.price,
-                        productosData.image?.medium || 'https://via.placeholder.com/210x295?text=Sin+imagen'
-                    );
-
-                    const elemento = products.createHtmlElement();
-                    productsContainer.appendChild(elemento);
-                });
-            })
-            .catch(error => {
-                console.error('Error al cargar productos:', error);
-            });
-            */
-           const listaProductos = [
-            new Product(
-                1,
-                'Consola PlayStation 5',
-                1200000,
-                '',
-                'Consolas',
-                'Experimentá una velocidad de carga ultrarrápida, inmersión más profunda y una nueva generación de juegos.'
-            ),
-            new Product(
-                2,
-                'Cyberpunk 2077',
-                85000,
-                '',
-                'Juegos',
-                'Una aventura de acción y rol de mundo abierto ambientada en la megalópolis de Night City.'
-            ),
-            new Product(
-                3,
-                'Mouse Gamer Pro X',
-                75000,
-                '',
-                'Periféricos',
-                'Sensor óptico de alta precisión, diseño ergonómico y 8 botones programables para máxima ventaja.'
-            ),
-            new Product(
-                4,
-                'Teclado Mecánico RGB',
-                150000,
-                '',
-                'Periféricos',
-                'Switches mecánicos ultra-rápidos, retroiluminación RGB personalizable y construcción de aluminio.'
-            ),
-            // ... puedes seguir agregando todos los productos que quieras aquí
-        ];
-           return listaProductos;
     }
     
     function mostrarProducts(listaProductos) {
