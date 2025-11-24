@@ -1,0 +1,54 @@
+<%- include('../components/header') %>
+
+<main class="container my-5">
+  <h2 class="mb-4 text-center">Sales List and Details</h2>
+  <% if (sales && sales.length > 0) { %>
+  <div class="table-responsive">
+    <table
+      class="table table-dark table-bordered table-hover align-middle text-center"
+    >
+      <thead>
+        <tr>
+          <th>Sale ID</th>
+          <th>Client</th>
+          <th>Date</th>
+          <th>Total</th>
+          <th>Products</th>
+          <th>State</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% sales.forEach(sale => { %>
+        <tr>
+          <td><%= sale.id %></td>
+          <td><%= sale.customerName %></td>
+          <td><%= sale.createdAt.toLocaleString() %></td>
+          <td>$<%= sale.totalAmount %></td>
+          <td>
+            <ul class="list-unstyled mb-0">
+              <% sale.products.forEach(product => { %>
+              <li>
+                <strong><%= product.name %></strong>
+                (<%= product.sale_products && product.sale_products[0] ?
+                product.sale_products[0].quantity : '-' %> x $<%= product.price
+                %>)
+              </li>
+              <% }) %>
+            </ul>
+          </td>
+          <td>
+            <span
+              class="badge <%= sale.status === 'completed' ? 'bg-success' : sale.status === 'pending' ? 'bg-warning' : 'bg-danger' %>"
+            >
+              <%= sale.status %>
+            </span>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <% } else { %>
+  <div class="alert alert-info text-center">No sales registered</div>
+  <% } %>
+</main>

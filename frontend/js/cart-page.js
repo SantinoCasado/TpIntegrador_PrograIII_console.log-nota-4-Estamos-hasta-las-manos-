@@ -1,4 +1,4 @@
-import { showNotification } from "./utils.js";
+// import eliminado, showNotification ya es global
 
 // Aca iria todala logica para renderizar y manejar la pagina del carrito de compras
 document.addEventListener("DOMContentLoaded", () => {
@@ -21,14 +21,16 @@ function renderCart() {
   }
 
   let total = 0;
-  let html = `<table class="table table-bordered table-hover">
+
+  let html = `<div class="table-responsive"><table class="table table-dark table-bordered table-hover align-middle text-center" style="background: #1a0025; border-radius: 12px; overflow: hidden;">
     <thead>
       <tr>
-        <th>Producto</th>
-        <th>Precio</th>
-        <th>Cantidad</th>
-        <th>Subtotal</th>
-        <th>Acciones</th>
+        <th class="text-center">Imagen</th>
+        <th class="text-center">Producto</th>
+        <th class="text-center">Precio</th>
+        <th class="text-center">Cantidad</th>
+        <th class="text-center">Subtotal</th>
+        <th class="text-center">Acciones</th>
       </tr>
     </thead>
     <tbody>`;
@@ -36,20 +38,31 @@ function renderCart() {
   cart.forEach((item, idx) => {
     const subtotal = item.price * item.quantity;
     total += subtotal;
-    html += `<tr>
-            <td>${item.name}</td>
-            <td>$${item.price}</td>
-            <td>
-                <input type="number" min="1" max="99" value="${item.quantity}" data-idx="${idx}" class="form-control form-control-sm cart-qty-input" style="width:70px;">
-            </td>
-            <td>$${subtotal}</td>
-            <td>
-                <button class="btn btn-danger btn-sm remove-btn" data-idx="${idx}"><i class="fa fa-trash"></i></button>
-            </td>
-        </tr>`;
+    if (item.isActive === false || item.stock === 0 || typeof item.isActive === 'undefined') {
+      html += `<tr>
+        <td class="text-center"><img src="${item.image}" alt="${item.name}" style="width:60px; height:60px; object-fit:cover; border-radius:8px; box-shadow:0 0 8px #ff00cc33;"></td>
+        <td class="text-center">${item.name}</td>
+        <td colspan="4" class="text-center">
+          <span class="text-danger fw-bold">This product is not available</span>
+        </td>
+      </tr>`;
+    } else {
+      html += `<tr>
+        <td class="text-center"><img src="${item.image}" alt="${item.name}" style="width:60px; height:60px; object-fit:cover; border-radius:8px; box-shadow:0 0 8px #ff00cc33;"></td>
+        <td class="text-center">${item.name}</td>
+        <td class="fw-bold text-center">$${item.price}</td>
+        <td class="text-center">
+          <input type="number" min="1" max="99" value="${item.quantity}" data-idx="${idx}" class="form-control form-control-sm cart-qty-input text-center mx-auto" style="width:70px;">
+        </td>
+        <td class="fw-bold text-center">$${subtotal}</td>
+        <td class="text-center">
+          <button class="btn btn-danger btn-sm remove-btn px-3" data-idx="${idx}" title="Eliminar">Eliminar</button>
+        </td>
+      </tr>`;
+    }
   });
 
-  html += `</tbody></table>`;
+  html += `</tbody></table></div>`;
   html += `<div class="text-end fw-bold fs-5">Total: $${total}</div>`;
 
   cartContainer.innerHTML = html;
@@ -86,18 +99,54 @@ function updateCartQuantity(index, quantity) {
   renderCart();
 }
 
-function confirmPurchase() {
+async function confirmPurchase() {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
   if (cart.length === 0) {
-    showNotification("The cart is empty!", "warning");
+    showNotification("El carrito está vacío!", "warning");
     return;
   }
-  localStorage.removeItem("cart");
-  renderCart();
-  showNotification(
-    "¡Purchase confirmed! Thank you for your purchase.",
-    "success"
-  );
+
+  // Validar stock antes de enviar la compra
+  let errors = [];
+  for (const item of cart) {
+    // Consultar stock actual desde la API
+    try {
+      const res = await fetch(`${CONFIG.API_BASE_URL}/products/${item.id}`);
+      const product = await res.json();
+      if (!product.isActive || product.stock < item.quantity) {
+        errors.push(`El producto '${item.name}' no tiene suficiente stock (disponible: ${product.stock}, solicitado: ${item.quantity})`);
+      }
+    } catch (err) {
+      errors.push(`No se pudo verificar el stock de '${item.name}'`);
+    }
+  }
+  if (errors.length > 0) {
+    showNotification(errors.join('\n'), "error", 6000);
+    return;
+  }
+
+  // Si todo OK, enviar la compra al backend
+  try {
+    const customerName = localStorage.getItem('gaming-customer-name') || 'Cliente';
+    const saleProducts = cart.map(item => ({ productId: item.id, quantity: item.quantity }));
+    const res = await fetch(`${CONFIG.API_BASE_URL}/sales`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ customerName, products: saleProducts })
+    });
+    const data = await res.json();
+    if (res.status === 201) {
+      localStorage.removeItem("cart");
+      renderCart();
+      showNotification("¡Compra confirmada! Gracias por tu compra.", "success");
+    } else if (data.errors) {
+      showNotification(data.errors.join('\n'), "error", 6000);
+    } else {
+      showNotification("Error al procesar la compra.", "error");
+    }
+  } catch (err) {
+    showNotification("Error de conexión con el servidor.", "error");
+  }
 }
 
 function clearCart() {

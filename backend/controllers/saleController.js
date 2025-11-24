@@ -3,22 +3,28 @@ const { Sale, Product, SaleProduct } = require("../models");
 // C - CREATE - crear una nueva venta con productos
 const createSale = async (req, res) => {
   try {
-    const { customerName, products, paymentMethod } = req.body;
-
-    // Calcular el total
+    const { customerName, products } = req.body;
+    // Validar productos y stock
     let totalAmount = 0;
+    let errors = [];
     for (const item of products) {
       const product = await Product.findByPk(item.productId);
-      if (product) {
+      if (!product || !product.isActive) {
+        errors.push(`Producto no disponible: ${item.productId}`);
+      } else if (product.stock < item.quantity) {
+        errors.push(`Stock insuficiente para '${product.name}' (disponible: ${product.stock}, solicitado: ${item.quantity})`);
+      } else {
         totalAmount += product.price * item.quantity;
       }
+    }
+    if (errors.length > 0) {
+      return res.status(400).json({ errors });
     }
 
     // Crear la venta
     const newSale = await Sale.create({
       customerName,
       totalAmount,
-      paymentMethod: paymentMethod || "cash",
       status: "completed",
     });
 
@@ -31,6 +37,7 @@ const createSale = async (req, res) => {
           productId: item.productId,
           quantity: item.quantity,
           unitPrice: product.price,
+          subtotal: product.price * item.quantity
         });
         // Reducir el stock
         let newStock = product.stock - item.quantity;

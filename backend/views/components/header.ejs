@@ -1,10 +1,12 @@
 <!-- Mensajes flash/alertas globales -->
-<% if(success) { %>
+<% if(typeof success !== 'undefined' && success) { %>
 <div class="alert alert-success" role="alert">
   <i class="fas fa-check-circle me-2"></i>
+  <%= success %>
 </div>
-<% } %> <% if(error) { %>
+<% } %> <% if(typeof error !== 'undefined' && error) { %>
 <div class="alert alert-danger" role="alert">
   <i class="fas fa-exclamation-triangle me-2"></i>
+  <%= error %>
 </div>
 <% } %>

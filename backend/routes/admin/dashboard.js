@@ -27,4 +27,7 @@ router.put('/dashboard/products/:id', protegerRuta, adminController.updateProduc
 // DELETE /admin/dashboard/products/:id => procesar la eliminacion de un producto
 router.delete('/dashboard/products/:id', protegerRuta, adminController.deleteProduct);
 
+// GET /admin/dashboard/sales => muestra la lista de ventas en el dashboard
+router.get('/dashboard/sales', protegerRuta, adminController.showSales);
+
 module.exports = router;

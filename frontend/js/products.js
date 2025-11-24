@@ -1,5 +1,5 @@
-import { Product } from './class/Products.js';
-import {showNotification} from './utils.js';
+// import { Product } from './class/Products.js';
+// import eliminado, showNotification es global
 
 const hardwareIcons = []; // Eliminados, ya no se usan
 const softwareIcons = []; // Eliminados, ya no se usan
@@ -88,7 +88,7 @@ function updateCartCircle() {
 
 document.addEventListener('DOMContentLoaded', updateCartCircle);
 
-export function addToCart(product, quantity) {
+function addToCart(product, quantity) {
   // No agregar si la cantidad es menor que uno
   if (quantity < 1) return;
 
@@ -118,3 +118,4 @@ export function addToCart(product, quantity) {
   // Mostrar mensaje de exito junto con el pop out del redireccionamiento del carrito
   showNotification('Product added to cart', 'success');
 }
+window.addToCart = addToCart;

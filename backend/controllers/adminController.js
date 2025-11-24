@@ -1,6 +1,3 @@
-const {User, Product, Sale} = require('../models');
-const bcrypt = require('bcryptjs');
-
 // ======================= LOGIN DE ADMINISTRADOR ========================
 // Get - Muestro la pagina de login
 const showLogin = (req, res) => {
@@ -217,6 +214,36 @@ const activateProduct = async (req, res) => {
     }
 };
 
+// ======================= VIEW DE VENTAS ========================
+// GET - Muestro la vista de ventas
+const showSales = async (req, res) => {
+    try {
+        // Traer todas las ventas con productos asociados
+        const sales = await Sale.findAll({
+            include: [
+                {
+                    model: Product,
+                    as: 'products',
+                    through: { attributes: ['quantity', 'unitPrice'] }
+                }
+            ],
+            order: [['createdAt', 'DESC']]
+        });
+        res.render('admin/sales', {
+            title: 'Listado de Ventas',
+            sales
+        });
+    } catch (error) {
+        res.render('admin/sales', {
+            title: 'Listado de Ventas',
+            sales: [],
+            error: 'Error al cargar las ventas'
+        });
+    }
+};
+const {User, Product, Sale} = require('../models');
+const bcrypt = require('bcryptjs');
+
 module.exports = {
     showLogin,
     processLogin,
@@ -228,5 +255,6 @@ module.exports = {
     showEditProduct,
     updateProduct,
     deleteProduct,
-    activateProduct
+    activateProduct,
+    showSales
 };

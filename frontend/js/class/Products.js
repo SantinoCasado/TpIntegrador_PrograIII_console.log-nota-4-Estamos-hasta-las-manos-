@@ -1,5 +1,3 @@
-import { addToCart } from "../products.js";
-
 class Product {
   name;
   price;
@@ -48,33 +46,9 @@ class Product {
     }).format(this.price);
     priceH6.textContent = formattedPrice;
 
-    // Controles de cantidad y carrito
+    // Solo botón de carrito
     const controls = document.createElement("div");
     controls.classList.add("d-flex", "align-items-center", "mt-2");
-
-    const minusBtn = document.createElement("button");
-    minusBtn.className = "btn btn-outline-secondary btn-sm";
-    minusBtn.textContent = "-";
-
-    const qtyInput = document.createElement("input");
-    qtyInput.type = "number";
-    qtyInput.value = 0;
-    qtyInput.min = 1;
-    qtyInput.max = this.stock || 99;
-    qtyInput.className = "form-control form-control-sm mx-2";
-    qtyInput.style.width = "60px";
-
-    const plusBtn = document.createElement("button");
-    plusBtn.className = "btn btn-outline-secondary btn-sm";
-    plusBtn.textContent = "+";
-
-    minusBtn.onclick = () => {
-      if (qtyInput.value > 1) qtyInput.value--;
-    };
-    plusBtn.onclick = () => {
-      if (qtyInput.value < qtyInput.max) qtyInput.value++;
-    };
-
     const cartBtn = document.createElement("button");
     cartBtn.className = "btn btn-success btn-sm ms-2";
     cartBtn.innerHTML = '<i class="fa-solid fa-cart-plus"></i>';
@@ -86,9 +60,6 @@ class Product {
       cartBtn.classList.add("btn-secondary");
       cartBtn.classList.remove("btn-success");
       cartBtn.innerHTML = '<i class="fa-solid fa-ban"></i> Sin stock';
-      qtyInput.disabled = true;
-      minusBtn.disabled = true;
-      plusBtn.disabled = true;
     }
 
     cartBtn.onclick = () => {
@@ -96,18 +67,10 @@ class Product {
         showNotification("No se puede agregar: sin stock o inactivo", "error");
         return;
       }
-      const qty = parseInt(qtyInput.value);
-      if (qty > qtyInput.max) {
-        showNotification("No hay suficiente stock disponible", "error");
-        return;
-      }
-      addToCart(this, qty);
+      addToCart(this, 1); // Solo agrega 1, cantidad se elige en el carrito
       showNotification("Producto agregado al carrito", "success");
     };
 
-    controls.appendChild(minusBtn);
-    controls.appendChild(qtyInput);
-    controls.appendChild(plusBtn);
     controls.appendChild(cartBtn);
 
     cardBody.appendChild(title);
@@ -123,4 +86,4 @@ class Product {
   }
 }
 
-export { Product };
+// export { Product };

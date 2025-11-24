@@ -1,6 +1,6 @@
 let cart = []; // Array que almacenará los productos en el carrito
 
-export function addToCart(product) {
+function addToCart(product) {
     // Si el porudcto ya está en el carrito, aumentar la cantidad
     const existing = cart.find(item => item.id === product.id);
     if(existing) {
@@ -16,10 +16,14 @@ export function addToCart(product) {
     }
 }
 
-export function getCart() {
+function getCart() {
     return cart;
 }
 
-export function clearCart() {
+function clearCart() {
+    // Hacer las funciones globales para uso en otros scripts
+    window.addToCart = addToCart;
+    window.getCart = getCart;
+    window.clearCart = clearCart;
     cart = [];
 }

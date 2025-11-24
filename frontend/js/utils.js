@@ -40,20 +40,12 @@ function formatCustomerName(name){
         .join(' ');
 }
 
+// Hacer funciones globales para uso en otros scripts
+window.isLocalStorageAvailable = isLocalStorageAvailable;
+window.showNotification = showNotification;
+window.formatCustomerName = formatCustomerName;
+
 // Verifico si la pagina es para celular
 function isMobileDevice(){
     return window.innerWidth <= 768;
 }
-
-// Scroll suave hacia un elemento
-function smoothScrollTo(elementId){
-    const element = document.getElementById(elementId);
-    if(element){
-        element.scrollIntoView({
-            behavior: 'smooth', 
-            block: 'start'
-        });
-    }
-}
-
-export { showNotification };
