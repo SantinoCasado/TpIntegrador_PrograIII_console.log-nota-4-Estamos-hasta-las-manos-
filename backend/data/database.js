@@ -5,7 +5,7 @@ const { Sequelize } =  require("sequelize");
 const db = new Sequelize(
     'gaming', // Nombre CORRECTO de la base de datos
     'root', // Nombre de usuario
-    '46184393', // Contraseña
+    'Thithicai01?', // Contraseña
     {
         host: 'localhost',
         dialect: 'mysql',
