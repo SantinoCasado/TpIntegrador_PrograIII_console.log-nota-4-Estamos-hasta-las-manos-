@@ -9,8 +9,6 @@
   GitHub: [thiagopatricio](https://github.com/thiagopatricio)  
   Email: thiago.fernandez@email.com
 
-¿Dudas, sugerencias o contacto? Puedes escribirnos por email o GitHub.
-
 ## Descripción
 
 Sistema de autoservicio para la compra de productos de tecnología (hardware y software), con panel de administración para gestión de productos y ventas. Incluye frontend responsive y backend con API REST y vistas EJS.
