@@ -4,10 +4,13 @@
 
 - **Santino Casado**  
   GitHub: [SantinoCasado](https://github.com/SantinoCasado)  
-  Email: santino.casado@email.com
+  Gmail: santinocasado05@gmail.com
+  Linked-In: [Santino Casado](https://www.linkedin.com/in/santino-casado)
+   
 - **Thiago Patricio Fernandez Lado**  
-  GitHub: [thiagopatricio](https://github.com/thiagopatricio)  
-  Email: thiago.fernandez@email.com
+  GitHub: [thiago_ferlado](https://github.com/thiaguitofernandez)  
+  Gmail: thiagoferlado@gmail.com
+  Linked-In: [Thiago fernandez lado](https://www.linkedin.com/in/thiago-fernandez-lado) 
 
 ## Descripción
 
