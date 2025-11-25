@@ -69,18 +69,21 @@ graph TD
 - `POST /api/users/admin` - Crear usuario administrador
 
 ## Imágenes del proyecto
+
 # Front-end
-![Pantalla de logIn](./docs/img/screenShots/logInFront.png)
-![Pantalla de productos](./docs/img/screenShots/productsFront.png)
-![Ticket de carrito](./docs/img/screenShots/cartFront.png)
-![Ticket de Ticket](./docs/img/screenShots/ticketFront.png)
+
+![Pantalla de logIn](./docs/img/logInFront.png)
+![Pantalla de productos](./docs/img/productsFront.png)
+![Ticket de carrito](./docs/img/cartFront.png)
+![Ticket de Ticket](./docs/img/ticketFront.png)
 
 # Back-end
-![Pnatalla de LogIn](./docs/img/screenShots/logInBack.png)
-![Pnatalla de DashBoard](./docs/img/screenShots/dashBoardBack.png)
-![Pnatalla de AddProduct](./docs/img/screenShots/addProductBack.png)
-![Pnatalla de ManaggeProducts](./docs/img/screenShots/managgeProductsBack.png)
-![Pnatalla de ViewSales](./docs/img/screenShots/viewSalesBack.png)
+
+![Pnatalla de LogIn](./docs/img/logInBack.png)
+![Pnatalla de DashBoard](./docs/img/dashBoardBack.png)
+![Pnatalla de AddProduct](./docs/img/addProductBack.png)
+![Pnatalla de ManaggeProducts](./docs/img/managgeProductsBack.png)
+![Pnatalla de ViewSales](./docs/img/viewSalesBack.png)
 
 ---
 
