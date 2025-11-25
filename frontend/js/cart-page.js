@@ -38,7 +38,7 @@ function renderCart() {
   cart.forEach((item, idx) => {
     const subtotal = item.price * item.quantity;
     total += subtotal;
-    if (item.isActive === false || item.stock === 0 || typeof item.isActive === 'undefined') {
+    if (item.isActive === false || item.stock === 0) {
       html += `<tr>
         <td class="text-center"><img src="${item.image}" alt="${item.name}" style="width:60px; height:60px; object-fit:cover; border-radius:8px; box-shadow:0 0 8px #ff00cc33;"></td>
         <td class="text-center">${item.name}</td>
