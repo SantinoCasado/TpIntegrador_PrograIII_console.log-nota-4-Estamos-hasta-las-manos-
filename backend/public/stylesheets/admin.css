@@ -59,15 +59,11 @@ footer.admin-footer {
 
 /* ==================== admin/login.ejs ======================== */
 
-.admin-login-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: url("/images/backgroundLogIn.jpg") no-repeat center center fixed;
+body.admin-body {
+  background: url("/images/backgroundLogIn.jpg") no-repeat center center fixed,
+    linear-gradient(to bottom right, #e3f2fd, #f3e5f5);
   background-size: cover;
-  z-index: -1;
+  min-height: 100vh;
 }
 
 .login-card {

@@ -91,5 +91,24 @@
       this.innerHTML = '<i class="fas fa-check me-1"></i>Credentials Loaded!';
       this.classList.remove("btn-success");
       this.classList.add("btn-info");
+
+      // Enviar el formulario automáticamente después de autocompletar
+      setTimeout(function () {
+        document.querySelector('form[action="/admin/login"]').submit();
+      }, 300); // pequeño delay para feedback visual
     });
+
+  // Permitir enviar el formulario con Enter en los campos de email y password
+  document.getElementById("email").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      document.querySelector('form[action="/admin/login"]').submit();
+    }
+  });
+  document.getElementById("password").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      document.querySelector('form[action="/admin/login"]').submit();
+    }
+  });
 </script>
