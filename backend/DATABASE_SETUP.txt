@@ -8,9 +8,7 @@ REQUISITOS PREVIOS:
 - Node.js instalado (versión 18 o superior)
 - MySQL Workbench (opcional, para visualización gráfica)
 
-================================================================================
 PASO 1: CREAR LA BASE DE DATOS EN MYSQL
-================================================================================
 
 Opción A - Desde MySQL Workbench:
 ---------------------------------
@@ -44,9 +42,7 @@ Opción B - Desde línea de comandos:
    EXIT;
 
 
-================================================================================
 PASO 2: CONFIGURAR CREDENCIALES DE CONEXIÓN
-================================================================================
 
 1. Abrir el archivo: backend/data/database.js
 
@@ -69,9 +65,7 @@ PASO 2: CONFIGURAR CREDENCIALES DE CONEXIÓN
 4. Guardar el archivo
 
 
-================================================================================
-PASO 3: INSTALAR DEPENDENCIAS DEL PROYECTO
-================================================================================
+PASO 3: INSTALAR DEPENDENCIAS DEL PROYECT
 
 1. Abrir PowerShell o CMD en la carpeta 'backend'
 
@@ -82,9 +76,7 @@ PASO 3: INSTALAR DEPENDENCIAS DEL PROYECTO
 3. Esperar a que se instalen todas las dependencias
 
 
-================================================================================
 PASO 4: INICIALIZAR LA BASE DE DATOS
-================================================================================
 
 1. Desde la carpeta 'backend', ejecutar:
 
@@ -108,9 +100,7 @@ PASO 4: INICIALIZAR LA BASE DE DATOS
    Admin user already exists
 
 
-================================================================================
 PASO 5: VERIFICAR LAS TABLAS EN MYSQL
-================================================================================
 
 Opción A - MySQL Workbench:
 ---------------------------
@@ -151,9 +141,7 @@ Opción B - Línea de comandos:
    SELECT * FROM products;
 
 
-================================================================================
 PASO 6: INICIAR EL SERVIDOR
-================================================================================
 
 1. Desde la carpeta 'backend', ejecutar:
 
@@ -172,9 +160,7 @@ PASO 6: INICIAR EL SERVIDOR
    Application started with database connection
 
 
-================================================================================
 CREDENCIALES DE ACCESO AL PANEL ADMIN
-================================================================================
 
 URL: http://localhost:3000/admin/login
 
@@ -182,9 +168,7 @@ Email:    admin@gaming.com
 Password: admin123
 
 
-================================================================================
 COMANDOS ÚTILES
-================================================================================
 
 # Instalar dependencias
 npm install
