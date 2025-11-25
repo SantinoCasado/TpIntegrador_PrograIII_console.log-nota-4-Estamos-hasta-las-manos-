@@ -6,7 +6,6 @@
   GitHub: [SantinoCasado](https://github.com/SantinoCasado)  
   Gmail: santinocasado05@gmail.com  
   LinkedIn: [Santino Casado](https://www.linkedin.com/in/santino-casado)
-
 - **Thiago Patricio Fernandez Lado**  
   GitHub: [thiago_ferlado](https://github.com/thiaguitofernandez)  
   Gmail: thiagoferlado@gmail.com  
