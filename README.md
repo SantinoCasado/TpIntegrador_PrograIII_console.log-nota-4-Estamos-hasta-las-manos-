@@ -75,12 +75,14 @@ graph TD
 ![Ticket de carrito](./docs/img/screenShots/cartFront.png)
 ![Ticket de Ticket](./docs/img/screenShots/ticketFront.png)
 
-# Back-en
+# Back-end
 ![Pnatalla de LogIn](./docs/img/screenShots/logInBack.png)
-![Pnatalla de DashBoard](./docs/img/screenShots/dashBoard.png)
+![Pnatalla de DashBoard](./docs/img/screenShots/dashBoardBack.png)
 ![Pnatalla de AddProduct](./docs/img/screenShots/addProductBack.png)
 ![Pnatalla de ManaggeProducts](./docs/img/screenShots/managgeProductsBack.png)
 ![Pnatalla de ViewSales](./docs/img/screenShots/viewSalesBack.png)
+
+---
 
 ## Notas
 
