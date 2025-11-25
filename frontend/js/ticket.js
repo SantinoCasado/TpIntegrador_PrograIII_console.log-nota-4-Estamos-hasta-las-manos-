@@ -13,7 +13,7 @@ function loadTicketData() {
         return;
     }
 
-    document.getElementById('ticket-id').textContent = 'Nº venta: #${saleData.id}';
+    document.getElementById('ticket-id').textContent = `Nº venta: #${saleData.id}`;
     document.getElementById('ticket-date').textContent = `Fecha: ${new Date(saleData.createdAt).toLocaleDateString()}`;
     document.getElementById('ticket-customer').textContent = saleData.customerName;
 
@@ -21,27 +21,23 @@ function loadTicketData() {
     let html = '';
 
 
-    if (saleData.poducts && saleData.products.length > 0) {
+    if (saleData.products && saleData.products.length > 0) {
         saleData.products.forEach(item => {
-            const quantity = item.sale_poducts ? item.sale_poducts.quantity : item.quantity ;
+            const quantity = item.sale_products ? item.sale_products.quantity : item.quantity;
             const price = item.sale_products ? item.sale_products.unitPrice : item.price;
             const subtotal = quantity * price;
-            
-        html += `
-            <tr>
-                <td>${item.name}</td>
-                <td class="text-center">${quantity}</td>
-                <td class="text-end">$${parseFloat(price).toFixed(2)}</td>
-                <td class="text-end">$${parseFloat(subtotal).toFixed(2)}</td>
-            </tr>
-        `;
+            html += `
+                <tr>
+                    <td>${item.name}</td>
+                    <td class="text-center">${quantity}</td>
+                    <td class="text-end">$${parseFloat(price).toFixed(2)}</td>
+                    <td class="text-end">$${parseFloat(subtotal).toFixed(2)}</td>
+                </tr>
+            `;
         });
-        }
-
-        itemsContainer.innerHTML = html;
-
-
-        document.getElementById('ticket-subtotal').textContent = `$${parseFloat(saleData.subtotal).toFixed(2)}`;
+    }
+    itemsContainer.innerHTML = html;
+    document.getElementById('ticket-total').textContent = `Total: $${parseFloat(saleData.subtotal).toFixed(2)}`;
 
     }
 

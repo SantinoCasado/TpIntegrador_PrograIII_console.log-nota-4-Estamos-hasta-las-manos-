@@ -15,8 +15,10 @@ document.addEventListener('DOMContentLoaded', function(){
     loadSavedTheme();
     setupThemeToggle();
 
-    //Configuro el formulario
-    setupCustomerForm();
+    //Configuro el formulario solo si existe en la página
+    if(document.getElementById('customer-form')){
+        setupCustomerForm();
+    }
 
     // Configuro efectos
     setupEffects();

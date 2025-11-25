@@ -136,9 +136,17 @@ async function confirmPurchase() {
     });
     const data = await res.json();
     if (res.status === 201) {
+      // Guardar la venta en localStorage para el ticket
+      const sale = {
+        id: data.sale?.id || data.id || Date.now(),
+        createdAt: data.sale?.createdAt || data.createdAt || new Date().toISOString(),
+        customerName: customerName,
+        products: data.sale?.products || cart,
+        subtotal: data.sale?.total || data.total || cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
+      };
+      localStorage.setItem('lastSale', JSON.stringify(sale));
       localStorage.removeItem("cart");
-      renderCart();
-      showNotification("¡Compra confirmada! Gracias por tu compra.", "success");
+      window.location.href = 'ticket.html';
     } else if (data.errors) {
       showNotification(data.errors.join('\n'), "error", 6000);
     } else {
