@@ -62,6 +62,14 @@
             <i class="fas fa-moon"></i>
             <span>Dark Theme</span>
           </button>
+          <button
+            id="logout-btn"
+            class="btn btn-outline-danger btn-sm d-flex align-items-center gap-2 px-3 ms-3"
+            onclick="logout()"
+          >
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+          </button>
         </div>
       </div>
     </header>
@@ -157,6 +165,12 @@
       </div>
     </footer>
 
+    <script>
+      function logout() {
+        localStorage.clear();
+        window.location.href = "index.html";
+      }
+    </script>
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script src="./js/class/Products.js"></script>

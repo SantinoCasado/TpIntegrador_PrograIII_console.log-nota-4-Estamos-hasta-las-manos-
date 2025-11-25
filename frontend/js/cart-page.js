@@ -36,7 +36,7 @@ function renderCart() {
     <tbody>`;
 
   cart.forEach((item, idx) => {
-    const subtotal = item.price * item.quantity;
+    const subtotal = (item.price * item.quantity);
     total += subtotal;
     if (item.isActive === false || item.stock === 0) {
       html += `<tr>
@@ -54,7 +54,7 @@ function renderCart() {
         <td class="text-center">
           <input type="number" min="1" max="99" value="${item.quantity}" data-idx="${idx}" class="form-control form-control-sm cart-qty-input text-center mx-auto" style="width:70px;">
         </td>
-        <td class="fw-bold text-center">$${subtotal}</td>
+        <td class="fw-bold text-center">$${subtotal.toFixed(2)}</td>
         <td class="text-center">
           <button class="btn btn-danger btn-sm remove-btn px-3" data-idx="${idx}" title="Eliminar">Eliminar</button>
         </td>
@@ -63,7 +63,7 @@ function renderCart() {
   });
 
   html += `</tbody></table></div>`;
-  html += `<div class="text-end fw-bold fs-5">Total: $${total}</div>`;
+  html += `<div class="text-end fw-bold fs-5">Total: $${total.toFixed(2)}</div>`;
 
   cartContainer.innerHTML = html;
 
