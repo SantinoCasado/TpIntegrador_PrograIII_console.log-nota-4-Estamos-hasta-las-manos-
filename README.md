@@ -69,12 +69,18 @@ graph TD
 - `POST /api/users/admin` - Crear usuario administrador
 
 ## Imágenes del proyecto
+# Front-end
+![Pantalla de logIn](./docs/img/screenShots/logInFront.png)
+![Pantalla de productos](./docs/img/screenShots/productsFront.png)
+![Ticket de carrito](./docs/img/screenShots/cartFront.png)
+![Ticket de Ticket](./docs/img/screenShots/ticketFront.png)
 
-Agrega aquí capturas de pantalla del sistema funcionando:
-
-![Pantalla de productos](./docs/img/productos.png)
-![Ticket de compra](./docs/img/ticket.png)
-![Panel admin](./docs/img/admin.png)
+# Back-en
+![Pnatalla de LogIn](./docs/img/screenShots/logInBack.png)
+![Pnatalla de DashBoard](./docs/img/screenShots/dashBoard.png)
+![Pnatalla de AddProduct](./docs/img/screenShots/addProductBack.png)
+![Pnatalla de ManaggeProducts](./docs/img/screenShots/managgeProductsBack.png)
+![Pnatalla de ViewSales](./docs/img/screenShots/viewSalesBack.png)
 
 ## Notas
 
