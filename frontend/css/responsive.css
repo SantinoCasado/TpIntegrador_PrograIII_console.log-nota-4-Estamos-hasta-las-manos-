@@ -14,3 +14,17 @@
     padding: 0 15px;
   }
 }
+
+/* Adaptación para Teclado Virtual en Móviles */
+@media (max-width: 768px) {
+  .main-content {
+    /* Crea un espacio "blando" abajo igual a la altura del teclado */
+    padding-bottom: env(keyboard-inset-height, 0px);
+    transition: padding-bottom 0.2s ease-out;
+  }
+
+  /* Opcional: Si quieres que la tarjeta se centre visualmente en el espacio restante */
+  .card {
+     transition: transform 0.2s ease-out;
+  }
+}

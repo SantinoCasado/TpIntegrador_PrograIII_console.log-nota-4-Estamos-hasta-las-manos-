@@ -71,11 +71,35 @@ function setupCustomerForm(){
     const nameInput = document.getElementById('customer-name');
     const continueButton = document.getElementById('continue-btn');
 
+    if ('virtualKeyboard' in navigator) {
+        // Le dice al navegador: "No cambies el tamaño del viewport, yo me encargo"
+        navigator.virtualKeyboard.overlaysContent = true;
+    } else {
+        console.log("La API VirtualKeyboard no es soportada en este navegador.");
+    }
+
     if(!form || !nameInput || !continueButton){
         console.error('Customer form elements not found.');
         return;
     }
 
+    nameInput.addEventListener('pointerup', function(){
+        if ('virtualKeyboard' in navigator) {
+            navigator.virtualKeyboard.show();
+        }
+    });
+
+    nameInput.addEventListener('focus', function(){
+        if ('virtualKeyboard' in navigator) {
+            navigator.virtualKeyboard.show();
+        }
+    });
+
+    nameInput.addEventListener('blur', function(){
+        if ('virtualKeyboard' in navigator) {
+            navigator.virtualKeyboard.hide();
+        }
+    });
     //Valido en tiempo real
     nameInput.addEventListener('input', function(){
         const name = nameInput.value.trim();
