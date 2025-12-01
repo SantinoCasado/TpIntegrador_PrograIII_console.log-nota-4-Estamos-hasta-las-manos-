@@ -111,3 +111,31 @@ body {
   color: #333333 !important;
   border: 1px solid #dee2e6 !important;
 }
+[data-theme="light"] body,
+[data-theme="light"] .card-body,
+[data-theme="light"] p,
+[data-theme="light"] h1, 
+[data-theme="light"] h2, 
+[data-theme="light"] h3, 
+[data-theme="light"] h4, 
+[data-theme="light"] h5, 
+[data-theme="light"] h6 {
+    color: #222222 !important; /* Texto oscuro casi negro */
+}
+
+/* Excepciones para el modo claro */
+[data-theme="light"] .text-light {
+    color: #333333 !important; /* Sobreescribir la clase de bootstrap */
+}
+
+[data-theme="light"] .navbar .text-light {
+    color: #555555 !important;
+}
+
+/* Mantener el texto blanco solo en componentes que siguen siendo oscuros en modo claro (como el header o botones) */
+[data-theme="light"] .bg-dark .text-light,
+[data-theme="light"] .btn-primary,
+[data-theme="light"] .btn-danger,
+[data-theme="light"] .btn-success {
+    color: #ffffff !important;
+}
