@@ -72,16 +72,39 @@ function setupCustomerForm(){
     const continueButton = document.getElementById('continue-btn');
 
     if ('virtualKeyboard' in navigator) {
+<<<<<<< Updated upstream
         // Le dice al navegador: "No cambies el tamaño del viewport, yo me encargo"
         navigator.virtualKeyboard.overlaysContent = true;
     } else {
         console.log("La API VirtualKeyboard no es soportada en este navegador.");
+=======
+        navigator.virtualKeyboard.overlaysContent = true;
+>>>>>>> Stashed changes
     }
 
     if(!form || !nameInput || !continueButton){
         console.error('Customer form elements not found.');
         return;
     }
+    nameInput.addEventListener('pointerup', function(){
+        if ('virtualKeyboard' in navigator) {
+            navigator.virtualKeyboard.show();
+        }
+    });
+
+    // Mantener el focus listener por si se llega vía tabulación
+    nameInput.addEventListener('focus', function(){
+        if ('virtualKeyboard' in navigator) {
+            navigator.virtualKeyboard.show();
+        }
+    });
+
+    // Ocultar al perder foco
+    nameInput.addEventListener('blur', function(){
+        if ('virtualKeyboard' in navigator) {
+            navigator.virtualKeyboard.hide();
+        }
+    });
 
     nameInput.addEventListener('pointerup', function(){
         if ('virtualKeyboard' in navigator) {

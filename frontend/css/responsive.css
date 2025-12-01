@@ -14,7 +14,10 @@
     padding: 0 15px;
   }
 }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 /* Adaptación para Teclado Virtual en Móviles */
 @media (max-width: 768px) {
   .main-content {
@@ -27,4 +30,8 @@
   .card {
      transition: transform 0.2s ease-out;
   }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
