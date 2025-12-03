@@ -115,7 +115,7 @@ function downloadPDF() {
     </div>
     `;
 
-    // Crear un elemento temporal en el DOM
+    
     const tempContainer = document.createElement('div');
     tempContainer.innerHTML = invoiceContent;
     document.body.appendChild(tempContainer);
@@ -129,7 +129,7 @@ function downloadPDF() {
     };
 
     html2pdf().set(opt).from(tempContainer).save().then(() => {
-        document.body.removeChild(tempContainer); // Limpiar
+        document.body.removeChild(tempContainer);
         btn.innerHTML = originalText;
         btn.disabled = false;
         showNotification("PDF generado correctamente", "success");

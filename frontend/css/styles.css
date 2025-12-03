@@ -169,3 +169,53 @@ footer {
   animation: adminGlow 2s infinite alternate;
   border: 2px solid gold !important;
 }
+
+
+/* Estilos del teclado virtual */
+#virtual-keyboard {
+    position: fixed;
+    bottom: -300px; /* Oculto inicialmente */
+    left: 0;
+    width: 100%;
+    background: #1a1a1a;
+    padding: 10px;
+    transition: bottom 0.3s ease;
+    z-index: 10000;
+    border-top: 2px solid var(--purple);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+#virtual-keyboard.visible {
+    bottom: 0;
+}
+.kb-row {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    width: 100%;
+    max-width: 800px;
+}
+.kb-key {
+    background: #333;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 5px;
+    padding: 10px;
+    min-width: 30px;
+    flex: 1;
+    cursor: pointer;
+    font-weight: bold;
+    user-select: none;
+}
+.kb-key:active {
+    background: var(--purple);
+}
+.kb-key.space {
+    flex: 5;
+}
+.kb-key.action {
+    background: var(--dark-base);
+    color: var(--pink);
+}

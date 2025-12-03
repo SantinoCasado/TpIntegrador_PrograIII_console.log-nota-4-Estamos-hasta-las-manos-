@@ -1,4 +1,3 @@
-// frontend/js/class/Products.js
 
 class Product {
     constructor(id, name, price, image, type, description, stock) {
@@ -18,7 +17,7 @@ class Product {
       const cardDiv = document.createElement("div");
       cardDiv.classList.add("card", "h-100", "shadow-sm");
   
-      // ... (código de imagen y cuerpo igual que antes) ...
+      
       const img = document.createElement("img");
       img.src = this.image;
       img.classList.add("card-img-top");

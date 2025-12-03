@@ -120,22 +120,22 @@ body {
 [data-theme="light"] h4, 
 [data-theme="light"] h5, 
 [data-theme="light"] h6 {
-    color: #222222 !important; /* Texto oscuro casi negro */
+    color: #222222 !important; 
 }
 
-/* Excepciones para el modo claro */
+
 [data-theme="light"] .text-light {
-    color: #333333 !important; /* Sobreescribir la clase de bootstrap */
+    color: #333333 !important; 
 }
 
 [data-theme="light"] .navbar .text-light {
     color: #555555 !important;
 }
 
-/* Mantener el texto blanco solo en componentes que siguen siendo oscuros en modo claro (como el header o botones) */
+
 [data-theme="light"] .bg-dark .text-light,
 [data-theme="light"] .btn-primary,
 [data-theme="light"] .btn-danger,
 [data-theme="light"] .btn-success {
-    color: #ffffff !important;
+    color: #ffffff;
 }
