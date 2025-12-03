@@ -7,26 +7,35 @@ const softwareIcons = []; // Eliminados, ya no se usan
 let allProducts = [];
 let currentCategory = 'all';
 
-// Event listeners para los filtros
-// Hardware
-document.getElementById('filter-hardware').addEventListener('click', () => {
-  currentCategory = 'hardware';
-  renderProducts();
-});
-// Software
-document.getElementById('filter-software').addEventListener('click', () => {
-  currentCategory = 'software';
-  renderProducts();
-});
-// Todos
-document.getElementById('filter-all').addEventListener('click', () => {
-  currentCategory = 'all';
-  renderProducts();
-});
-// Ordenamiento
-document.getElementById('sort-products').addEventListener('change', () => {
-  renderProducts();
-});
+
+// Event listeners para los filtros (solo si existen en el DOM)
+const filterHardware = document.getElementById('filter-hardware');
+if (filterHardware) {
+  filterHardware.addEventListener('click', () => {
+    currentCategory = 'hardware';
+    renderProducts();
+  });
+}
+const filterSoftware = document.getElementById('filter-software');
+if (filterSoftware) {
+  filterSoftware.addEventListener('click', () => {
+    currentCategory = 'software';
+    renderProducts();
+  });
+}
+const filterAll = document.getElementById('filter-all');
+if (filterAll) {
+  filterAll.addEventListener('click', () => {
+    currentCategory = 'all';
+    renderProducts();
+  });
+}
+const sortProducts = document.getElementById('sort-products');
+if (sortProducts) {
+  sortProducts.addEventListener('change', () => {
+    renderProducts();
+  });
+}
 
 // Cargar productos al iniciar la página
 document.addEventListener('DOMContentLoaded', async () => {
